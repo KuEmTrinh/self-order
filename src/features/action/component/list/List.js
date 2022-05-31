@@ -39,7 +39,7 @@ export default function List({ userId, tableId }) {
           case 3:
             cancelSumCount += el.count;
             totalSumCount += el.count;
-            sumPrice += parseInt(el.newPrice);
+            // sumPrice += parseInt(el.newPrice);
             break;
         }
       });
@@ -77,6 +77,21 @@ export default function List({ userId, tableId }) {
   const openPaymentModal = () => {
     setOpenPayment(true);
   };
+  const resetList = () => {
+    setOpenPayment(false);
+    const query = db
+      .collection("user")
+      .doc(userId)
+      .collection("order")
+      .where("tableId", "==", tableId)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.docs.map((doc) => {
+          doc.ref.delete();
+        });
+      });
+    return query;
+  };
   return (
     <div className="listInfomation">
       <Modal
@@ -85,7 +100,13 @@ export default function List({ userId, tableId }) {
           setOpenPayment(false);
         }}
       >
-        <Payment priceTotal={priceTotal}></Payment>
+        <Payment
+          priceTotal={priceTotal}
+          userId={userId}
+          tableId={tableId}
+          listData={listData}
+          resetList={resetList}
+        ></Payment>
       </Modal>
       <div className="listPayment">
         <div className="listTotal">

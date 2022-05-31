@@ -1,6 +1,22 @@
 import React from "react";
+import { db } from "../../../../app/firebase";
+import { firebase } from "../../../../app/firebase";
 import "./Payment.css";
-export default function Payment({priceTotal}) {
+export default function Payment({priceTotal, userId , tableId, listData, resetList}) {
+  const paymentConfirm = () => {
+    console.log("confirm");
+    const query = db.collection("user").doc(userId).collection("bill").add({
+      tableId: tableId,
+      total: priceTotal,
+      details: listData,
+      status: 1,
+      method: "Tiền mặt",
+      receipt: 1,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    })
+    resetList();
+    return query;
+  }
   return (
     <div className="payment">
       <p className="paymentTitle">Xác nhận Thanh Toán</p>
@@ -22,7 +38,7 @@ export default function Payment({priceTotal}) {
           <p className="paymentMethodItem">Không</p>
         </div>
       </div>
-      <div className="paymentConfirmButton">Thanh toán</div>
+      <div className="paymentConfirmButton" onClick={paymentConfirm}>Thanh toán</div>
     </div>
   );
 }
