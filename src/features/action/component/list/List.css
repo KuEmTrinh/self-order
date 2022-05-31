@@ -1,0 +1,81 @@
+.orderListing{
+    height: calc(100vh - 10rem);
+    overflow-y: auto;
+}
+.listPayment{
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+}
+.listInfomation{
+    height: calc(100vh - 6rem);
+    overflow-y: auto;
+}
+.listTotal{
+    width: calc(75% - 0.7rem);
+    padding-top: 20%;
+    position: relative;
+    background-color: #fff;
+    border-radius: 4px;
+}
+.listTotal p{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: #272727;
+    font-weight: bold;
+}
+.listPaymentButton{
+    width: calc(25% - 1rem);
+    padding-top: 20%;
+    background: linear-gradient(90deg, #3dd49d 0%, #3dd479 100%);
+    box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+    position: relative;
+    border-radius: 4px;
+}
+.listPaymentButton p{
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bold;
+}
+.listTotalDetail{
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+}
+.listTotalDetailItem{
+    width: calc(25% - 1rem);
+}
+.listTotalDetailItemCount{
+    width: 100%;
+    padding-top: calc(100% - 1rem);
+    background-color: #fff;
+    border-radius: 4px;
+    position: relative;
+}
+.listTotalDetailItemCount p {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: #272727;
+    font-weight: bold;
+}
+.listTotalDetailTitle{
+    margin-top: 1rem;
+    text-align: center;
+    font-weight: 400;
+    font-size: 0.8rem;
+    color: #707070;
+}
+.listTotalDetailItemIcon{
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px;
+}

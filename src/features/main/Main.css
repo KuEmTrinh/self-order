@@ -1,0 +1,72 @@
+.main{
+    display: flex;
+    align-items: center;
+}
+.mainComponent{
+    margin: 1rem;
+    height: auto;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 2rem;
+    position: relative;
+}
+.componentTitle{
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.inputBox{
+    padding: 1rem 0;
+}
+.inputBoxTitle{
+    margin-right: 1rem;
+}
+.inputBoxEnter{
+    padding: 0.7rem 1.3rem;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(243, 243, 243);
+}
+
+.selectImageButton::-webkit-file-upload-button{
+    visibility: hidden;
+}
+.selectImageButton::before {
+    content: 'Select Image';
+    display: inline-block;
+    background-color: rgb(243, 243, 243);
+    border: 1px #e3e3e3;
+    border-radius: 3px;
+    padding: 5px 8px;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    cursor: pointer;
+    text-shadow: 1px 1px #fff;
+    font-weight: 700;
+    font-size: 10pt;
+  }
+  .selectImageButton:hover::before {
+    border: 1px #e3e3e3;
+  }
+  .selectImageButton:active::before {
+    background-color: rgb(243, 243, 243);
+  }
+  .printButton{
+      display: flex;
+      justify-content: center;
+  }
+  .textCenter{
+      text-align: center;
+  }
+  .textDescription{
+      padding: 1rem;
+      text-align: center;
+  }
+  .qrCode{
+      width: 100%;
+      height: auto;
+      display: flex;
+      justify-content: center;
+  }

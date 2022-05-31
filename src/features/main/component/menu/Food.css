@@ -1,0 +1,70 @@
+.foods{
+    overflow-x: auto;
+    width: calc(100%);
+}
+.food{
+    width: 10rem;
+    /* margin-bottom: 2rem; */
+    padding: 0.5rem;
+}
+.foodImage{
+    position: relative;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    width: 100%;
+    padding-top: 100%;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    overflow: hidden;
+}
+img {
+    display: block;
+    max-width: 100%;
+}
+.foodImage img{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+.foodContent{
+    display: flex;
+    width: 10rem;
+    justify-content: space-between;
+    position: relative;
+}
+.foodDetails{
+    width: 7rem;
+    line-height: 2.5rem;
+    width: 85%;
+}
+.foodVietnamese{
+    font-size: 18px;
+    font-weight: bold;
+    word-break: break-all;
+    color: #272727;
+}
+.foodJapanese{
+    font-size: 16px;
+    word-break: break-all;
+    color: #8a8a8a;
+}
+.foodPrice{
+    font-size: 19px;
+    font-weight: bold;
+    color: #272727;
+}
+.foodButton{
+    border: none;
+    background-color: #272727;
+    color: white;
+    padding: 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+}
+

@@ -1,0 +1,28 @@
+.navlink {
+    text-decoration: none;
+    color: #323232;
+}
+.linkItem {
+    padding: 15px 0;
+    border-radius: 5px;
+    margin: 15px 0;
+    font-weight: 500;
+}
+.linkItem:hover{
+    transition: all 0.2s linear;
+    background-color: #323232;
+    padding: 15px 0;
+}
+.linkItem:hover .navlink{
+    transition: all 0.2s linear;
+    color: aliceblue;
+}
+.linkList{
+    margin: 3rem 0;
+    text-align: center;
+}
+
+.logout{
+    margin-top: 6rem;
+    cursor: pointer;
+}

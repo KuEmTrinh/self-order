@@ -1,8 +1,11 @@
-import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
-
+import { configureStore } from "@reduxjs/toolkit";
+import loginReducer from "../features/login/loginSlice";
+import navigationReducer from "../features/action/component/navigationSlice";
+import foodReducer from "../features/action/component/food/foodSlice";
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    login: loginReducer,
+    navigation: navigationReducer,
+    food: foodReducer,
   },
 });
