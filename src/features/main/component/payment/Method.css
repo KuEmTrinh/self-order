@@ -1,0 +1,15 @@
+.methodList{
+    margin-top: 1rem;
+    flex-wrap: wrap;
+    display: flex;
+}
+.methodItem{
+    font-size: 14px;
+    padding: 6px 18px;
+    background-color: rgb(239, 239, 239);
+    border-radius: 20px;
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+    margin-right: 1rem;
+    width: fit-content;
+}

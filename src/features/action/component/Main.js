@@ -3,6 +3,7 @@ import Food from "./food/Food";
 import { useSelector } from "react-redux";
 import Cart from "./cart/Cart";
 import List from "./list/List";
+import Error from "./Error";
 export default function Main({ userId, tableInfo, connectCode, tableId }) {
   const componentNav = useSelector((state) => state.navigation.data);
   const tableCode = tableInfo.code;
@@ -13,6 +14,11 @@ export default function Main({ userId, tableInfo, connectCode, tableId }) {
       setRenderCheck(true);
     }
   }, []);
+  useEffect(() => {
+    if (code != tableCode) {
+      setRenderCheck(false);
+    }
+  }, [tableInfo]);
   return (
     <>
       {renderCheck ? (
@@ -38,7 +44,7 @@ export default function Main({ userId, tableInfo, connectCode, tableId }) {
           )}
         </div>
       ) : (
-        "Day la component sai ma code"
+        <Error/>
       )}
     </>
   );

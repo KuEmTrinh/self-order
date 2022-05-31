@@ -10,7 +10,7 @@ export default function Action() {
   useEffect(() => {
     const fetchData = async () => {
       const query = await db.collection("table").doc(params?.id);
-      const observer = query.get().then((querySnapshot) => {
+      const observer = query.onSnapshot((querySnapshot) => {
         setTableInfo(querySnapshot.data());
       });
       return observer;

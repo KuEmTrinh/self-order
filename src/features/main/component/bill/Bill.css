@@ -23,15 +23,76 @@
     border-radius: 5px;
 }
 .totalBoxItemTitle{
+    font-weight: bold;
     text-align: center;
     margin-top: 0.6rem;
+    font-size: 0.8rem;
+    color: #999999;
 }
 .totalBoxItemRight{
     display: flex;
     width: 60%;
     justify-content: space-between;
 }
+.billDetail{
+    max-height: 25rem;
+    overflow-y: auto;
+    width: 14rem;
+    margin: 0 auto;
+    color: #393939;
+    padding: 1rem 2rem;
+}
 .billBox{
     height: 60vh;
     overflow-y: auto;
+}
+.tableTitle{
+    font-weight: bold;
+    color:#393939
+}
+.billDetailTitle{
+    text-align: center;
+}
+.billDetailTable{
+    text-align: center;
+    font-weight: bold;
+    padding: 1rem;
+}
+.billDetailText{
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+.billDetailProductWrap{
+    display: flex;
+    justify-content: space-between;
+    flex: 3 1;
+    margin: 3px 0;
+}
+.billDetailTotal{
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+.billDetailButton{
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+.billDetailButton button{
+    border: none;
+    /* background: linear-gradient(90deg, #3dd49d 0%, #3dd479 100%); */
+    width: 46%;
+    padding: 0.7rem 0;
+    border-radius: 5px;
+    color: #393939;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+}
+.billDetailButton button p {
+    margin-right: 5px;
 }

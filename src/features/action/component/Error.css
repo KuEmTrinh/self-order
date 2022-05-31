@@ -1,0 +1,14 @@
+.error{
+    height: calc(100vh - 5rem);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+.error p {
+    padding: 1rem;
+    background-color: #fff;
+    color: #393939;
+    font-weight: bold;
+    border-radius: 5px;
+}

@@ -17,7 +17,7 @@ export default function NavLink() {
   return (
     <div className="linkList">
       <div className="linkItem">
-        <Link to="/order" className="navlink">
+        <Link to="/" className="navlink">
           Order
         </Link>
       </div>
@@ -37,8 +37,8 @@ export default function NavLink() {
         </Link>
       </div>
       <div className="linkItem">
-        <Link to="/money" className="navlink">
-          Money
+        <Link to="/method" className="navlink">
+          Payment
         </Link>
       </div>
       <div className="linkItem">
