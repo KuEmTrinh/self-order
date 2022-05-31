@@ -28,7 +28,11 @@ export default function Main({ userId, tableInfo, connectCode, tableId }) {
             ""
           )}
           {componentNav === "OrderList" ? (
-            <List userId={userId} tableId={tableId}></List>
+            <List
+              userId={userId}
+              tableId={tableId}
+              tableInfo={tableInfo}
+            ></List>
           ) : (
             ""
           )}

@@ -9,7 +9,7 @@ import { green } from "@mui/material/colors";
 import { pink } from "@mui/material/colors";
 import Modal from "../../../main/component/menu/Modal";
 import Payment from "./Payment";
-export default function List({ userId, tableId }) {
+export default function List({ userId, tableId, tableInfo }) {
   const [listData, setListData] = useState("");
   const [totalCount, setTotalCount] = useState(0);
   const [completeCount, setCompleteCount] = useState(0);
@@ -106,6 +106,10 @@ export default function List({ userId, tableId }) {
           tableId={tableId}
           listData={listData}
           resetList={resetList}
+          tableName={tableInfo.name}
+          totalCount={totalCount}
+          completeCount={completeCount}
+          cancelCount={cancelCount}
         ></Payment>
       </Modal>
       <div className="listPayment">
