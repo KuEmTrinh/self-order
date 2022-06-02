@@ -1,0 +1,9 @@
+.imagePreview{
+    width: 7rem;
+    height: 7rem;
+    border-radius: 5px;
+}
+.mainNewFood{
+    display: flex;
+    justify-content: space-between;
+}
