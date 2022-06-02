@@ -4,6 +4,7 @@ import { db } from "../../../../app/firebase";
 import { useEffect, useState } from "react";
 import Modal from "./Modal";
 import FoodEdit from "./FoodEdit";
+import Switch from "@mui/material/Switch";
 export default function FoodList({ categoryId }) {
   const [foods, setFoods] = useState("");
   const [foodEditToggle, setFoodEditToglle] = useState(false);
@@ -11,6 +12,17 @@ export default function FoodList({ categoryId }) {
   const editThisFood = (index) => {
     setFoodEditToglle(!foodEditToggle);
     setEditFoodIndex(index);
+  };
+  const handleChangeStatus = (id, checked) => {
+    const query = db
+      .collection("category")
+      .doc(categoryId)
+      .collection("food")
+      .doc(id)
+      .update({
+        status: !checked,
+      });
+    return query;
   };
   useEffect(() => {
     const query = db.collection("category").doc(categoryId).collection("food");
@@ -24,6 +36,7 @@ export default function FoodList({ categoryId }) {
           japanese: doc.data().japanese,
           price: doc.data().price,
           imgUrl: doc.data().imgUrl,
+          status: doc.data().status,
           createAt: doc.data().createAt,
         });
       });
@@ -58,7 +71,15 @@ export default function FoodList({ categoryId }) {
                   <div className="foodDetail">
                     <p className="foodVietnamese">{element.vietnamese}</p>
                     <p className="foodJapanese">{element.japanese}</p>
-                    <p className="foodPrice">{element.price}</p>
+                    <div className="foodToggle">
+                      <p className="foodPrice">{element.price}</p>
+                      <Switch
+                        checked={element.status}
+                        onChange={() => {
+                          handleChangeStatus(element.id, element.status);
+                        }}
+                      ></Switch>
+                    </div>
                   </div>
                   <button
                     className="foodButton"

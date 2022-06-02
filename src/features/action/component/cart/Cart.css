@@ -74,8 +74,42 @@
     display: flex;
     justify-content: center;
 }
+.cartTitle{
+    font-weight: bold;
+    padding-right: 1rem;
+    padding-left: 0.5rem;
+}
 
 .disableButton{
     background: rgb(234, 234, 234);
     color: rgb(87, 87, 87);
+}
+
+.cartToggle{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 1rem ;
+}
+.cartHistory{
+    position: absolute;
+    bottom: 6.2rem;
+    right: 1.2rem;
+    color: #a6a6a6;
+    background-color: #fff;
+    padding: 0.5rem;
+    border-radius: 5px;
+    z-index: 300;
+}
+.cartHistoryBox{
+    z-index: 200;
+    position: fixed;
+    width: 100%;
+    background-color: #fff;
+    max-height: calc(100vh - 15rem);
+    overflow-y: auto;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.cartHistoryItemBox{
+    z-index: 200;
 }

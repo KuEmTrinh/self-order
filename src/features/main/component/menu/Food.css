@@ -59,12 +59,18 @@ img {
     color: #272727;
 }
 .foodButton{
+    height: fit-content;
+    width: auto;
     border: none;
     background-color: #272727;
     color: white;
-    padding: 8px;
-    border-radius: 4px;
+    padding: 1.8rem 0.4rem;
+    border-radius: 0.3rem;
     font-weight: bold;
     cursor: pointer;
 }
-
+.foodToggle{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

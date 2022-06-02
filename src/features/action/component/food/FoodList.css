@@ -73,6 +73,16 @@ img{
     font-weight: bold;
     cursor: pointer;
 }
+.foodSoldOutButton{
+    height: fit-content;
+    width: auto;
+    border: none;
+    background-color: rgb(234, 234, 234);
+    padding: 1.8rem 0.8rem;
+    border-radius: 0.3rem;
+    font-weight: bold;
+    cursor: pointer;
+}
 .disableButton{
     background-color: rgb(234, 234, 234);
     padding: 0.9rem;

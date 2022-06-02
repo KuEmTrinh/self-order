@@ -52,6 +52,7 @@ export default function FoodList({ categoryId }) {
             japanese: doc.data().japanese,
             price: doc.data().price,
             imgUrl: doc.data().imgUrl,
+            status: doc.data().status,
             createAt: doc.data().createAt,
           });
         });
@@ -95,14 +96,20 @@ export default function FoodList({ categoryId }) {
                       </Box>
                     </button>
                   ) : (
-                    <button
-                      className="foodOrderButton"
-                      onClick={() => {
-                        addToCart(index);
-                      }}
-                    >
-                      Chọn
-                    </button>
+                    <>
+                      {el.status ? (
+                        <button
+                          className="foodOrderButton"
+                          onClick={() => {
+                            addToCart(index);
+                          }}
+                        >
+                          Chọn
+                        </button>
+                      ) : (
+                        <button className="foodSoldOutButton" disabled>Hết</button>
+                      )}
+                    </>
                   )}
                 </div>
               </div>
