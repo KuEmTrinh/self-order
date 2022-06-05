@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./Categories.css";
 import FoodList from "../food/FoodList";
+import Search from "./Search";
 export default function Categories({ data }) {
-  useEffect(()=>{
-    setCategoryId(data[0].id)
-  },[])
+  useEffect(() => {
+    setCategoryId(data[0].id);
+  }, []);
   const [categoryId, setCategoryId] = useState("");
   const [indexCategory, setIndexCategory] = useState(0);
   return (
@@ -29,6 +30,7 @@ export default function Categories({ data }) {
           );
         })}
       </div>
+      <Search categoryList={data}></Search>
       {categoryId ? <FoodList categoryId={categoryId}></FoodList> : ""}
     </>
   );

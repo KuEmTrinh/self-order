@@ -5,9 +5,7 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import CartConfirm from "./CartConfirm";
-import Switch from "@mui/material/Switch";
-import ManageSearchIcon from "@mui/icons-material/ManageSearch";
-import AnimateHeight from "react-animate-height";
+import CartHistory from "./CartHistory";
 import {
   deleteFoodCart,
   plusFoodCart,
@@ -18,7 +16,6 @@ export default function Cart({ userId, tableInfo, tableId }) {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.food.data);
   const [cartData, setCartData] = useState("");
-  const [height, setHeight] = useState(0);
   const deleteCartItem = (id) => {
     dispatch(deleteFoodCart(id));
   };
@@ -66,34 +63,7 @@ export default function Cart({ userId, tableInfo, tableId }) {
 
   return (
     <>
-      <div className="historyCartWrap">
-        <AnimateHeight
-          className="cartHistoryBox"
-          duration={500}
-          height={height}
-        >
-          <div className="cartItem">
-            <div className="cartImage">
-              <img src="https://firebasestorage.googleapis.com/v0/b/selforder-39140.appspot.com/o/files%2Ft%C3%B4m.jfif?alt=media&token=942ca0af-a75c-43c2-a037-95b4ea90644f" />
-            </div>
-            <div className="cartItemRight">
-              <div className="cartInfomation">
-                <p className="cartVietnamese">ABC</p>
-                <p className="cartJapanese">EFD</p>
-                <p className="cartPrice">1231</p>
-              </div>
-            </div>
-          </div>
-        </AnimateHeight>
-      </div>
-      <div className="cartHistory">
-        <ManageSearchIcon
-          fontSize="large"
-          onClick={() => {
-            setHeight(height === 0 ? "auto" : 0);
-          }}
-        ></ManageSearchIcon>
-      </div>
+      {/* <CartHistory></CartHistory> */}
       {cartData ? (
         <>
           <CartConfirm
@@ -102,15 +72,6 @@ export default function Cart({ userId, tableInfo, tableId }) {
             tableInfo={tableInfo}
             tableId={tableId}
           ></CartConfirm>
-          {/* <div className="cartToggle">
-            <p className="cartTitle">Tự động ghép đơn</p>
-            <Switch
-              checked={combineToggole}
-              onChange={() => {
-                handleChangeStatus();
-              }}
-            ></Switch>
-          </div> */}
           <div className="cart">
             {cartData.map((el, index) => {
               return (

@@ -1,0 +1,16 @@
+.searchBox{
+    margin: 15px 15px 0 15px;
+}
+.searchBoxInput{
+    width: auto;
+    padding: 0.7rem 1.4rem;
+    border: none;
+    border-radius: 14px;
+}
+.searchBoxInput:focus{
+    outline: none;
+}
+.searchBoxInput:hover{
+    transition: all 0.3s linear;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}

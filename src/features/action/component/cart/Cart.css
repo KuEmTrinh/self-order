@@ -94,12 +94,18 @@
 .cartHistory{
     position: absolute;
     bottom: 6.2rem;
-    right: 1.2rem;
+    left: 1.2rem;
     color: #a6a6a6;
     background-color: #fff;
     padding: 0.5rem;
     border-radius: 5px;
     z-index: 300;
+    display: flex;
+    align-items: center;
+}
+.cartHistory p {
+    font-weight: bold;
+    padding: 0.4rem;
 }
 .cartHistoryBox{
     z-index: 200;
