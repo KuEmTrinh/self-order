@@ -16,6 +16,7 @@ export default function FoodList({ categoryId }) {
   const searchData = useSelector((state) => state.search.data);
   const searchingStatus = useSelector((state) => state.search.searching);
   const [foodList, setFoodList] = useState("");
+  const [searchingFoodList, setSearchingFoodList] = useState("");
   const [mainDataFoodList, setMainDataFoodList] = useState("");
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
@@ -31,7 +32,7 @@ export default function FoodList({ categoryId }) {
     setOpen(true);
   };
   useEffect(() => {
-    setFoodList(searchData);
+    setSearchingFoodList(searchData);
     if (searchData.length == 0) {
       setFoodList(mainDataFoodList);
     }
@@ -106,7 +107,7 @@ export default function FoodList({ categoryId }) {
       ) : (
         ""
       )}
-      {foodList ? (
+      {foodList && searchingStatus == false ? (
         <div className="foodOrder">
           {foodList.map((el, index) => {
             return (
@@ -150,7 +151,7 @@ export default function FoodList({ categoryId }) {
           })}
         </div>
       ) : (
-        ""
+        "foodList data"
       )}
     </>
   );
