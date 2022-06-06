@@ -15,9 +15,13 @@ export const searchSlice = createSlice({
     setSearching: (state, action) => {
       state.searching = action.payload;
     },
+    removeSearchingData: (state, action) => {
+      state.searching = false;
+    },
   },
 });
 
-export const { setFoodData, setSearching } = searchSlice.actions;
+export const { setFoodData, setSearching, removeSearchingData } =
+  searchSlice.actions;
 
 export default searchSlice.reducer;

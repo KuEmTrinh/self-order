@@ -85,6 +85,27 @@ export default function FoodList({ categoryId }) {
           </Alert>
         </Snackbar>
       </Stack>
+      {searchingStatus ? (
+        <>
+          {searchData.length > 0 ? (
+            <>
+              <p className="searchResultData">
+                {searchData.length + " Kết quả"}
+              </p>
+            </>
+          ) : (
+            <>
+              {searchingStatus ? (
+                <p className="searchResultData">Không có kết quả phù hợp</p>
+              ) : (
+                ""
+              )}
+            </>
+          )}
+        </>
+      ) : (
+        ""
+      )}
       {foodList ? (
         <div className="foodOrder">
           {foodList.map((el, index) => {

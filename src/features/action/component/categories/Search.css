@@ -6,6 +6,7 @@
     padding: 0.7rem 1.4rem;
     border: none;
     border-radius: 14px;
+    color: #393939;
 }
 .searchBoxInput:focus{
     outline: none;
@@ -13,4 +14,7 @@
 .searchBoxInput:hover{
     transition: all 0.3s linear;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+.searchBoxInput::placeholder{
+    color: #878787;
 }
