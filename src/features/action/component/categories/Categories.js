@@ -30,7 +30,7 @@ export default function Categories({ data }) {
           );
         })}
       </div>
-      <Search categoryList={data}></Search>
+      <Search categoryList={data} categoryId={categoryId}></Search>
       {categoryId ? <FoodList categoryId={categoryId}></FoodList> : ""}
     </>
   );

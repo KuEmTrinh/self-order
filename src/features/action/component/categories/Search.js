@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../../../../app/firebase";
 import "./Search.css";
-export default function Search({ categoryList }) {
+import { useDispatch } from "react-redux";
+import { setFoodData, setSearching } from "./searchSlice";
+export default function Search({ categoryList, categoryId }) {
+  const dispatch = useDispatch();
   const [foods, setFoods] = useState([]);
+  const [keyWord, setKeyWord] = useState("");
+  useEffect(() => {
+    setKeyWord("");
+  }, [categoryId]);
   useEffect(() => {
     const data = [];
     categoryList.map((el) => {
@@ -26,23 +33,30 @@ export default function Search({ categoryList }) {
   const searchData = (keyWord) => {
     const resultData = [];
     foods.map((el, index) => {
-      const keyWordArray = el.vietnamese.split(" ");
-      keyWordArray.map((el) => {
-        if (keyWord == el) {
-          console.log("true");
-          resultData.push(foods[index]);
-        }
-      });
+      const result = el.vietnamese.search(keyWord);
+      if (result >= 0 && keyWord != "") {
+        resultData.push(foods[index]);
+      }
     });
-    console.log(resultData);
+    dispatch(setFoodData(JSON.parse(JSON.stringify(resultData))));
+    // console.log(resultData);
   };
-  const searchValue = (e) => {
-    const keyWord = e.target.value;
-    searchData(keyWord);
+  const searchValueChange = (e) => {
+    if (e.target.value != "") {
+      dispatch(setSearching(true));
+    } else {
+      dispatch(setSearching(false));
+    }
+    setKeyWord(e.target.value);
+    searchData(e.target.value);
   };
   return (
     <div className="searchBox">
-      <input className="searchBoxInput" onChange={searchValue}></input>
+      <input
+        value={keyWord}
+        className="searchBoxInput"
+        onChange={searchValueChange}
+      ></input>
     </div>
   );
 }

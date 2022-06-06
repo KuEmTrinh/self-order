@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../../../../app/firebase";
 import "./FoodList.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addFoodToCart } from "./foodSlice";
 import Stack from "@mui/material/Stack";
 import Snackbar from "@mui/material/Snackbar";
@@ -13,7 +13,10 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 export default function FoodList({ categoryId }) {
   const dispatch = useDispatch();
+  const searchData = useSelector((state) => state.search.data);
+  const searchingStatus = useSelector((state) => state.search.searching);
   const [foodList, setFoodList] = useState("");
+  const [mainDataFoodList, setMainDataFoodList] = useState("");
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [disableButton, setDisableButton] = useState(false);
@@ -27,6 +30,12 @@ export default function FoodList({ categoryId }) {
     setMessage("Đã thêm");
     setOpen(true);
   };
+  useEffect(() => {
+    setFoodList(searchData);
+    if (searchData.length == 0) {
+      setFoodList(mainDataFoodList);
+    }
+  }, [searchData]);
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -57,6 +66,7 @@ export default function FoodList({ categoryId }) {
           });
         });
         setFoodList(food);
+        setMainDataFoodList(food);
       });
     return query;
   }, [categoryId]);
@@ -107,7 +117,9 @@ export default function FoodList({ categoryId }) {
                           Chọn
                         </button>
                       ) : (
-                        <button className="foodSoldOutButton" disabled>Hết</button>
+                        <button className="foodSoldOutButton" disabled>
+                          Hết
+                        </button>
                       )}
                     </>
                   )}
