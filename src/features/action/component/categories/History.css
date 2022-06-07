@@ -1,0 +1,22 @@
+.historyBox{
+    transition: all 0.3s linear;
+    position: fixed;
+    width: 70%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 500;
+}
+.historyBoxOpacity {
+    position: absolute;
+    background-color: #fff;
+    z-index: 501;
+    opacity: 0.9;
+    width: 100%;
+    height: 100%;
+}
+.historyBoxContent{
+    position: absolute;
+    z-index: 502;
+    color: #000;
+}

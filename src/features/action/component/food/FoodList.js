@@ -26,8 +26,13 @@ export default function FoodList({ categoryId }) {
     setTimeout(() => {
       setDisableButton(false);
     }, 1000);
-    const sendData = JSON.stringify(foodList[index]);
-    dispatch(addFoodToCart(sendData));
+    const sendDataFromFoodList = JSON.stringify(foodList[index]);
+    const sendDataFromSearchList = JSON.stringify(searchingFoodList[index]);
+    if (searchingStatus == true) {
+      dispatch(addFoodToCart(sendDataFromSearchList));
+    } else {
+      dispatch(addFoodToCart(sendDataFromFoodList));
+    }
     setMessage("Đã thêm");
     setOpen(true);
   };
@@ -151,7 +156,53 @@ export default function FoodList({ categoryId }) {
           })}
         </div>
       ) : (
-        "foodList data"
+        ""
+      )}
+      {searchingFoodList && searchingStatus == true ? (
+        <div className="foodOrder">
+          {searchingFoodList.map((el, index) => {
+            return (
+              <div className="foodOrderItem" key={el.id}>
+                <div className="foodOrderImage">
+                  <img src={el.imgUrl} />
+                </div>
+                <div className="foodOrderContent">
+                  <div className="foodOrderDetails">
+                    <p className="foodOrderVietnamese">{el.vietnamese}</p>
+                    <p className="foodOrderJapanese">{el.japanese}</p>
+                    <p className="foodOrderPrice">{el.price}</p>
+                  </div>
+                  {disableButton ? (
+                    <button className="foodOrderButton disableButton">
+                      <Box sx={{ display: "flex" }}>
+                        <CircularProgress size="1.5rem" />
+                      </Box>
+                    </button>
+                  ) : (
+                    <>
+                      {el.status ? (
+                        <button
+                          className="foodOrderButton"
+                          onClick={() => {
+                            addToCart(index);
+                          }}
+                        >
+                          Chọn
+                        </button>
+                      ) : (
+                        <button className="foodSoldOutButton" disabled>
+                          Hết
+                        </button>
+                      )}
+                    </>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        ""
       )}
     </>
   );

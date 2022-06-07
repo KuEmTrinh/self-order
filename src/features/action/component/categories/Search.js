@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../../../../app/firebase";
 import "./Search.css";
+import "./History.css";
+import History from "./History";
 import { useDispatch } from "react-redux";
+import HistoryIcon from "@mui/icons-material/History";
+import { Animated } from "react-animated-css";
 import { setFoodData, setSearching, removeSearchingData } from "./searchSlice";
 export default function Search({ categoryList, categoryId }) {
   const dispatch = useDispatch();
   const [foods, setFoods] = useState([]);
   const [keyWord, setKeyWord] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
     setKeyWord("");
     dispatch(removeSearchingData());
@@ -72,14 +77,38 @@ export default function Search({ categoryList, categoryId }) {
     str = str.replace(/Đ/g, "D");
     return str;
   };
+
+  // History Box
+  const openHistoryBox = () => {
+    setIsOpen(!isOpen);
+  };
   return (
     <div className="searchBox">
+      {isOpen ? (
+        <Animated
+          animationIn="bounceInLeft"
+          animationOut="fadeOut"
+          isVisible={true}
+        >
+          <div className="historyBox">
+            <div className="historyBoxOpacity"></div>
+            <History></History>
+          </div>
+        </Animated>
+      ) : (
+        ""
+      )}
       <input
         value={keyWord}
         className="searchBoxInput"
         onChange={searchValueChange}
         placeholder="Tìm kiếm"
       ></input>
+      <HistoryIcon
+        color="action"
+        fontSize="large"
+        onClick={openHistoryBox}
+      ></HistoryIcon>
     </div>
   );
 }

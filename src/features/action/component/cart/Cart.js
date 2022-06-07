@@ -5,7 +5,6 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import CartConfirm from "./CartConfirm";
-import CartHistory from "./CartHistory";
 import {
   deleteFoodCart,
   plusFoodCart,
@@ -63,7 +62,6 @@ export default function Cart({ userId, tableInfo, tableId }) {
 
   return (
     <>
-      {/* <CartHistory></CartHistory> */}
       {cartData ? (
         <>
           <CartConfirm
