@@ -23,7 +23,7 @@ export default function Main({ userId, tableInfo, connectCode, tableId }) {
     <>
       {renderCheck ? (
         <div>
-          {componentNav === "List" ? <Food userId={userId}></Food> : ""}
+          {componentNav === "List" ? <Food userId={userId} tableId={tableId}></Food> : ""}
           {componentNav === "Dashboard" ? (
             <Cart
               userId={userId}

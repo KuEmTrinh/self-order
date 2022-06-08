@@ -15,8 +15,64 @@
     height: 100%;
 }
 .historyBoxContent{
+    width: 100%;
     position: absolute;
     z-index: 502;
     color: #000;
     padding: 1rem;
+}
+
+.historyItem{
+    width: calc(100% - 2rem);
+    height: auto;
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.historyImage img{
+    width: 5rem;
+    height: 5rem;
+    object-fit: cover;
+    border-radius: 7px;
+}
+.historyImage {
+    width: 30%;
+    margin-right: 0.5rem;
+}
+.historyInfomation{
+    line-height: 1rem;
+}
+.historyVietnamese{
+    font-weight: bold;
+    font-style: 1rem;
+}
+.historyJapanese{
+    font-size: 0.7rem;
+}
+.historyPrice{
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+.historyItemRight{
+    width: 75%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.historyButton{
+    height: fit-content;
+    width: auto;
+    border: none;
+    background-color: #272727;
+    color: white;
+    padding: 1.8rem 0.4rem;
+    border-radius: 0.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+.historyDisableButton{
+    background-color: white;
+    color: #272727;
 }

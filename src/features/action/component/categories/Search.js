@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import HistoryIcon from "@mui/icons-material/History";
 import { Animated } from "react-animated-css";
 import { setFoodData, setSearching, removeSearchingData } from "./searchSlice";
-export default function Search({ categoryList, categoryId }) {
+export default function Search({ categoryList, categoryId, userId, tableId }) {
   const dispatch = useDispatch();
   const [foods, setFoods] = useState([]);
   const [keyWord, setKeyWord] = useState("");
@@ -87,7 +87,7 @@ export default function Search({ categoryList, categoryId }) {
       {isOpen ? (
         <div className="historyBox">
           <div className="historyBoxOpacity"></div>
-          <History></History>
+          <History userId={userId} tableId={tableId}></History>
         </div>
       ) : (
         ""

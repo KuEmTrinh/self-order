@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Categories.css";
 import FoodList from "../food/FoodList";
 import Search from "./Search";
-export default function Categories({ data }) {
+export default function Categories({ data, tableId, userId }) {
   useEffect(() => {
     setCategoryId(data[0].id);
   }, []);
@@ -30,7 +30,12 @@ export default function Categories({ data }) {
           );
         })}
       </div>
-      <Search categoryList={data} categoryId={categoryId}></Search>
+      <Search
+        categoryList={data}
+        categoryId={categoryId}
+        tableId={tableId}
+        userId={userId}
+      ></Search>
       {categoryId ? <FoodList categoryId={categoryId}></FoodList> : ""}
     </>
   );

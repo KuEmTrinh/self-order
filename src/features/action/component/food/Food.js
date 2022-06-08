@@ -2,7 +2,7 @@ import React from "react";
 import { db } from "../../../../app/firebase";
 import { useEffect, useState } from "react";
 import Categories from "../categories/Categories";
-export default function Food({ userId }) {
+export default function Food({ userId, tableId }) {
   const uid = userId;
   const [data, setData] = useState("");
   useEffect(() => {
@@ -21,5 +21,13 @@ export default function Food({ userId }) {
       });
     return query;
   }, []);
-  return <>{data ? <Categories data={data}></Categories> : "Loading"}</>;
+  return (
+    <>
+      {data ? (
+        <Categories data={data} userId={userId} tableId={tableId}></Categories>
+      ) : (
+        "Loading"
+      )}
+    </>
+  );
 }
