@@ -76,3 +76,10 @@
     background-color: white;
     color: #272727;
 }
+.historyList{
+    height: calc(100vh - 7rem);
+    overflow-y: auto;
+}
+.historyList::-webkit-scrollbar {
+  display: none;
+}
