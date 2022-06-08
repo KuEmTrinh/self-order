@@ -85,16 +85,10 @@ export default function Search({ categoryList, categoryId }) {
   return (
     <div className="searchBox">
       {isOpen ? (
-        <Animated
-          animationIn="bounceInLeft"
-          animationOut="fadeOut"
-          isVisible={true}
-        >
-          <div className="historyBox">
-            <div className="historyBoxOpacity"></div>
-            <History></History>
-          </div>
-        </Animated>
+        <div className="historyBox">
+          <div className="historyBoxOpacity"></div>
+          <History></History>
+        </div>
       ) : (
         ""
       )}
