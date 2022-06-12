@@ -7,7 +7,24 @@ import CheckIcon from "@mui/icons-material/Check";
 import { db } from "../../../../app/firebase";
 import { firebase } from "../../../../app/firebase";
 import "./NewFood.css";
+import Resizer from "react-image-file-resizer";
+
 export default function NewFood({ categoryId, categoryName }) {
+  const resizeFile = (file) =>
+    new Promise((resolve) => {
+      Resizer.imageFileResizer(
+        file,
+        300,
+        300,
+        "JPEG",
+        100,
+        0,
+        (uri) => {
+          resolve(uri);
+        },
+        "base64"
+      );
+    });
   const [file, setFile] = useState("");
   const [percent, setPercent] = useState(0);
   const [resultBox, setResultBox] = useState(false);
@@ -54,8 +71,15 @@ export default function NewFood({ categoryId, categoryName }) {
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     });
   };
-  const handleChange = (event) => {
-    setFile(event.target.files[0]);
+  const handleChange = async (event) => {
+    try {
+      // const file = event.target.files[0];
+      // const image = await resizeFile(event.target.files[0]);
+      // console.log(event.target.files[0]);
+      setFile(event.target.files[0]);
+    } catch (err) {
+      console.log(err);
+    }
   };
   const handleUpload = () => {
     if (!file) {
