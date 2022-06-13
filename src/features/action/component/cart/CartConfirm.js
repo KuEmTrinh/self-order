@@ -35,6 +35,7 @@ export default function CartConfirm({ cartData, userId, tableInfo, tableId }) {
       el.newPrice = el.price;
     }
     db.collection("user").doc(userId).collection("order").add({
+      foodId: el.id,
       tableName: tableInfo.name,
       tableId: tableId,
       vietnamese: el.vietnamese,
