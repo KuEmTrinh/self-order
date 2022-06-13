@@ -17,6 +17,18 @@ export default function List({ userId, tableId, tableInfo }) {
   const [cancelCount, setCancelCount] = useState(0);
   const [priceTotal, setPriceTotal] = useState(0);
   const [openPayment, setOpenPayment] = useState(false);
+  const toDateTime = (secs) => {
+    var t = new Date(1970, 1, 1);
+    t.setSeconds(secs);
+    let year = t.getFullYear();
+    let month = t.getMonth();
+    let day = t.getDate();
+    let hours = t.getHours();
+    return year + "-" + less10(month) + "-" + less10(day) + "-" + less10(day);
+  };
+  const less10 = (time) => {
+    return time < 10 ? "0" + time : time;
+  };
   useEffect(() => {
     if (listData) {
       let completeSumCount = 0;
@@ -25,6 +37,7 @@ export default function List({ userId, tableId, tableInfo }) {
       let totalSumCount = 0;
       let sumPrice = 0;
       listData.map((el) => {
+        console.log(toDateTime(el.createdAt.seconds));
         switch (el.status) {
           case 1:
             creatingSumCount += el.count;
@@ -61,6 +74,7 @@ export default function List({ userId, tableId, tableInfo }) {
         querySnapshot.docs.map((doc) => {
           data.push({
             id: doc.id,
+            createdAt: doc.data().createdAt,
             vietnamese: doc.data().vietnamese,
             japanese: doc.data().japanese,
             count: doc.data().count,

@@ -57,7 +57,6 @@ export default function History({ userId, tableId }) {
             newPrice: doc.data().newPrice,
           });
         });
-        console.log(data);
         setHistoryData(data);
       });
     return query;
