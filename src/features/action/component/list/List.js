@@ -17,6 +17,24 @@ export default function List({ userId, tableId, tableInfo }) {
   const [cancelCount, setCancelCount] = useState(0);
   const [priceTotal, setPriceTotal] = useState(0);
   const [openPayment, setOpenPayment] = useState(false);
+  const toDateTime = (secs) => {
+    var t = new Date(1970, 1, 0, 9);
+    t.setSeconds(secs);
+    var today = new Date();
+    console.log("createdAt:" + t.getHours() + "/" + t.getMinutes()+ "/" + t.getSeconds());
+    console.log("currentTime:" + today.getHours() + "/" + today.getMinutes()+ "/" + today.getSeconds());
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    let year = t.getFullYear();
+    let month = t.getMonth();
+    let day = t.getDate();
+    let hours = t.getHours();
+    let min = t.getMinutes();
+    let sec = t.getSeconds();
+    return year + "-" + less10(month) + "-" + less10(day) + "  Time: " + less10(hours) + "-" + less10(min)+ "-" + less10(sec);
+  };
+  const less10 = (time) => {
+    return time < 10 ? "0" + time : time;
+  };
   useEffect(() => {
     if (listData) {
       let completeSumCount = 0;
@@ -25,6 +43,7 @@ export default function List({ userId, tableId, tableInfo }) {
       let totalSumCount = 0;
       let sumPrice = 0;
       listData.map((el) => {
+        console.log(toDateTime(el.createdAt.seconds));
         switch (el.status) {
           case 1:
             creatingSumCount += el.count;
@@ -61,6 +80,7 @@ export default function List({ userId, tableId, tableInfo }) {
         querySnapshot.docs.map((doc) => {
           data.push({
             id: doc.id,
+            createdAt: doc.data().createdAt,
             vietnamese: doc.data().vietnamese,
             japanese: doc.data().japanese,
             count: doc.data().count,
