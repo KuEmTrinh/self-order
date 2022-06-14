@@ -8,7 +8,7 @@ import { db } from "../../../../app/firebase";
 import { firebase } from "../../../../app/firebase";
 import "./NewFood.css";
 import Resizer from "react-image-file-resizer";
-
+import imageCompression from "browser-image-compression";
 export default function NewFood({ categoryId, categoryName }) {
   const resizeFile = (file) =>
     new Promise((resolve) => {
@@ -72,11 +72,15 @@ export default function NewFood({ categoryId, categoryName }) {
     });
   };
   const handleChange = async (event) => {
+    const options = {
+      maxSizeMB: 0.1,
+      maxWidthOrHeight: 400,
+      useWebWorker: true,
+    };
     try {
-      // const file = event.target.files[0];
-      // const image = await resizeFile(event.target.files[0]);
-      // console.log(event.target.files[0]);
-      setFile(event.target.files[0]);
+      const file = event.target.files[0];
+      const compressedFile = await imageCompression(file, options);
+      setFile(compressedFile);
     } catch (err) {
       console.log(err);
     }
