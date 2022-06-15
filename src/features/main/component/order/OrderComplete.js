@@ -2,15 +2,8 @@ import React, { useEffect, useState } from "react";
 import Modal from "../../../main/component/menu/Modal";
 import { firebase } from "../../../../app/firebase";
 import { db } from "../../../../app/firebase";
-import Box from "@mui/material/Box";
-import SpeedDial from "@mui/material/SpeedDial";
-import SpeedDialIcon from "@mui/material/SpeedDialIcon";
-import SpeedDialAction from "@mui/material/SpeedDialAction";
-import DeleteIcon from "@mui/icons-material/Delete";
-import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
 
-export default function OrderComplete({ userInfo, deleteToggle }) {
-  const [order, setOrder] = useState("");
+export default function OrderComplete({ userInfo,completeToggle, closeCompleteToggle}) {
   useEffect(() => {
     const query = db
       .collection("user")
@@ -34,10 +27,7 @@ export default function OrderComplete({ userInfo, deleteToggle }) {
       });
     return query;
   }, []);
-  const [completeToggle, setCompleteToggle] = useState(false);
-  const openCompleteBox = () => {
-    setCompleteToggle(true);
-  };
+  const [order, setOrder] = useState("");
   const changeStatus = (id) => {
     const query = db
       .collection("user")
@@ -54,10 +44,10 @@ export default function OrderComplete({ userInfo, deleteToggle }) {
       <Modal
         show={completeToggle}
         onClose={() => {
-          setCompleteToggle(false);
+          closeCompleteToggle();
         }}
       >
-        <p className="orderCompleteTitle">Lịch sử Hoạt Động</p>
+        <p className="componentTitle orderCompleteTitle">Lịch sử Hoạt Động</p>
         {order ? (
           <div className="orderCompleteBox">
             {order.map((el, index) => {
@@ -102,31 +92,6 @@ export default function OrderComplete({ userInfo, deleteToggle }) {
           ""
         )}
       </Modal>
-
-      <div className="orderActionBox">
-        <Box sx={{ height: 320, transform: "translateZ(0px)", flexGrow: 1 }}>
-          <SpeedDial
-            ariaLabel="SpeedDial basic example"
-            sx={{ position: "absolute", bottom: 16, right: 16 }}
-            icon={<SpeedDialIcon />}
-          >
-            <SpeedDialAction
-              key={"Complete"}
-              icon={<LibraryAddCheckIcon></LibraryAddCheckIcon>}
-              onClick={openCompleteBox}
-              tooltipOpen
-              tooltipTitle={"List"}
-            />
-            <SpeedDialAction
-              key={"Delete"}
-              icon={<DeleteIcon></DeleteIcon>}
-              onClick={deleteToggle}
-              tooltipOpen
-              tooltipTitle={"Hủy"}
-            />
-          </SpeedDial>
-        </Box>
-      </div>
     </>
   );
 }

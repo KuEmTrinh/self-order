@@ -21,6 +21,7 @@ export default function History({ userId, tableId }) {
     setTimeout(() => {
       setDisableButton(false);
     }, 1000);
+    historyData[index].newPrice = historyData[index].price;
     const sendDataFromHistoryList = JSON.stringify(historyData[index]);
     dispatch(addFoodToCart(sendDataFromHistoryList));
     setMessage("Đã thêm");

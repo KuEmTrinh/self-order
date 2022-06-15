@@ -29,7 +29,11 @@ export default function List({ userId, tableId, tableInfo }) {
     // If using time pickers with 24 hours format, add the below line get exact hours
     if (hours < 0) hours = hours + 24;
     if (hours == 0) {
-      return minutes + " phút trước";
+      if(minutes == 0){
+        return "bây giờ"
+      }else{
+        return minutes + " phút trước";
+      }
     } else {
       return hours + " tiếng " + minutes + " phút trước";
     }
