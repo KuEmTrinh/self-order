@@ -5,10 +5,12 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import HourglassTopIcon from "@mui/icons-material/HourglassTop";
 import CancelIcon from "@mui/icons-material/Cancel";
 import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
+import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import { green } from "@mui/material/colors";
 import { pink } from "@mui/material/colors";
 import Modal from "../../../main/component/menu/Modal";
 import Payment from "./Payment";
+import ChangeHistory from "./ChangeHistory";
 export default function List({ userId, tableId, tableInfo }) {
   const [listData, setListData] = useState("");
   const [totalCount, setTotalCount] = useState(0);
@@ -17,6 +19,8 @@ export default function List({ userId, tableId, tableInfo }) {
   const [cancelCount, setCancelCount] = useState(0);
   const [priceTotal, setPriceTotal] = useState(0);
   const [openPayment, setOpenPayment] = useState(false);
+  const [historyToggle, setHistoryToggle] = useState(false);
+  const [orderItemId, setOrderItemId] = useState("");
   const diff = (start, end) => {
     start = start.split(":");
     end = end.split(":");
@@ -29,9 +33,9 @@ export default function List({ userId, tableId, tableInfo }) {
     // If using time pickers with 24 hours format, add the below line get exact hours
     if (hours < 0) hours = hours + 24;
     if (hours == 0) {
-      if(minutes == 0){
-        return "bây giờ"
-      }else{
+      if (minutes == 0) {
+        return "bây giờ";
+      } else {
         return minutes + " phút trước";
       }
     } else {
@@ -58,6 +62,10 @@ export default function List({ userId, tableId, tableInfo }) {
     let currentTime = getCurrentTime();
     let diffTime = diff(createdAtTime, currentTime);
     return diffTime;
+  };
+  const openHistory = (id) => {
+    setOrderItemId(id);
+    setHistoryToggle(true);
   };
   useEffect(() => {
     if (listData) {
@@ -103,6 +111,7 @@ export default function List({ userId, tableId, tableInfo }) {
         querySnapshot.docs.map((doc) => {
           data.push({
             id: doc.id,
+            changeStatus: doc.data().changeStatus,
             createdAt: doc.data().createdAt,
             vietnamese: doc.data().vietnamese,
             japanese: doc.data().japanese,
@@ -155,6 +164,17 @@ export default function List({ userId, tableId, tableInfo }) {
           completeCount={completeCount}
           cancelCount={cancelCount}
         ></Payment>
+      </Modal>
+      <Modal
+        show={historyToggle}
+        onClose={() => {
+          setHistoryToggle(false);
+        }}
+      >
+        <ChangeHistory
+          orderItemId={orderItemId}
+          userId={userId}
+        ></ChangeHistory>
       </Modal>
       <div className="listPayment">
         <div className="listTotal">
@@ -221,7 +241,7 @@ export default function List({ userId, tableId, tableInfo }) {
                     </p>
                     <p className="listDuration">{el.timeDuration}</p>
                   </div>
-                  <div>
+                  <div className="listIconBox">
                     <p>
                       {el.status == 1 ? (
                         <HourglassTopIcon color="action" />
@@ -243,6 +263,19 @@ export default function List({ userId, tableId, tableInfo }) {
                         ""
                       )}
                     </p>
+                    <div>
+                      {el.changeStatus ? (
+                        <AutoFixHighIcon
+                          fontSize="small"
+                          color="action"
+                          onClick={() => {
+                            openHistory(el.id);
+                          }}
+                        ></AutoFixHighIcon>
+                      ) : (
+                        ""
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>

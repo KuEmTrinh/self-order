@@ -1,0 +1,23 @@
+.changeHistoryBox{
+    width: 15rem;
+}
+.changeHistoryContentTime{
+    margin-top: 0.3rem;
+    margin-bottom: 0.2rem;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}
+.changeHistoryContentTime p{
+    margin-left: 1rem;
+    color: #393939;
+}
+.changeHistoryContentDetails{
+    font-weight: normal;
+    color: #393939;
+    display: flex;
+    align-items: center;
+}
+.changeHistoryContentNewDetails{
+    font-weight: bold;
+}

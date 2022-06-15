@@ -26,7 +26,7 @@ export default function OrderSetting({
     const newArray = cloneOrderList;
     newArray[index].count += 1;
     newArray[index].changeStatus = true;
-    newArray[index].newPrice += newArray[index].price;
+    newArray[index].newPrice += parseInt(newArray[index].price);
     setCloneOrderList([...newArray]);
   };
   const changePriceValue = (e, index) => {
@@ -60,10 +60,10 @@ export default function OrderSetting({
           .doc(el.id)
           .collection("changeInfo")
           .add({
-            oldPrice: el.basePrice,
-            newPrice: el.price,
-            oldCount: el.maxCount,
-            newCount: el.count,
+            oldPrice: parseInt(el.basePrice),
+            newPrice: parseInt(el.price),
+            oldCount: parseInt(el.maxCount),
+            newCount: parseInt(el.count),
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
           });
         // console.log("this item is changed");
@@ -116,28 +116,35 @@ export default function OrderSetting({
                           <th>{el.tableName}</th>
                           <th>{el.vietnamese}</th>
                           <th className="orderSettingTableCount">
-                            {el.count > 1 ? (
-                              <RemoveIcon
-                                fontSize="small"
-                                onClick={() => {
-                                  minusCount(index);
-                                }}
-                              ></RemoveIcon>
-                            ) : (
-                              ""
-                            )}
-
-                            {el.count}
-                            {el.count < el.maxCount ? (
-                              <AddIcon
-                                fontSize="small"
-                                onClick={() => {
-                                  plusCount(index);
-                                }}
-                              ></AddIcon>
-                            ) : (
-                              ""
-                            )}
+                            <div className="orderSettingTableCountItem">
+                              <div className="orderSettingTableCountIcon">
+                                {el.count > 1 ? (
+                                  <RemoveIcon
+                                    fontSize="small"
+                                    onClick={() => {
+                                      minusCount(index);
+                                    }}
+                                  ></RemoveIcon>
+                                ) : (
+                                  ""
+                                )}
+                              </div>
+                              <div className="orderSettingTableCountNumber">
+                                {el.count}
+                              </div>
+                              <div className="orderSettingTableCountIcon">
+                                {el.count < el.maxCount ? (
+                                  <AddIcon
+                                    fontSize="small"
+                                    onClick={() => {
+                                      plusCount(index);
+                                    }}
+                                  ></AddIcon>
+                                ) : (
+                                  ""
+                                )}
+                              </div>
+                            </div>
                           </th>
                           <th className="orderSettingTablePriceChange">
                             <input

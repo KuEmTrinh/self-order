@@ -82,3 +82,9 @@
 .listDuration{
     font-size: 0.7rem;
 }
+
+.listIconBox{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

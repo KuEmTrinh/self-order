@@ -25,10 +25,10 @@ export default function Order() {
       if (minutes == 0) {
         return "bây giờ";
       } else {
-        return minutes + " phút trước";
+        return minutes + "p";
       }
     } else {
-      return hours + " tiếng " + minutes + " phút trước";
+      return hours + "h" + minutes + "p";
     }
   };
   const toDateTime = (secs) => {

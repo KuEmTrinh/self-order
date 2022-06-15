@@ -116,11 +116,6 @@
 .orderSettingTableItem th{
     padding: 0.7rem;
 }
-.orderSettingTableCount{
-    display: flex;
-    justify-content: space-between;
-    align-items:flex-end;
-}
 .orderSettingTablePriceChange input{
     width: 3rem;
     text-align: center;
@@ -138,4 +133,14 @@
     border-radius: 3px;
     background-color: #4CAF50;
     color: #fff;
+}
+.orderSettingTableCountItem{
+    display: flex;
+    justify-content: space-between;
+}
+.orderSettingTableCountIcon{
+    width: 30%;
+}
+.orderSettingTableCountNumber{
+    width: 40%;
 }
