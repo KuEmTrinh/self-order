@@ -85,3 +85,18 @@
 .warningBackground{
     background-color: rgb(255, 218, 218)
 }
+.orderBoxIcon{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.orderIconItem{
+    margin-left: 1rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.orderIconBox{
+    display: flex;
+}

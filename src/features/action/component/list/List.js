@@ -17,23 +17,43 @@ export default function List({ userId, tableId, tableInfo }) {
   const [cancelCount, setCancelCount] = useState(0);
   const [priceTotal, setPriceTotal] = useState(0);
   const [openPayment, setOpenPayment] = useState(false);
-  const toDateTime = (secs) => {
-    var t = new Date(1970, 1, 0, 9);
-    t.setSeconds(secs);
-    var today = new Date();
-    console.log("createdAt:" + t.getHours() + "/" + t.getMinutes()+ "/" + t.getSeconds());
-    console.log("currentTime:" + today.getHours() + "/" + today.getMinutes()+ "/" + today.getSeconds());
-    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    let year = t.getFullYear();
-    let month = t.getMonth();
-    let day = t.getDate();
-    let hours = t.getHours();
-    let min = t.getMinutes();
-    let sec = t.getSeconds();
-    return year + "-" + less10(month) + "-" + less10(day) + "  Time: " + less10(hours) + "-" + less10(min)+ "-" + less10(sec);
+  const diff = (start, end) => {
+    start = start.split(":");
+    end = end.split(":");
+    var startDate = new Date(0, 0, 0, start[0], start[1], 0);
+    var endDate = new Date(0, 0, 0, end[0], end[1], 0);
+    var diff = endDate.getTime() - startDate.getTime();
+    var hours = Math.floor(diff / 1000 / 60 / 60);
+    diff -= hours * 1000 * 60 * 60;
+    var minutes = Math.floor(diff / 1000 / 60);
+    // If using time pickers with 24 hours format, add the below line get exact hours
+    if (hours < 0) hours = hours + 24;
+    if (hours == 0) {
+      return minutes + " phút trước";
+    } else {
+      return hours + " tiếng " + minutes + " phút trước";
+    }
   };
-  const less10 = (time) => {
-    return time < 10 ? "0" + time : time;
+  const toDateTime = (secs) => {
+    var time = new Date(1970, 1, 0, 9);
+    time.setSeconds(secs);
+    let hours = time.getHours();
+    let min = time.getMinutes();
+    return hours + ":" + min;
+  };
+  const getCurrentTime = () => {
+    let today = new Date();
+    let hours = today.getHours();
+    let min = today.getMinutes();
+    return hours + ":" + min;
+  };
+
+  //time duration calcutaion
+  const getTimeDuration = (secs) => {
+    let createdAtTime = toDateTime(secs.seconds);
+    let currentTime = getCurrentTime();
+    let diffTime = diff(createdAtTime, currentTime);
+    return diffTime;
   };
   useEffect(() => {
     if (listData) {
@@ -43,7 +63,6 @@ export default function List({ userId, tableId, tableInfo }) {
       let totalSumCount = 0;
       let sumPrice = 0;
       listData.map((el) => {
-        console.log(toDateTime(el.createdAt.seconds));
         switch (el.status) {
           case 1:
             creatingSumCount += el.count;
@@ -88,6 +107,7 @@ export default function List({ userId, tableId, tableInfo }) {
             imgUrl: doc.data().imgUrl,
             price: doc.data().price,
             newPrice: doc.data().newPrice,
+            timeDuration: getTimeDuration(doc.data().createdAt),
           });
         });
         setListData(data);
@@ -195,6 +215,7 @@ export default function List({ userId, tableId, tableInfo }) {
                     <p className="cartPrice">
                       {el.newPrice} ({el.price} x {el.count})
                     </p>
+                    <p className="listDuration">{el.timeDuration}</p>
                   </div>
                   <div>
                     <p>

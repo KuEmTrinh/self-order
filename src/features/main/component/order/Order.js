@@ -3,14 +3,17 @@ import { db } from "../../../../app/firebase";
 import { useSelector } from "react-redux";
 import OrderItem from "./OrderItem";
 import OrderComplete from "./OrderComplete";
+import DeleteIcon from "@mui/icons-material/Delete";
+import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
+
 import "./Order.css";
 export default function Order() {
   const userInfo = JSON.parse(useSelector((state) => state.login.data));
   const [order, setOrder] = useState("");
-  const [deleteItem, setDeleteItem] = useState(false)
-  const deleteToggle = () =>{
-    setDeleteItem(!deleteItem)
-  }
+  const [deleteItem, setDeleteItem] = useState(false);
+  const deleteToggle = () => {
+    setDeleteItem(!deleteItem);
+  };
   useEffect(() => {
     const query = db
       .collection("user")
@@ -38,8 +41,27 @@ export default function Order() {
     <>
       {order ? (
         <>
-          <OrderComplete order={order} userInfo={userInfo} deleteToggle={deleteToggle}></OrderComplete>
-          <OrderItem userInfo={userInfo} deleteItem={deleteItem} order={order}/>
+          <div className="orderBoxIcon">
+            <p className="componentTitle">Danh sách Order</p>
+            <div className="orderIconBox">
+              <div className="orderIconItem">
+                <DeleteIcon onClick={deleteToggle}></DeleteIcon>
+              </div>
+              <div className="orderIconItem">
+                <LibraryAddCheckIcon></LibraryAddCheckIcon>
+              </div>
+            </div>
+          </div>
+          <OrderComplete
+            order={order}
+            userInfo={userInfo}
+            deleteToggle={deleteToggle}
+          ></OrderComplete>
+          <OrderItem
+            userInfo={userInfo}
+            deleteItem={deleteItem}
+            order={order}
+          />
         </>
       ) : (
         ""

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
 import Modal from "../../../main/component/menu/Modal";
 import { firebase } from "../../../../app/firebase";
 import { db } from "../../../../app/firebase";
@@ -8,6 +7,7 @@ import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
 import DeleteIcon from "@mui/icons-material/Delete";
+import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
 
 export default function OrderComplete({ userInfo, deleteToggle }) {
   const [order, setOrder] = useState("");
