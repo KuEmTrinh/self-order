@@ -2,20 +2,76 @@ import React, { useEffect, useState } from "react";
 import Modal from "../../../main/component/menu/Modal";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import { db } from "../../../../app/firebase";
+import { firebase } from "../../../../app/firebase";
 export default function OrderSetting({
   settingToggle,
   closeSettingToggle,
   order,
+  userId,
 }) {
   useEffect(() => {
     setCloneOrderList(order);
-  }, []);
+  }, [order]);
   const [cloneOrderList, setCloneOrderList] = useState("");
   const minusCount = (index) => {
     const newArray = cloneOrderList;
     newArray[index].count -= 1;
     newArray[index].changeStatus = true;
+    newArray[index].newPrice -= newArray[index].price;
     setCloneOrderList([...newArray]);
+  };
+
+  const plusCount = (index) => {
+    const newArray = cloneOrderList;
+    newArray[index].count += 1;
+    newArray[index].changeStatus = true;
+    newArray[index].newPrice += newArray[index].price;
+    setCloneOrderList([...newArray]);
+  };
+  const changePriceValue = (e, index) => {
+    console.log(e.target.value);
+    const newArray = cloneOrderList;
+    const changeItem = newArray[index];
+    changeItem.changeStatus = true;
+    changeItem.price = e.target.value;
+    changeItem.newPrice = changeItem.count * changeItem.price;
+    setCloneOrderList([...newArray]);
+  };
+  const saveChangeData = () => {
+    cloneOrderList.map((el, index) => {
+      if (el.changeStatus) {
+        console.log(el.id);
+        const changeStatusQuery = db
+          .collection("user")
+          .doc(userId)
+          .collection("order")
+          .doc(el.id)
+          .update({
+            changeStatus: true,
+            price: el.price,
+            newPrice: el.newPrice,
+            count: el.count,
+          });
+        const createHistory = db
+          .collection("user")
+          .doc(userId)
+          .collection("order")
+          .doc(el.id)
+          .collection("changeInfo")
+          .add({
+            oldPrice: el.basePrice,
+            newPrice: el.price,
+            oldCount: el.maxCount,
+            newCount: el.count,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          });
+        // console.log("this item is changed");
+        // console.log(el.maxCount + "->" + el.count);
+        // console.log(el.basePrice + "->" + el.price);
+        // return { changeStatusQuery, createHistory };
+      }
+    });
   };
   return (
     <>
@@ -25,7 +81,14 @@ export default function OrderSetting({
           closeSettingToggle();
         }}
       >
-        <p className="componentTitle orderCompleteTitle">Chỉnh sữa thông tin</p>
+        <div className="orderBoxIcon">
+          <p className="componentTitle">Chỉnh sữa thông tin</p>
+          <div className="orderIconBox">
+            <button className="orderSettingButton" onClick={saveChangeData}>
+              Cập nhật
+            </button>
+          </div>
+        </div>
         {cloneOrderList ? (
           <div className="orderSettingBox">
             <table className="orderSettingTable">
@@ -42,26 +105,56 @@ export default function OrderSetting({
                 {cloneOrderList.map((el, index) => {
                   return (
                     <>
-                      <tr className="orderSettingTableItem">
-                        <th>{el.tableName}</th>
-                        <th>{el.vietnamese}</th>
-                        <th className="orderSettingTableCount">
-                          <RemoveIcon
-                            fontSize="small"
-                            onClick={() => {
-                              minusCount(index);
-                            }}
-                          ></RemoveIcon>
-                          {el.count}
-                          <AddIcon fontSize="small"></AddIcon>
-                        </th>
-                        <th className="orderSettingTablePriceChange">
-                          <input value={el.price} />
-                        </th>
-                        <th>{el.newPrice}</th>
-                        <th>3 phút trước</th>
-                        {/* <th>{el.changeStatus ? "Cập nhật" : ""}</th> */}
-                      </tr>
+                      {el.status == 1 ? (
+                        <tr
+                          className={
+                            el.changeStatus
+                              ? "orderSettingTableItem orderSettingTableItemActive"
+                              : "orderSettingTableItem"
+                          }
+                        >
+                          <th>{el.tableName}</th>
+                          <th>{el.vietnamese}</th>
+                          <th className="orderSettingTableCount">
+                            {el.count > 1 ? (
+                              <RemoveIcon
+                                fontSize="small"
+                                onClick={() => {
+                                  minusCount(index);
+                                }}
+                              ></RemoveIcon>
+                            ) : (
+                              ""
+                            )}
+
+                            {el.count}
+                            {el.count < el.maxCount ? (
+                              <AddIcon
+                                fontSize="small"
+                                onClick={() => {
+                                  plusCount(index);
+                                }}
+                              ></AddIcon>
+                            ) : (
+                              ""
+                            )}
+                          </th>
+                          <th className="orderSettingTablePriceChange">
+                            <input
+                              value={el.price}
+                              onChange={(e) => {
+                                changePriceValue(e, index);
+                              }}
+                              type="number"
+                            />
+                          </th>
+                          <th>{el.newPrice}</th>
+                          <th>{el.timeDuration}</th>
+                          {/* <th>{el.changeStatus ? "Cập nhật" : ""}</th> */}
+                        </tr>
+                      ) : (
+                        ""
+                      )}
                     </>
                   );
                 })}
