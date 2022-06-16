@@ -43,6 +43,7 @@ export default function CartConfirm({ cartData, userId, tableInfo, tableId }) {
       japanese: el.japanese,
       newPrice: el.newPrice,
       price: el.price,
+      basePrice: el.price,
       count: el.count,
       imgUrl: el.imgUrl,
       status: 1,

@@ -132,18 +132,37 @@ export default function List({ userId, tableId, tableInfo }) {
   };
   const resetList = () => {
     setOpenPayment(false);
-    const query = db
-      .collection("user")
-      .doc(userId)
-      .collection("order")
+    const query = db.collection("user").doc(userId).collection("order");
+    query
       .where("tableId", "==", tableId)
       .get()
       .then((querySnapshot) => {
         querySnapshot.docs.map((doc) => {
+          const docChangeInfo = query
+            .doc(doc.id)
+            .collection("changeInfo")
+            .get()
+            .then((querySnapshot) => {
+              try {
+                querySnapshot.docs.map((doc) => {
+                  doc.ref.delete();
+                });
+              } catch (error) {
+                console.log("have no info");
+              }
+            });
           doc.ref.delete();
         });
       });
-    return query;
+    // const checkChangeInfo = query.collection("changeInfo").get();
+    // if (checkChangeInfo) {
+    //   checkChangeInfo.then((querySnapshot) => {
+    //     querySnapshot.docs.map((doc) => {
+    //       doc.ref.delete();
+    //     });
+    //   });
+    // }
+    // return query;
   };
   return (
     <div className="listInfomation">

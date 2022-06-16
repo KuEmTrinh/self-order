@@ -7,24 +7,8 @@ import CheckIcon from "@mui/icons-material/Check";
 import { db } from "../../../../app/firebase";
 import { firebase } from "../../../../app/firebase";
 import "./NewFood.css";
-import Resizer from "react-image-file-resizer";
 import imageCompression from "browser-image-compression";
 export default function NewFood({ categoryId, categoryName }) {
-  const resizeFile = (file) =>
-    new Promise((resolve) => {
-      Resizer.imageFileResizer(
-        file,
-        300,
-        300,
-        "JPEG",
-        100,
-        0,
-        (uri) => {
-          resolve(uri);
-        },
-        "base64"
-      );
-    });
   const [file, setFile] = useState("");
   const [percent, setPercent] = useState(0);
   const [resultBox, setResultBox] = useState(false);

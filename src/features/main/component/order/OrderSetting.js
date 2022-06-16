@@ -52,6 +52,7 @@ export default function OrderSetting({
             price: el.price,
             newPrice: el.newPrice,
             count: el.count,
+            
           });
         const createHistory = db
           .collection("user")

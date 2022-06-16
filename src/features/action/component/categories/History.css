@@ -83,3 +83,7 @@
 .historyList::-webkit-scrollbar {
   display: none;
 }
+.historyTime{
+    font-size: 0.7rem;
+    color: #393939;
+}

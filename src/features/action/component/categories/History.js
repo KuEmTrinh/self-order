@@ -16,6 +16,48 @@ export default function History({ userId, tableId }) {
   const [disableButton, setDisableButton] = useState(false);
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
+  // time duration calcutator function
+  const diff = (start, end) => {
+    start = start.split(":");
+    end = end.split(":");
+    var startDate = new Date(0, 0, 0, start[0], start[1], 0);
+    var endDate = new Date(0, 0, 0, end[0], end[1], 0);
+    var diff = endDate.getTime() - startDate.getTime();
+    var hours = Math.floor(diff / 1000 / 60 / 60);
+    diff -= hours * 1000 * 60 * 60;
+    var minutes = Math.floor(diff / 1000 / 60);
+    // If using time pickers with 24 hours format, add the below line get exact hours
+    if (hours < 0) hours = hours + 24;
+    if (hours == 0) {
+      if (minutes == 0) {
+        return "bây giờ";
+      } else {
+        return minutes + " phút trước";
+      }
+    } else {
+      return hours + " tiếng " + minutes + " phút trước";
+    }
+  };
+  const toDateTime = (secs) => {
+    var time = new Date(1970, 1, 0, 9);
+    time.setSeconds(secs);
+    let hours = time.getHours();
+    let min = time.getMinutes();
+    return hours + ":" + min;
+  };
+  const getCurrentTime = () => {
+    let today = new Date();
+    let hours = today.getHours();
+    let min = today.getMinutes();
+    return hours + ":" + min;
+  };
+  const getTimeDuration = (secs) => {
+    let createdAtTime = toDateTime(secs.seconds);
+    let currentTime = getCurrentTime();
+    let diffTime = diff(createdAtTime, currentTime);
+    return diffTime;
+  };
+  // end
   const addToCart = (index) => {
     setDisableButton(true);
     setTimeout(() => {
@@ -54,8 +96,9 @@ export default function History({ userId, tableId }) {
             count: doc.data().count,
             status: doc.data().status,
             imgUrl: doc.data().imgUrl,
-            price: doc.data().price,
+            price: doc.data().basePrice,
             newPrice: doc.data().newPrice,
+            createdAt: getTimeDuration(doc.data().createdAt),
           });
         });
         setHistoryData(data);
@@ -91,6 +134,7 @@ export default function History({ userId, tableId }) {
                     <p className="historyVietnamese">{el.vietnamese}</p>
                     <p className="historyJapanese">{el.japanese}</p>
                     <p className="historyPrice">{el.price}</p>
+                    <p className="historyTime">{el.createdAt}</p>
                   </div>
                   {disableButton ? (
                     <button className="foodOrderButton disableButton">
