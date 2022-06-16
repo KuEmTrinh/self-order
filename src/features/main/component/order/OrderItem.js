@@ -6,36 +6,124 @@ import Zoom from "@mui/material/Zoom";
 export default function OrderItem({ order, userInfo, deleteItem }) {
   const [deleteToggle, setDeleteToggle] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState("");
-  const changeStatus = (id) => {
-    const query = db
-      .collection("user")
-      .doc(userInfo.uid)
-      .collection("order")
-      .doc(id)
-      .update({
-        status: 2,
-        updateAt: firebase.firestore.FieldValue.serverTimestamp(),
-      });
+  const [deleteIndex, setDeleteIndex] = useState("");
+  const [cloneOrder, setCloneOrder] = useState("");
+  useEffect(() => {
+    setCloneOrder([...order]);
+  }, [order]);
+  const changeStatus = (id, index) => {
+    const newOrderList = cloneOrder;
+    newOrderList[index].show = false;
+    setCloneOrder([...newOrderList]);
+    setTimeout(() => {
+      const query = db
+        .collection("user")
+        .doc(userInfo.uid)
+        .collection("order")
+        .doc(id)
+        .update({
+          status: 2,
+          updateAt: firebase.firestore.FieldValue.serverTimestamp(),
+        });
+    }, 250);
   };
-  const openDeleteToggle = (id) => {
+  const openDeleteToggle = (id, index) => {
     setDeleteToggle(true);
     setDeleteItemId(id);
+    setDeleteIndex(index);
   };
   const cannelConfirm = () => {
-    const query = db
-      .collection("user")
-      .doc(userInfo.uid)
-      .collection("order")
-      .doc(deleteItemId)
-      .update({
-        status: 3,
-        updateAt: firebase.firestore.FieldValue.serverTimestamp(),
-      });
+    const newOrderList = cloneOrder;
+    newOrderList[deleteIndex].show = false;
+    setCloneOrder([...newOrderList]);
+    setTimeout(() => {
+      const query = db
+        .collection("user")
+        .doc(userInfo.uid)
+        .collection("order")
+        .doc(deleteItemId)
+        .update({
+          status: 3,
+          updateAt: firebase.firestore.FieldValue.serverTimestamp(),
+        });
+      setDeleteItemId("");
+    }, 250);
     setDeleteToggle(false);
-    setDeleteItemId("");
   };
   return (
     <>
+      {cloneOrder ? (
+        <>
+          <div className="orderList">
+            {cloneOrder.map((el, index) => {
+              return (
+                <div key={el.id}>
+                  {el.status == 1 && deleteItem == false ? (
+                    <>
+                      <Zoom in={el.show}>
+                        <div
+                          className="orderItem normalBorder"
+                          key={index}
+                          onClick={() => {
+                            changeStatus(el.id, index);
+                          }}
+                        >
+                          <p className="tableName">{el.tableName}</p>
+                          <div className="wrapFlex">
+                            <p className="foodName">{el.vietnamese}</p>
+                            <p
+                              className={
+                                el.count > 1
+                                  ? "foodCount foodCountSpecial"
+                                  : "foodCount"
+                              }
+                            >
+                              {el.count}
+                            </p>
+                          </div>
+                        </div>
+                      </Zoom>
+                    </>
+                  ) : (
+                    ""
+                  )}
+                  {el.status == 1 && deleteItem == true ? (
+                    <>
+                      <Zoom in={el.show}>
+                        <div
+                          className="orderItem normalBorder warningBorder warningBackground"
+                          key={index}
+                          onClick={() => {
+                            openDeleteToggle(el.id, index);
+                          }}
+                        >
+                          <p className="tableName">{el.tableName}</p>
+                          <div className="wrapFlex">
+                            <p className="foodName">{el.vietnamese}</p>
+                            <p
+                              className={
+                                el.count > 1
+                                  ? "foodCount foodCountSpecial"
+                                  : "foodCount"
+                              }
+                            >
+                              {el.count}
+                            </p>
+                          </div>
+                        </div>
+                      </Zoom>
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </>
+      ) : (
+        ""
+      )}
       <Modal
         show={deleteToggle}
         onClose={() => {
@@ -49,72 +137,6 @@ export default function OrderItem({ order, userInfo, deleteItem }) {
           </button>
         </div>
       </Modal>
-      <div className="orderList">
-        {order.map((el, index) => {
-          return (
-            <div key={el.id}>
-              {el.status == 1 && deleteItem == false ? (
-                <>
-                  <Zoom in={true}>
-                    <div
-                      className="orderItem normalBorder"
-                      key={index}
-                      onClick={() => {
-                        changeStatus(el.id);
-                      }}
-                    >
-                      <p className="tableName">{el.tableName}</p>
-                      <div className="wrapFlex">
-                        <p className="foodName">{el.vietnamese}</p>
-                        <p
-                          className={
-                            el.count > 1
-                              ? "foodCount foodCountSpecial"
-                              : "foodCount"
-                          }
-                        >
-                          {el.count}
-                        </p>
-                      </div>
-                    </div>
-                  </Zoom>
-                </>
-              ) : (
-                ""
-              )}
-              {el.status == 1 && deleteItem == true ? (
-                <>
-                  <Zoom in={true}>
-                    <div
-                      className="orderItem normalBorder warningBorder warningBackground"
-                      key={index}
-                      onClick={() => {
-                        openDeleteToggle(el.id);
-                      }}
-                    >
-                      <p className="tableName">{el.tableName}</p>
-                      <div className="wrapFlex">
-                        <p className="foodName">{el.vietnamese}</p>
-                        <p
-                          className={
-                            el.count > 1
-                              ? "foodCount foodCountSpecial"
-                              : "foodCount"
-                          }
-                        >
-                          {el.count}
-                        </p>
-                      </div>
-                    </div>
-                  </Zoom>
-                </>
-              ) : (
-                ""
-              )}
-            </div>
-          );
-        })}
-      </div>
     </>
   );
 }

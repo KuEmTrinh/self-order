@@ -52,7 +52,6 @@ export default function OrderSetting({
             price: el.price,
             newPrice: el.newPrice,
             count: el.count,
-            
           });
         const createHistory = db
           .collection("user")
@@ -82,96 +81,98 @@ export default function OrderSetting({
           closeSettingToggle();
         }}
       >
-        <div className="orderBoxIcon">
-          <p className="componentTitle">Chỉnh sữa thông tin</p>
-          <div className="orderIconBox">
-            <button className="orderSettingButton" onClick={saveChangeData}>
-              Cập nhật
-            </button>
+        <div className="orderSettingContent">
+          <div className="orderBoxIcon">
+            <p className="componentTitle">Chỉnh sữa thông tin</p>
+            <div className="orderIconBox">
+              <button className="orderSettingButton" onClick={saveChangeData}>
+                Cập nhật
+              </button>
+            </div>
           </div>
+          {cloneOrderList ? (
+            <div className="orderSettingBox">
+              <table className="orderSettingTable">
+                <tbody>
+                  <tr className="orderSettingTableHeader">
+                    <th>Bàn</th>
+                    <th>Tên món</th>
+                    <th>SL</th>
+                    <th>Giá</th>
+                    <th>Tổng</th>
+                    <th>T.Gian</th>
+                    {/* <th>Cập nhật</th> */}
+                  </tr>
+                  {cloneOrderList.map((el, index) => {
+                    return (
+                      <>
+                        {el.status == 1 ? (
+                          <tr
+                            className={
+                              el.changeStatus
+                                ? "orderSettingTableItem orderSettingTableItemActive"
+                                : "orderSettingTableItem"
+                            }
+                          >
+                            <th>{el.tableName}</th>
+                            <th>{el.vietnamese}</th>
+                            <th className="orderSettingTableCount">
+                              <div className="orderSettingTableCountItem">
+                                <div className="orderSettingTableCountIcon">
+                                  {el.count > 1 ? (
+                                    <RemoveIcon
+                                      fontSize="small"
+                                      onClick={() => {
+                                        minusCount(index);
+                                      }}
+                                    ></RemoveIcon>
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
+                                <div className="orderSettingTableCountNumber">
+                                  {el.count}
+                                </div>
+                                <div className="orderSettingTableCountIcon">
+                                  {el.count < el.maxCount ? (
+                                    <AddIcon
+                                      fontSize="small"
+                                      onClick={() => {
+                                        plusCount(index);
+                                      }}
+                                    ></AddIcon>
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
+                              </div>
+                            </th>
+                            <th className="orderSettingTablePriceChange">
+                              <input
+                                value={el.price}
+                                onChange={(e) => {
+                                  changePriceValue(e, index);
+                                }}
+                                type="number"
+                              />
+                            </th>
+                            <th>{el.newPrice}</th>
+                            <th>{el.timeDuration}</th>
+                            {/* <th>{el.changeStatus ? "Cập nhật" : ""}</th> */}
+                          </tr>
+                        ) : (
+                          ""
+                        )}
+                      </>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
-        {cloneOrderList ? (
-          <div className="orderSettingBox">
-            <table className="orderSettingTable">
-              <tbody>
-                <tr className="orderSettingTableHeader">
-                  <th>Bàn</th>
-                  <th>Tên món</th>
-                  <th>SL</th>
-                  <th>Giá</th>
-                  <th>Tổng</th>
-                  <th>T.Gian</th>
-                  {/* <th>Cập nhật</th> */}
-                </tr>
-                {cloneOrderList.map((el, index) => {
-                  return (
-                    <>
-                      {el.status == 1 ? (
-                        <tr
-                          className={
-                            el.changeStatus
-                              ? "orderSettingTableItem orderSettingTableItemActive"
-                              : "orderSettingTableItem"
-                          }
-                        >
-                          <th>{el.tableName}</th>
-                          <th>{el.vietnamese}</th>
-                          <th className="orderSettingTableCount">
-                            <div className="orderSettingTableCountItem">
-                              <div className="orderSettingTableCountIcon">
-                                {el.count > 1 ? (
-                                  <RemoveIcon
-                                    fontSize="small"
-                                    onClick={() => {
-                                      minusCount(index);
-                                    }}
-                                  ></RemoveIcon>
-                                ) : (
-                                  ""
-                                )}
-                              </div>
-                              <div className="orderSettingTableCountNumber">
-                                {el.count}
-                              </div>
-                              <div className="orderSettingTableCountIcon">
-                                {el.count < el.maxCount ? (
-                                  <AddIcon
-                                    fontSize="small"
-                                    onClick={() => {
-                                      plusCount(index);
-                                    }}
-                                  ></AddIcon>
-                                ) : (
-                                  ""
-                                )}
-                              </div>
-                            </div>
-                          </th>
-                          <th className="orderSettingTablePriceChange">
-                            <input
-                              value={el.price}
-                              onChange={(e) => {
-                                changePriceValue(e, index);
-                              }}
-                              type="number"
-                            />
-                          </th>
-                          <th>{el.newPrice}</th>
-                          <th>{el.timeDuration}</th>
-                          {/* <th>{el.changeStatus ? "Cập nhật" : ""}</th> */}
-                        </tr>
-                      ) : (
-                        ""
-                      )}
-                    </>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          ""
-        )}
       </Modal>
     </>
   );

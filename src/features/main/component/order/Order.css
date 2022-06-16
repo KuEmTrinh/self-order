@@ -59,7 +59,6 @@
     overflow-x: auto;
 }
 .orderSettingBox{
-    width: 50vh;
     height: 73vh;
 }
 .orderCompleteTitle{
@@ -143,4 +142,7 @@
 }
 .orderSettingTableCountNumber{
     width: 40%;
+}
+.orderSettingContent{
+    width: 65vh;
 }

@@ -36,47 +36,49 @@ export default function BillDetails({ onClose, bill, userId }) {
   };
   const RenderComponent = React.forwardRef((props, ref) => {
     return (
-      <div ref={ref}>
-        <div className="billDetail">
-          <p className="billDetailTitle">
-            Cảm ơn quý khách đã sử dụng dịch vụ của chúng tôi
-          </p>
+      <div className="billDetail">
+        <div className="billPrintContent">
+          <div ref={ref} className="billPrintContentCenter">
+            <p className="billDetailTitle">
+              Cảm ơn quý khách đã sử dụng dịch vụ của chúng tôi
+            </p>
 
-          <p className="billDetailTable">{props.bill.tableName}</p>
-          <div className="billDetailProductWrap">
-            <p>Tổng món:</p>
-            <p>{props.bill.totalOrder}</p>
-          </div>
-          <div className="billDetailProductWrap">
-            <p>Hoàn thành:</p>
-            <p>{props.bill.complete}</p>
-          </div>
-          <div className="billDetailProductWrap">
-            <p>Huỷ:</p>
-            <p>{props.bill.cancel}</p>
-          </div>
-          <div className="billDetailProductWrap">
-            <p>Phương thức:</p>
-            <p>{props.bill.method}</p>
-          </div>
-          <hr></hr>
-          <p className="billDetailText">Chi tiết</p>
-          <div className="billDetailProduct">
-            {props.bill.details.map((el, index) => {
-              return (
-                <div className="billDetailProductWrap" key={index}>
-                  <p>
-                    {el.count} {el.vietnamese}
-                  </p>
-                  <p>{el.newPrice}</p>
-                </div>
-              );
-            })}
-          </div>
-          <hr></hr>
-          <div className="billDetailTotal">
-            <p>Tổng</p>
-            <p>{props.bill.total}</p>
+            <p className="billDetailTable">{props.bill.tableName}</p>
+            <div className="billDetailProductWrap">
+              <p>Tổng món:</p>
+              <p>{props.bill.totalOrder}</p>
+            </div>
+            <div className="billDetailProductWrap">
+              <p>Hoàn thành:</p>
+              <p>{props.bill.complete}</p>
+            </div>
+            <div className="billDetailProductWrap">
+              <p>Huỷ:</p>
+              <p>{props.bill.cancel}</p>
+            </div>
+            <div className="billDetailProductWrap">
+              <p>Phương thức:</p>
+              <p>{props.bill.method}</p>
+            </div>
+            <hr></hr>
+            <p className="billDetailText">Chi tiết</p>
+            <div className="billDetailProduct">
+              {props.bill.details.map((el, index) => {
+                return (
+                  <div className="billDetailProductWrap" key={index}>
+                    <p>
+                      {el.count} {el.vietnamese}
+                    </p>
+                    <p>{el.newPrice}</p>
+                  </div>
+                );
+              })}
+            </div>
+            <hr></hr>
+            <div className="billDetailTotal">
+              <p>Tổng</p>
+              <p>{props.bill.total}</p>
+            </div>
           </div>
         </div>
       </div>

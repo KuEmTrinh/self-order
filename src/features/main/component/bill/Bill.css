@@ -40,11 +40,6 @@
     width: 14rem;
     margin: 0 auto;
     color: #393939;
-    padding: 1rem 2rem;
-}
-.billBox{
-    height: 60vh;
-    overflow-y: auto;
 }
 .tableTitle{
     font-weight: bold;
@@ -95,4 +90,17 @@
 }
 .billDetailButton button p {
     margin-right: 5px;
+}
+
+.billPrintContent{
+    width: 14rem;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.billPrintContentCenter{
+    width: auto;
+    padding: 1rem 2rem;
 }

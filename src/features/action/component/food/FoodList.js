@@ -7,6 +7,7 @@ import Stack from "@mui/material/Stack";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import CircularProgress from "@mui/material/CircularProgress";
+import Zoom from "@mui/material/Zoom";
 import Box from "@mui/material/Box";
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -21,6 +22,7 @@ export default function FoodList({ categoryId }) {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [disableButton, setDisableButton] = useState(false);
+  const [showItem, setShowItem] = useState(false);
   const addToCart = (index) => {
     setDisableButton(true);
     setTimeout(() => {
@@ -54,6 +56,7 @@ export default function FoodList({ categoryId }) {
   });
   const { vertical, horizontal } = state;
   useEffect(() => {
+    setShowItem(false);
     const query = db
       .collection("category")
       .doc(categoryId)
@@ -74,6 +77,9 @@ export default function FoodList({ categoryId }) {
         setFoodList(food);
         setMainDataFoodList(food);
       });
+    setTimeout(() => {
+      setShowItem(true);
+    }, 150);
     return query;
   }, [categoryId]);
   return (
@@ -116,42 +122,44 @@ export default function FoodList({ categoryId }) {
         <div className="foodOrder">
           {foodList.map((el, index) => {
             return (
-              <div className="foodOrderItem" key={el.id}>
-                <div className="foodOrderImage">
-                  <img src={el.imgUrl} />
-                </div>
-                <div className="foodOrderContent">
-                  <div className="foodOrderDetails">
-                    <p className="foodOrderVietnamese">{el.vietnamese}</p>
-                    <p className="foodOrderJapanese">{el.japanese}</p>
-                    <p className="foodOrderPrice">{el.price}</p>
+              <Zoom in={showItem}>
+                <div className="foodOrderItem" key={el.id}>
+                  <div className="foodOrderImage">
+                    <img src={el.imgUrl} />
                   </div>
-                  {disableButton ? (
-                    <button className="foodOrderButton disableButton">
-                      <Box sx={{ display: "flex" }}>
-                        <CircularProgress size="1.5rem" />
-                      </Box>
-                    </button>
-                  ) : (
-                    <>
-                      {el.status ? (
-                        <button
-                          className="foodOrderButton"
-                          onClick={() => {
-                            addToCart(index);
-                          }}
-                        >
-                          Chọn
-                        </button>
-                      ) : (
-                        <button className="foodSoldOutButton" disabled>
-                          Hết
-                        </button>
-                      )}
-                    </>
-                  )}
+                  <div className="foodOrderContent">
+                    <div className="foodOrderDetails">
+                      <p className="foodOrderVietnamese">{el.vietnamese}</p>
+                      <p className="foodOrderJapanese">{el.japanese}</p>
+                      <p className="foodOrderPrice">{el.price}</p>
+                    </div>
+                    {disableButton ? (
+                      <button className="foodOrderButton disableButton">
+                        <Box sx={{ display: "flex" }}>
+                          <CircularProgress size="1.5rem" />
+                        </Box>
+                      </button>
+                    ) : (
+                      <>
+                        {el.status ? (
+                          <button
+                            className="foodOrderButton"
+                            onClick={() => {
+                              addToCart(index);
+                            }}
+                          >
+                            Chọn
+                          </button>
+                        ) : (
+                          <button className="foodSoldOutButton" disabled>
+                            Hết
+                          </button>
+                        )}
+                      </>
+                    )}
+                  </div>
                 </div>
-              </div>
+              </Zoom>
             );
           })}
         </div>

@@ -5,7 +5,7 @@ import "./History.css";
 import History from "./History";
 import { useDispatch } from "react-redux";
 import HistoryIcon from "@mui/icons-material/History";
-import { Animated } from "react-animated-css";
+import Fade from "@mui/material/Fade";
 import { setFoodData, setSearching, removeSearchingData } from "./searchSlice";
 export default function Search({ categoryList, categoryId, userId, tableId }) {
   const dispatch = useDispatch();
@@ -85,10 +85,12 @@ export default function Search({ categoryList, categoryId, userId, tableId }) {
   return (
     <div className="searchBox">
       {isOpen ? (
-        <div className="historyBox">
-          <div className="historyBoxOpacity"></div>
-          <History userId={userId} tableId={tableId}></History>
-        </div>
+        <Fade in={isOpen}>
+          <div className="historyBox">
+            <div className="historyBoxOpacity"></div>
+            <History userId={userId} tableId={tableId}></History>
+          </div>
+        </Fade>
       ) : (
         ""
       )}

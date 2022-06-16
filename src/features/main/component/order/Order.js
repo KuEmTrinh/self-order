@@ -95,6 +95,7 @@ export default function Order() {
             newPrice: parseInt(doc.data().newPrice),
             status: doc.data().status,
             changeStatus: false,
+            show: true,
             createdAt: doc.data().createdAt,
             updateAt: doc.data().updateAt,
             timeDuration: getTimeDuration(doc.data().createdAt),
