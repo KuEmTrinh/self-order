@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { db } from "../../../../app/firebase";
 import { firebase } from "../../../../app/firebase";
 import Modal from "../../../main/component/menu/Modal";
+import Zoom from "@mui/material/Zoom";
 export default function OrderItem({ order, userInfo, deleteItem }) {
   const [deleteToggle, setDeleteToggle] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState("");
@@ -53,52 +54,60 @@ export default function OrderItem({ order, userInfo, deleteItem }) {
           return (
             <div key={el.id}>
               {el.status == 1 && deleteItem == false ? (
-                <div
-                  className="orderItem normalBorder"
-                  key={index}
-                  onClick={() => {
-                    changeStatus(el.id);
-                  }}
-                >
-                  <p className="tableName">{el.tableName}</p>
-                  <div className="wrapFlex">
-                    <p className="foodName">{el.vietnamese}</p>
-                    <p
-                      className={
-                        el.count > 1
-                          ? "foodCount foodCountSpecial"
-                          : "foodCount"
-                      }
+                <>
+                  <Zoom in={true}>
+                    <div
+                      className="orderItem normalBorder"
+                      key={index}
+                      onClick={() => {
+                        changeStatus(el.id);
+                      }}
                     >
-                      {el.count}
-                    </p>
-                  </div>
-                </div>
+                      <p className="tableName">{el.tableName}</p>
+                      <div className="wrapFlex">
+                        <p className="foodName">{el.vietnamese}</p>
+                        <p
+                          className={
+                            el.count > 1
+                              ? "foodCount foodCountSpecial"
+                              : "foodCount"
+                          }
+                        >
+                          {el.count}
+                        </p>
+                      </div>
+                    </div>
+                  </Zoom>
+                </>
               ) : (
                 ""
               )}
               {el.status == 1 && deleteItem == true ? (
-                <div
-                  className="orderItem normalBorder warningBorder warningBackground"
-                  key={index}
-                  onClick={() => {
-                    openDeleteToggle(el.id);
-                  }}
-                >
-                  <p className="tableName">{el.tableName}</p>
-                  <div className="wrapFlex">
-                    <p className="foodName">{el.vietnamese}</p>
-                    <p
-                      className={
-                        el.count > 1
-                          ? "foodCount foodCountSpecial"
-                          : "foodCount"
-                      }
+                <>
+                  <Zoom in={true}>
+                    <div
+                      className="orderItem normalBorder warningBorder warningBackground"
+                      key={index}
+                      onClick={() => {
+                        openDeleteToggle(el.id);
+                      }}
                     >
-                      {el.count}
-                    </p>
-                  </div>
-                </div>
+                      <p className="tableName">{el.tableName}</p>
+                      <div className="wrapFlex">
+                        <p className="foodName">{el.vietnamese}</p>
+                        <p
+                          className={
+                            el.count > 1
+                              ? "foodCount foodCountSpecial"
+                              : "foodCount"
+                          }
+                        >
+                          {el.count}
+                        </p>
+                      </div>
+                    </div>
+                  </Zoom>
+                </>
               ) : (
                 ""
               )}
