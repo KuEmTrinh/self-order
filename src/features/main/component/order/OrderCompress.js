@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-
+import Grow from "@mui/material/Grow";
 export default function OrderCompress({ order }) {
   //useState
   const [orderCompressList, setOrderCompressList] = useState("");
+  const [oldIndex, setOldIndex] = useState(0);
   //useEffect
   useEffect(() => {
     setOrderCompressList(order);
@@ -11,31 +12,141 @@ export default function OrderCompress({ order }) {
     getOrderCompress(order);
   }, [order]);
   //Function
+  const showChilrenItem = (index) => {
+    const showArray = [...orderCompressList];
+    showArray[oldIndex].show = false;
+    showArray[index].show = !showArray[index].show;
+    if (index == oldIndex) {
+      if (showArray[oldIndex].show == true) {
+        showArray[oldIndex].show = false;
+      } else {
+        showArray[oldIndex].show = true;
+      }
+    }
+    setOrderCompressList([...showArray]);
+    setOldIndex(index);
+  };
   const getOrderCompress = (order) => {
     const compressedOrderList = [];
     let cloneOrderList = JSON.parse(JSON.stringify(order));
     for (let i = 0; i < cloneOrderList.length; i++) {
       let childrenCompressArray = [];
+      childrenCompressArray.show = false;
+      childrenCompressArray.count = 0;
+      childrenCompressArray.completeCount = 0;
       let compareFlag = cloneOrderList[i];
       childrenCompressArray.push(compareFlag);
+      childrenCompressArray.count += compareFlag.count;
+      childrenCompressArray.vietnamese = compareFlag.vietnamese;
+      if (compareFlag.status == 2) {
+        childrenCompressArray.completeCount += compareFlag.count;
+      }
       cloneOrderList.splice(i, 1);
-      console.log("---");
-      console.log("flag");
-      console.log(compareFlag.foodId);
-      console.log("end flag");
       for (let j = 0; j < cloneOrderList.length; j++) {
         let compareItem = cloneOrderList[j];
-        console.log(compareItem.foodId);
         if (compareItem.foodId == compareFlag.foodId) {
-          // console.log("trung lap");
+          childrenCompressArray.push(compareItem);
+          childrenCompressArray.count += compareItem.count;
+          if (compareItem.status == 2) {
+            childrenCompressArray.completeCount += compareItem.count;
+          }
           cloneOrderList.splice(j, 1);
           j -= 1;
         }
       }
-      console.log("---");
+      compressedOrderList.push(childrenCompressArray);
       i -= 1;
     }
-    // console.log(compressedOrderList);
+    setOrderCompressList(compressedOrderList);
+    console.log(compressedOrderList);
   };
-  return <div className="orderList">OrderCompress</div>;
+  return (
+    <div className="orderList">
+      {orderCompressList ? (
+        <>
+          {orderCompressList.map((el, index) => {
+            return (
+              <>
+                {el.length == 1 ? (
+                  <div className="orderItem normalBorder">
+                    <p className="tableName">{el[0].tableName}</p>
+                    <div className="wrapFlex">
+                      <p className="foodName">{el[0].vietnamese}</p>
+                      <p
+                        className={
+                          el.count > 1
+                            ? "foodCount foodCountSpecial"
+                            : "foodCount"
+                        }
+                      >
+                        {el.count}
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="compressOrderList">
+                    {el.show ? (
+                      <>
+                        <div
+                          className="compressTitle normalBorder"
+                          onClick={() => {
+                            showChilrenItem(index);
+                          }}
+                        >
+                          {el.vietnamese} {el.completeCount}/{el.count}
+                        </div>
+                        {/* Conditionally applies the timeout prop to change the entry speed. */}
+                        <div className="compressBox">
+                          {el.map((compressEl, index) => {
+                            return (
+                              <Grow
+                                in={el.show}
+                                style={{ transformOrigin: "0 0 0" }}
+                                {...(el.show ? { timeout: index * 300 } : {})}
+                              >
+                                <div className="orderItem normalBorder">
+                                  <p className="tableName">
+                                    {compressEl.tableName}
+                                  </p>
+                                  <div className="wrapFlex">
+                                    <p className="foodName">
+                                      {compressEl.vietnamese}
+                                    </p>
+                                    <p
+                                      className={
+                                        compressEl.count > 1
+                                          ? "foodCount foodCountSpecial"
+                                          : "foodCount"
+                                      }
+                                    >
+                                      {compressEl.count}
+                                    </p>
+                                  </div>
+                                </div>
+                              </Grow>
+                            );
+                          })}
+                        </div>
+                      </>
+                    ) : (
+                      <div
+                        className="compressTitle normalBorder"
+                        onClick={() => {
+                          showChilrenItem(index);
+                        }}
+                      >
+                        {el.vietnamese} {el.completeCount}/{el.count}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </>
+            );
+          })}
+        </>
+      ) : (
+        ""
+      )}
+    </div>
+  );
 }
