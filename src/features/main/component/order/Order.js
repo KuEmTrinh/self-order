@@ -4,7 +4,9 @@ import { useSelector } from "react-redux";
 import OrderItem from "./OrderItem";
 import OrderComplete from "./OrderComplete";
 import OrderSetting from "./OrderSetting";
+import OrderCompress from "./OrderCompress";
 import DeleteIcon from "@mui/icons-material/Delete";
+import CompressIcon from "@mui/icons-material/Compress";
 import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
 import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
 import "./Order.css";
@@ -60,6 +62,7 @@ export default function Order() {
   const [deleteItem, setDeleteItem] = useState(false);
   const [completeToggle, setCompleteToggle] = useState(false);
   const [settingToggle, setSettingToggle] = useState(false);
+  const [compressToggle, setCompressToggle] = useState(false);
   const deleteToggle = () => {
     setDeleteItem(!deleteItem);
   };
@@ -75,6 +78,9 @@ export default function Order() {
   const closeSettingToggle = () => {
     setSettingToggle(false);
   };
+  const openCompressToggle = () => {
+    setCompressToggle(!compressToggle);
+  };
   useEffect(() => {
     const query = db
       .collection("user")
@@ -86,6 +92,7 @@ export default function Order() {
         querySnapshot.docs.map((doc) => {
           order.push({
             id: doc.id,
+            foodId: doc.data().foodId,
             vietnamese: doc.data().vietnamese,
             tableName: doc.data().tableName,
             count: doc.data().count,
@@ -130,6 +137,12 @@ export default function Order() {
                   color={settingToggle ? "primary" : "action"}
                 ></SettingsSuggestIcon>
               </div>
+              <div className="orderIconItem">
+                <CompressIcon
+                  onClick={openCompressToggle}
+                  color={compressToggle ? "primary" : "action"}
+                ></CompressIcon>
+              </div>
             </div>
           </div>
           <OrderComplete
@@ -139,17 +152,21 @@ export default function Order() {
             completeToggle={completeToggle}
             closeCompleteToggle={closeCompleteToggle}
           ></OrderComplete>
-          <OrderItem
-            userInfo={userInfo}
-            deleteItem={deleteItem}
-            order={order}
-          />
           <OrderSetting
             settingToggle={settingToggle}
             closeSettingToggle={closeSettingToggle}
             order={order}
             userId={userInfo.uid}
           ></OrderSetting>
+          {compressToggle ? (
+            <OrderCompress order={order}></OrderCompress>
+          ) : (
+            <OrderItem
+              userInfo={userInfo}
+              deleteItem={deleteItem}
+              order={order}
+            />
+          )}
         </>
       ) : (
         ""
