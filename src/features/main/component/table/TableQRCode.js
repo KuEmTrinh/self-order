@@ -11,7 +11,7 @@ export default function TableQRCode(props) {
     content: () => componentRef.current,
   });
   useEffect(() => {
-    setQrLink("https://selforder-39140.web.app/table/" + tableId + "/" + tableCode);
+    setQrLink("https://taporder.vercel.app/table/" + tableId + "/" + tableCode);
   }, []);
   const RenderComponent = React.forwardRef((props, ref) => {
     return (

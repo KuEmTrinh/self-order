@@ -158,4 +158,19 @@
     margin-right: 0.8rem;
     margin-bottom: 0.7rem;
     align-items: center;
+    justify-content: space-between;
+}
+
+.compressInfoBox{
+    display: flex;
+}
+.compressFoodVietnames{
+    margin-right: 1rem;
+}
+.compressTotalCount{
+    background-color: #939393;
+    color: #fff;
+    padding: 0.3rem;
+    border-radius: 3px;
+    margin-left: 3px;
 }

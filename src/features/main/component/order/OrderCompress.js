@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import Grow from "@mui/material/Grow";
 export default function OrderCompress({ order }) {
   //useState
   const [orderCompressList, setOrderCompressList] = useState("");
-  const [oldIndex, setOldIndex] = useState(0);
   //useEffect
   useEffect(() => {
     setOrderCompressList(order);
@@ -14,17 +15,8 @@ export default function OrderCompress({ order }) {
   //Function
   const showChilrenItem = (index) => {
     const showArray = [...orderCompressList];
-    showArray[oldIndex].show = false;
     showArray[index].show = !showArray[index].show;
-    if (index == oldIndex) {
-      if (showArray[oldIndex].show == true) {
-        showArray[oldIndex].show = false;
-      } else {
-        showArray[oldIndex].show = true;
-      }
-    }
     setOrderCompressList([...showArray]);
-    setOldIndex(index);
   };
   const getOrderCompress = (order) => {
     const compressedOrderList = [];
@@ -93,7 +85,13 @@ export default function OrderCompress({ order }) {
                             showChilrenItem(index);
                           }}
                         >
-                          {el.vietnamese} {el.completeCount}/{el.count}
+                          <div className="compressInfoBox">
+                            <p className="compressFoodVietnames">
+                              {el.vietnamese}{" "}
+                            </p>
+                            <p className="compressTotalCount">{el.count}</p>
+                          </div>
+                          <ArrowDropUpIcon></ArrowDropUpIcon>
                         </div>
                         {/* Conditionally applies the timeout prop to change the entry speed. */}
                         <div className="compressBox">
@@ -135,7 +133,13 @@ export default function OrderCompress({ order }) {
                           showChilrenItem(index);
                         }}
                       >
-                        {el.vietnamese} {el.completeCount}/{el.count}
+                        <div className="compressInfoBox">
+                          <p className="compressFoodVietnames">
+                            {el.vietnamese}{" "}
+                          </p>
+                          <p className="compressTotalCount">{el.count}</p>
+                        </div>
+                        <ArrowDropDownIcon></ArrowDropDownIcon>
                       </div>
                     )}
                   </div>
