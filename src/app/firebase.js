@@ -11,7 +11,7 @@ import { getStorage } from "firebase/storage";
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAs_uU4Sz8GdYgq_TJq1boFCn1MeSmeYEU",
-  authDomain: "taporder.vercel.app",
+  authDomain: "selforder-39140.firebaseapp.com",
   projectId: "selforder-39140",
   storageBucket: "selforder-39140.appspot.com",
   messagingSenderId: "1074527787113",
