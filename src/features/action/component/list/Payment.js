@@ -36,6 +36,7 @@ export default function Payment({
           });
         });
       setPaymentData(data);
+      setPaymentMethod([data[0]]);
       return query;
     };
     fetchData();

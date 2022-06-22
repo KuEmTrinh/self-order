@@ -1,6 +1,11 @@
 .bill{
     height: 80vh;
 }
+.billBox{
+    overflow-y: auto;
+    max-height: 65vh;
+    padding: 0.3rem;
+}
 .totalBox{
     display: flex;
     width: 100%;
