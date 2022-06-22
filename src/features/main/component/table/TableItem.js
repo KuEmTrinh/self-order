@@ -1,6 +1,16 @@
 import React, { useState } from "react";
 import Modal from "../menu/Modal";
 import TableQRCode from "./TableQRCode";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import QrCodeIcon from "@mui/icons-material/QrCode";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 export default function TableItem({ tables }) {
   const [openModal, setOpenModal] = useState(false);
   const [tableIndex, setTableIndex] = useState("");
@@ -19,20 +29,70 @@ export default function TableItem({ tables }) {
         <TableQRCode table={JSON.stringify(tables[tableIndex])}></TableQRCode>
       </Modal>
       <p className="componentTitle categoryList">Danh Sách Bàn</p>
-      <div className="categories">
-        {tables.map((element, index) => {
-          return (
-            <span
-              className="categoryItem"
-              key={element.id}
-              onClick={() => {
-                printQRCode(index);
-              }}
-            >
-              {element.name}
-            </span>
-          );
-        })}
+      <div className="billBox">
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>
+                  <p className="tableTitle">Index</p>
+                </TableCell>
+                <TableCell align="right">
+                  <p className="tableTitle">Tên bàn</p>
+                </TableCell>
+                <TableCell align="right">
+                  <p className="tableTitle">Mã Qr</p>
+                </TableCell>
+                <TableCell align="right">
+                  <p className="tableTitle">Xóa</p>
+                </TableCell>
+                <TableCell align="right">
+                  <p className="tableTitle">Sửa</p>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {tables ? (
+                <>
+                  {tables.map((row, index) => (
+                    <TableRow
+                      key={row.id}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {index}
+                      </TableCell>
+                      <TableCell align="right">{row.name}</TableCell>
+                      <TableCell align="right">
+                        <div
+                          className="categoryIcon tableQrCodeIcon"
+                          key={row.id}
+                          onClick={() => {
+                            printQRCode(index);
+                          }}
+                        >
+                          <QrCodeIcon></QrCodeIcon>
+                        </div>
+                      </TableCell>
+                      <TableCell align="right">
+                        <div className="categoryIcon categoryDeleteIcon">
+                          <DeleteIcon />
+                        </div>
+                      </TableCell>
+                      <TableCell align="right">
+                        <div className="categoryIcon categoryDeleteIcon">
+                          <EditIcon />
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </>
+              ) : (
+                ""
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </div>
     </>
   );
