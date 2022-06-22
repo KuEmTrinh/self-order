@@ -9,7 +9,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import AddIcon from "@mui/icons-material/Add";
+import ListAltIcon from "@mui/icons-material/ListAlt";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 export default function CategoryList({ categoryList }) {
@@ -96,7 +96,7 @@ export default function CategoryList({ categoryList }) {
                   <p className="tableTitle">Tên danh mục</p>
                 </TableCell>
                 <TableCell align="right">
-                  <p className="tableTitle">Thêm</p>
+                  <p className="tableTitle">Danh sách món</p>
                 </TableCell>
                 <TableCell align="right">
                   <p className="tableTitle">Xóa</p>
@@ -120,8 +120,7 @@ export default function CategoryList({ categoryList }) {
                       <TableCell align="right">{row.name}</TableCell>
                       <TableCell align="right">
                         <div className="categoryIcon categoryAddIcon">
-                          <AddIcon
-                            color="success"
+                          <ListAltIcon
                             key={row.id}
                             onClick={() => {
                               navigate(`/menu/${row.id}/${row.name}`);

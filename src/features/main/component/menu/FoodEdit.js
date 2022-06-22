@@ -40,6 +40,14 @@ export default function FoodEdit(props) {
       <div className="foodImage">
         <img src={editFood.imgUrl} />
       </div>
+      <div className="inputBox flex align-center">
+        <input
+          type="file"
+          // onChange={handleChange}
+          accept=""
+          className="selectImageButton"
+        />
+      </div>
       <div className="foodContent w-100">
         <div className="foodDetail flex flex-column">
           <input
@@ -58,7 +66,7 @@ export default function FoodEdit(props) {
             value={foodPrice}
           />
         </div>
-        <button className="foodButton" onClick={editThisFood}>
+        <button className="foodEditButton" onClick={editThisFood}>
           Sửa
         </button>
       </div>

@@ -24,7 +24,7 @@ export default function NavLink() {
             setActiveLink("/");
           }}
         >
-          Order
+          Bảng món
         </div>
       </Link>
       <Link to="/menu" className="navlink">
@@ -36,7 +36,7 @@ export default function NavLink() {
             setActiveLink("menu");
           }}
         >
-          Menu
+          Thực đơn
         </div>
       </Link>
       <Link to="/table" className="navlink">
@@ -48,7 +48,7 @@ export default function NavLink() {
             setActiveLink("table");
           }}
         >
-          Table
+          Bàn
         </div>
       </Link>
       <Link to="/bill" className="navlink">
@@ -60,7 +60,7 @@ export default function NavLink() {
             setActiveLink("bill");
           }}
         >
-          Bill
+          Hoá đơn
         </div>
       </Link>
       <Link to="/method" className="navlink">
@@ -72,7 +72,7 @@ export default function NavLink() {
             setActiveLink("method");
           }}
         >
-          Payment
+          Thanh toán
         </div>
       </Link>
       <Link to="/printer" className="navlink">
@@ -84,7 +84,7 @@ export default function NavLink() {
             setActiveLink("printer");
           }}
         >
-          Printer
+          Máy in
         </div>
       </Link>
       <div className="logout">
