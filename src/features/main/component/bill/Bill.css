@@ -2,9 +2,11 @@
     height: 80vh;
 }
 .billBox{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     overflow-y: auto;
-    max-height: 65vh;
-    padding: 0.3rem;
+    max-height: 55vh;
+    padding: 0.2rem;
 }
 .totalBox{
     display: flex;

@@ -8,7 +8,10 @@ export default function TableList() {
   const uid = userInfomation.uid;
   const [tableListData, setTableListData] = useState("");
   useEffect(() => {
-    const query = db.collection("table").where("uid", "==", uid);
+    const query = db
+      .collection("table")
+      .where("uid", "==", uid)
+      .orderBy("createdAt");
     const observer = query.onSnapshot((querySnapshot) => {
       const data = [];
       querySnapshot.docs.map((doc) => {

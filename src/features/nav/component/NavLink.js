@@ -24,7 +24,7 @@ export default function NavLink() {
             setActiveLink("/");
           }}
         >
-          Bảng món
+          Order
         </div>
       </Link>
       <Link to="/menu" className="navlink">

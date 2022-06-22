@@ -9,7 +9,10 @@ export default function Categories() {
   const uid = userInfomation.uid;
   const [categoryList, setCategoryList] = useState("");
   useEffect(() => {
-    const query = db.collection("category").where("uid", "==", uid);
+    const query = db
+      .collection("category")
+      .where("uid", "==", uid)
+      .orderBy("createdAt");
     const observer = query.onSnapshot((querySnapshot) => {
       const data = [];
       querySnapshot.docs.map((doc) => {
