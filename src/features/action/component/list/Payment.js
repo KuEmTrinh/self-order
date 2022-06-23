@@ -41,6 +41,12 @@ export default function Payment({
     };
     fetchData();
   }, []);
+  const changeTablePaymentStatus = (tableId) => {
+    const query = db.collection("table").doc(tableId);
+    query.update({
+      paymentStatus: true,
+    });
+  };
   const paymentConfirm = () => {
     console.log("confirm");
     const query = db
@@ -60,6 +66,7 @@ export default function Payment({
         receipt: String(receiptMethod),
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       });
+    changeTablePaymentStatus(tableId);
     resetList();
     return query;
   };

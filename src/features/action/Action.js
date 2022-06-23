@@ -26,6 +26,7 @@ export default function Action() {
           tableInfo={tableInfo}
           connectCode={params?.code}
           tableId={params?.id}
+          paymentStatus={tableInfo.paymentStatus}
         ></Main>
       ) : (
         ""

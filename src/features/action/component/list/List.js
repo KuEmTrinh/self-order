@@ -11,7 +11,7 @@ import { pink } from "@mui/material/colors";
 import Modal from "../../../main/component/menu/Modal";
 import Payment from "./Payment";
 import ChangeHistory from "./ChangeHistory";
-export default function List({ userId, tableId, tableInfo }) {
+export default function List({ userId, tableId, tableInfo, paymentStatus }) {
   const [listData, setListData] = useState("");
   const [totalCount, setTotalCount] = useState(0);
   const [completeCount, setCompleteCount] = useState(0);
@@ -199,9 +199,15 @@ export default function List({ userId, tableId, tableInfo }) {
         <div className="listTotal">
           <p>Tổng:{priceTotal}円</p>
         </div>
-        <div className="listPaymentButton" onClick={openPaymentModal}>
-          <p>Thanh toán</p>
-        </div>
+        {paymentStatus ? (
+          <div className="listPaymentButtonDisable">
+            <p>Thanh toán</p>
+          </div>
+        ) : (
+          <div className="listPaymentButton" onClick={openPaymentModal}>
+            <p>Thanh toán</p>
+          </div>
+        )}
       </div>
       <div className="listTotalDetail">
         <div className="listTotalDetailItem">

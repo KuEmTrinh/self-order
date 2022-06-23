@@ -4,7 +4,13 @@ import { useSelector } from "react-redux";
 import Cart from "./cart/Cart";
 import List from "./list/List";
 import Error from "./Error";
-export default function Main({ userId, tableInfo, connectCode, tableId }) {
+export default function Main({
+  userId,
+  tableInfo,
+  connectCode,
+  tableId,
+  paymentStatus,
+}) {
   const componentNav = useSelector((state) => state.navigation.data);
   const tableCode = tableInfo.code;
   const code = connectCode;
@@ -23,7 +29,11 @@ export default function Main({ userId, tableInfo, connectCode, tableId }) {
     <>
       {renderCheck ? (
         <div>
-          {componentNav === "List" ? <Food userId={userId} tableId={tableId}></Food> : ""}
+          {componentNav === "List" ? (
+            <Food userId={userId} tableId={tableId} paymentStatus={paymentStatus}></Food>
+          ) : (
+            ""
+          )}
           {componentNav === "Dashboard" ? (
             <Cart
               userId={userId}
@@ -38,13 +48,14 @@ export default function Main({ userId, tableInfo, connectCode, tableId }) {
               userId={userId}
               tableId={tableId}
               tableInfo={tableInfo}
+              paymentStatus={paymentStatus}
             ></List>
           ) : (
             ""
           )}
         </div>
       ) : (
-        <Error/>
+        <Error />
       )}
     </>
   );

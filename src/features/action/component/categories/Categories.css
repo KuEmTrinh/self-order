@@ -26,3 +26,16 @@
     z-index: 300;
     background-color: #F6F6F6;
 }
+.paymentTrue{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 100%;
+    text-align: center;
+    background-color: #fff;
+    z-index: 300;
+    font-weight: bold;
+    font-size: 0.9rem;
+    padding: 1rem;
+}

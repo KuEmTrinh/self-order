@@ -15,6 +15,7 @@ export default function NewTable() {
         name: inputValue,
         uid: userInfomation.uid,
         code: getRandomInt(10000),
+        paymentStatus: false,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       });
       setInputValue("");

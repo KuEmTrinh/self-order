@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Categories.css";
 import FoodList from "../food/FoodList";
 import Search from "./Search";
-export default function Categories({ data, tableId, userId }) {
+export default function Categories({ data, tableId, userId, paymentStatus }) {
   useEffect(() => {
     setCategoryId(data[0].id);
   }, []);
@@ -38,7 +38,7 @@ export default function Categories({ data, tableId, userId }) {
           userId={userId}
         ></Search>
       </div>
-      {categoryId ? <FoodList categoryId={categoryId}></FoodList> : ""}
+      {categoryId && paymentStatus == false ? <FoodList categoryId={categoryId} paymentStatus={paymentStatus}></FoodList> : <p className="paymentTrue">Đang xác nhận thanh toán</p>}
     </>
   );
 }
