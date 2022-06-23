@@ -14,6 +14,11 @@ import EditIcon from "@mui/icons-material/Edit";
 export default function TableItem({ tables }) {
   const [openModal, setOpenModal] = useState(false);
   const [tableIndex, setTableIndex] = useState("");
+  const [deleteTableId, setDeleteTableId] = useState("");
+  const [deleteTableToggle, setDeleteTableToggle] = useState(false);
+  const [editTableId, setEditTableId] = useState("");
+  const [editTableNewName, setEditTableNewName] = useState("");
+  const [editTableToggle, setEditTableToggle] = useState(false);
   const printQRCode = (index) => {
     setTableIndex(index);
     setOpenModal(!openModal);
@@ -27,6 +32,14 @@ export default function TableItem({ tables }) {
         }}
       >
         <TableQRCode table={JSON.stringify(tables[tableIndex])}></TableQRCode>
+      </Modal>
+      <Modal
+        show={deleteTableToggle}
+        onClose={() => {
+          setDeleteTableToggle(!deleteTableToggle);
+        }}
+      >
+        Delete Confirm
       </Modal>
       <p className="componentTitle categoryList">Danh Sách Bàn</p>
       <div className="billBox">
@@ -75,7 +88,7 @@ export default function TableItem({ tables }) {
                         </div>
                       </TableCell>
                       <TableCell align="right">
-                        <div className="categoryIcon categoryDeleteIcon">
+                        <div className="categoryIcon categoryDeleteIcon" onClick={() => {}}>
                           <DeleteIcon />
                         </div>
                       </TableCell>
