@@ -8,8 +8,7 @@
     padding: 1rem;
 }
 .listInfomation{
-    height: calc(100vh - 6rem);
-    overflow-y: auto;
+    padding-bottom: 5rem;
 }
 .listTotal{
     width: calc(75% - 0.7rem);
