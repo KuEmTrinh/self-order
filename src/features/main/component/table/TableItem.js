@@ -11,18 +11,32 @@ import Paper from "@mui/material/Paper";
 import QrCodeIcon from "@mui/icons-material/QrCode";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import { db } from "../../../../app/firebase";
 export default function TableItem({ tables }) {
+  //useState
   const [openModal, setOpenModal] = useState(false);
   const [tableIndex, setTableIndex] = useState("");
   const [deleteTableId, setDeleteTableId] = useState("");
   const [deleteTableToggle, setDeleteTableToggle] = useState(false);
+  const [deleteTableName, setDeleteTableName] = useState("");
   const [editTableId, setEditTableId] = useState("");
   const [editTableNewName, setEditTableNewName] = useState("");
   const [editTableToggle, setEditTableToggle] = useState(false);
+  //useEffect
+
+  //Function
+  //Function qr code print
   const printQRCode = (index) => {
     setTableIndex(index);
     setOpenModal(!openModal);
   };
+  //Function table delete confirm
+  const deleteConfirm = () => {
+    const query = db.collection("table").doc(deleteTableId);
+    query.delete();
+    setDeleteTableToggle(!deleteTableToggle);
+  };
+  //Function edit
   return (
     <>
       <Modal
@@ -39,7 +53,12 @@ export default function TableItem({ tables }) {
           setDeleteTableToggle(!deleteTableToggle);
         }}
       >
-        Delete Confirm
+        <p className="componentTitle">Xóa {deleteTableName} ?</p>
+        <div className="cartToggleConfirm">
+          <button className="deleteConfirmButton" onClick={deleteConfirm}>
+            Xác nhận
+          </button>
+        </div>
       </Modal>
       <p className="componentTitle categoryList">Danh Sách Bàn</p>
       <div className="billBox">
@@ -88,7 +107,14 @@ export default function TableItem({ tables }) {
                         </div>
                       </TableCell>
                       <TableCell align="right">
-                        <div className="categoryIcon categoryDeleteIcon" onClick={() => {}}>
+                        <div
+                          className="categoryIcon categoryDeleteIcon"
+                          onClick={() => {
+                            setDeleteTableId(row.id);
+                            setDeleteTableToggle(!deleteTableToggle);
+                            setDeleteTableName(row.name);
+                          }}
+                        >
                           <DeleteIcon />
                         </div>
                       </TableCell>
