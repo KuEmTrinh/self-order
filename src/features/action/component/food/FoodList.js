@@ -108,7 +108,7 @@ export default function FoodList({ categoryId }) {
           ) : (
             <>
               {searchingStatus ? (
-                <p className="searchResultData">Không có kết quả phù hợp</p>
+                  <p className="searchResultData">Không có kết quả phù hợp</p>
               ) : (
                 ""
               )}

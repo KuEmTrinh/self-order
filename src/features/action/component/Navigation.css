@@ -8,6 +8,7 @@
     background-color: #fff;
     border-radius: 10px 10px 0 0;
     align-items: center;
+    z-index: 300;
 }
 .iconList{
     width: 100%;

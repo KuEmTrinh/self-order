@@ -10,32 +10,34 @@ export default function Categories({ data, tableId, userId }) {
   const [indexCategory, setIndexCategory] = useState(0);
   return (
     <>
-      <div className="categoryBox">
-        {data.map((element, index) => {
-          return (
-            <div
-              className={
-                indexCategory == index
-                  ? "categoryLabel active"
-                  : "categoryLabel"
-              }
-              key={element.id}
-              onClick={() => {
-                setCategoryId(element.id);
-                setIndexCategory(index);
-              }}
-            >
-              {element.name}
-            </div>
-          );
-        })}
+      <div className="wrapTopBox">
+        <div className="categoryBox">
+          {data.map((element, index) => {
+            return (
+              <div
+                className={
+                  indexCategory == index
+                    ? "categoryLabel active"
+                    : "categoryLabel"
+                }
+                key={element.id}
+                onClick={() => {
+                  setCategoryId(element.id);
+                  setIndexCategory(index);
+                }}
+              >
+                {element.name}
+              </div>
+            );
+          })}
+        </div>
+        <Search
+          categoryList={data}
+          categoryId={categoryId}
+          tableId={tableId}
+          userId={userId}
+        ></Search>
       </div>
-      <Search
-        categoryList={data}
-        categoryId={categoryId}
-        tableId={tableId}
-        userId={userId}
-      ></Search>
       {categoryId ? <FoodList categoryId={categoryId}></FoodList> : ""}
     </>
   );

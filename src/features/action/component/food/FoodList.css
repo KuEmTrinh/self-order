@@ -2,8 +2,7 @@
     display: flex;
     padding: 1rem;
     flex-wrap: wrap;
-    height: calc(100vh - 15rem);
-    overflow-y: auto;
+    margin-top: 7rem;
     justify-content: space-between;
     align-content: flex-start;
 }
@@ -99,4 +98,13 @@ img{
     font-size: 0.8rem;
     margin: 10px 15px 0 15px;
     color: #686868;
+}
+.searchResultData{
+    position: fixed;
+    top: 7rem;
+    z-index: 400;
+    background-color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    box-shadow: rgb(0 0 0 / 15%) 1.95px 1.95px 2.6px;
 }

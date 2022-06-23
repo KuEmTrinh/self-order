@@ -18,3 +18,9 @@
     background: linear-gradient(90deg, #3dd49d 0%, #3dd479 100%);
     color: white;
 }
+.wrapTopBox{
+    position: fixed;
+    width: 100%;
+    z-index: 300;
+    background-color: #F6F6F6;
+}
