@@ -2,7 +2,7 @@
     display: flex;
     padding: 1rem;
     flex-wrap: wrap;
-    height: calc(100vh - 15.5rem);
+    height: calc(100vh - 15rem);
     overflow-y: auto;
     justify-content: space-between;
     align-content: flex-start;

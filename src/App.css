@@ -37,3 +37,7 @@
     transform: translateY(0px);
   }
 }
+
+#root{
+  height: calc(100vh - 5rem);
+}
