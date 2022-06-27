@@ -1,3 +1,13 @@
 .qrcodePrintTitle{
     font-weight: bold;
 }
+.handleThis{
+    padding: 1rem;
+}
+.rowTableSize{
+    width: 100%;
+}
+.confirmButton{
+    background-color: #4CAF50;
+    color: #fff !important;
+}

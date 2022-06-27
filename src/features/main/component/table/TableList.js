@@ -9,7 +9,7 @@ export default function TableList() {
   const uid = userInfomation.uid;
   const [tableListData, setTableListData] = useState("");
   const dispatch = useDispatch();
-  useEffect(() => {
+  const getData = () => {
     const query = db
       .collection("table")
       .where("uid", "==", uid)
@@ -29,6 +29,9 @@ export default function TableList() {
       setTableListData(data);
     });
     return observer;
+  };
+  useEffect(() => {
+    getData();
   }, []);
   useEffect(() => {
     dispatch(setTableCurrentIndex(tableListData.length));

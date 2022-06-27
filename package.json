@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^14.2.0",
     "browser-image-compression": "^2.0.0",
     "firebase": "^9.8.1",
+    "pkg": "^5.7.0",
     "react": "^18.1.0",
     "react-animate-height": "^3.0.3",
     "react-animated-css": "^1.2.1",
