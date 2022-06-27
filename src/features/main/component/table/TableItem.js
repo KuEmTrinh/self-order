@@ -14,12 +14,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import { db } from "../../../../app/firebase";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 export default function TableItem({ tables }) {
-  useEffect(() => {
-    console.log("changed");
-    setTableData(tables);
-  }, [tables]);
-  const [tableData, setTableData] = useState(tables);
   //useState
+  const [tableData, setTableData] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [tableIndex, setTableIndex] = useState("");
   const [deleteTableId, setDeleteTableId] = useState("");
@@ -30,8 +26,10 @@ export default function TableItem({ tables }) {
   const [editTableToggle, setEditTableToggle] = useState(false);
   const [listChangeStatus, setListChangeStatus] = useState(false);
   //useEffect
-
-  //Function
+  useEffect(() => {
+    setTableData(tables);
+    renderDndList();
+  }, [tables]);
   //Function qr code print
   const printQRCode = (index) => {
     setTableIndex(index);
@@ -74,7 +72,87 @@ export default function TableItem({ tables }) {
       });
       return query;
     });
+    setListChangeStatus(false);
+    // window.location.reload(false);
   };
+  const renderDndList = () => {
+    return (
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <Droppable droppableId="table">
+          {(provided) => (
+            <TableBody {...provided.droppableProps} ref={provided.innerRef}>
+              {tableData.map((row, index) => {
+                return (
+                  <Draggable
+                    key={row.id}
+                    draggableId={row.id.toString()}
+                    index={index}
+                    className="rowTableSize"
+                  >
+                    {(provided) => (
+                      <TableRow
+                        key={row.id}
+                        sx={{
+                          "&:last-child td, &:last-child th": {
+                            border: 0,
+                          },
+                        }}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        ref={provided.innerRef}
+                      >
+                        <TableCell component="th" scope="row">
+                          {index}
+                        </TableCell>
+                        <TableCell align="right">{row.name}</TableCell>
+                        <TableCell align="right">
+                          <div
+                            className="categoryIcon tableQrCodeIcon"
+                            key={row.id}
+                            onClick={() => {
+                              printQRCode(index);
+                            }}
+                          >
+                            <QrCodeIcon></QrCodeIcon>
+                          </div>
+                        </TableCell>
+                        <TableCell align="right">
+                          <div
+                            className="categoryIcon categoryDeleteIcon"
+                            onClick={() => {
+                              setDeleteTableId(row.id);
+                              setDeleteTableToggle(!deleteTableToggle);
+                              setDeleteTableName(row.name);
+                            }}
+                          >
+                            <DeleteIcon />
+                          </div>
+                        </TableCell>
+                        <TableCell align="right">
+                          <div
+                            className="categoryIcon categoryDeleteIcon"
+                            onClick={() => {
+                              setEditTableId(row.id);
+                              setEditTableToggle(!editTableToggle);
+                              setEditTableNewName(row.name);
+                            }}
+                          >
+                            <EditIcon />
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </Draggable>
+                );
+              })}
+              {provided.placeholder}
+            </TableBody>
+          )}
+        </Droppable>
+      </DragDropContext>
+    );
+  };
+  //getData
   return (
     <>
       <Modal
@@ -133,85 +211,6 @@ export default function TableItem({ tables }) {
           ""
         )}
       </div>
-      {/* <div className="billBox">
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  <p className="tableTitle">Index</p>
-                </TableCell>
-                <TableCell align="right">
-                  <p className="tableTitle">Tên bàn</p>
-                </TableCell>
-                <TableCell align="right">
-                  <p className="tableTitle">Mã Qr</p>
-                </TableCell>
-                <TableCell align="right">
-                  <p className="tableTitle">Xóa</p>
-                </TableCell>
-                <TableCell align="right">
-                  <p className="tableTitle">Sửa</p>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {tables ? (
-                <>
-                  {tables.map((row, index) => (
-                    <TableRow
-                      key={row.id}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell component="th" scope="row">
-                        {index}
-                      </TableCell>
-                      <TableCell align="right">{row.name}</TableCell>
-                      <TableCell align="right">
-                        <div
-                          className="categoryIcon tableQrCodeIcon"
-                          key={row.id}
-                          onClick={() => {
-                            printQRCode(index);
-                          }}
-                        >
-                          <QrCodeIcon></QrCodeIcon>
-                        </div>
-                      </TableCell>
-                      <TableCell align="right">
-                        <div
-                          className="categoryIcon categoryDeleteIcon"
-                          onClick={() => {
-                            setDeleteTableId(row.id);
-                            setDeleteTableToggle(!deleteTableToggle);
-                            setDeleteTableName(row.name);
-                          }}
-                        >
-                          <DeleteIcon />
-                        </div>
-                      </TableCell>
-                      <TableCell align="right">
-                        <div
-                          className="categoryIcon categoryDeleteIcon"
-                          onClick={() => {
-                            setEditTableId(row.id);
-                            setEditTableToggle(!editTableToggle);
-                            setEditTableNewName(row.name);
-                          }}
-                        >
-                          <EditIcon />
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </>
-              ) : (
-                ""
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div> */}
       <div className="billBox">
         {tableData ? (
           <TableContainer component={Paper}>
@@ -219,7 +218,7 @@ export default function TableItem({ tables }) {
               <TableHead>
                 <TableRow>
                   <TableCell>
-                    <p className="tableTitle">Index</p>
+                    <p className="tableTitle">Id</p>
                   </TableCell>
                   <TableCell align="right">
                     <p className="tableTitle">Tên bàn</p>
@@ -235,82 +234,7 @@ export default function TableItem({ tables }) {
                   </TableCell>
                 </TableRow>
               </TableHead>
-              <DragDropContext onDragEnd={handleDragEnd}>
-                <Droppable droppableId="table">
-                  {(provided) => (
-                    <TableBody
-                      {...provided.droppableProps}
-                      ref={provided.innerRef}
-                    >
-                      {tableData.map((row, index) => {
-                        return (
-                          <Draggable
-                            key={row.id}
-                            draggableId={row.index.toString()}
-                            index={index}
-                            className="rowTableSize"
-                          >
-                            {(provided) => (
-                              <TableRow
-                                key={row.id}
-                                sx={{
-                                  "&:last-child td, &:last-child th": {
-                                    border: 0,
-                                  },
-                                }}
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-                                ref={provided.innerRef}
-                              >
-                                <TableCell component="th" scope="row">
-                                  {row.index}
-                                </TableCell>
-                                <TableCell align="right">{row.name}</TableCell>
-                                <TableCell align="right">
-                                  <div
-                                    className="categoryIcon tableQrCodeIcon"
-                                    key={row.id}
-                                    onClick={() => {
-                                      printQRCode(index);
-                                    }}
-                                  >
-                                    <QrCodeIcon></QrCodeIcon>
-                                  </div>
-                                </TableCell>
-                                <TableCell align="right">
-                                  <div
-                                    className="categoryIcon categoryDeleteIcon"
-                                    onClick={() => {
-                                      setDeleteTableId(row.id);
-                                      setDeleteTableToggle(!deleteTableToggle);
-                                      setDeleteTableName(row.name);
-                                    }}
-                                  >
-                                    <DeleteIcon />
-                                  </div>
-                                </TableCell>
-                                <TableCell align="right">
-                                  <div
-                                    className="categoryIcon categoryDeleteIcon"
-                                    onClick={() => {
-                                      setEditTableId(row.id);
-                                      setEditTableToggle(!editTableToggle);
-                                      setEditTableNewName(row.name);
-                                    }}
-                                  >
-                                    <EditIcon />
-                                  </div>
-                                </TableCell>
-                              </TableRow>
-                            )}
-                          </Draggable>
-                        );
-                      })}
-                      {provided.placeholder}
-                    </TableBody>
-                  )}
-                </Droppable>
-              </DragDropContext>
+              {renderDndList()}
             </Table>
           </TableContainer>
         ) : (

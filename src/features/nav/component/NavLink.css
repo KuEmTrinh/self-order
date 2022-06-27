@@ -22,8 +22,10 @@
     cursor: pointer;
 }
 .linkItemActive {
+    font-weight: bold;
     color: #fff;
-    transition: all 0.2s linear;
+    transition: all 0.3s linear;
     background-color: #424242;
     padding: 15px 0;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }

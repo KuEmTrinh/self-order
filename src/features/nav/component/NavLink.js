@@ -84,7 +84,7 @@ export default function NavLink() {
             setActiveLink("printer");
           }}
         >
-          Máy in
+          Thông tin
         </div>
       </Link>
       <div className="logout">

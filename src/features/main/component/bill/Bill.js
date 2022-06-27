@@ -49,6 +49,8 @@ export default function Bill() {
       .collection("user")
       .doc(uid)
       .collection("bill")
+      .orderBy("createdAt", "desc")
+      .limit(10)
       .onSnapshot((querySnapshot) => {
         const data = [];
         querySnapshot.docs.map((doc) => {
