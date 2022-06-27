@@ -12,6 +12,7 @@ import QrCodeIcon from "@mui/icons-material/QrCode";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { db } from "../../../../app/firebase";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
 export default function TableItem({ tables }) {
   //useState
   const [openModal, setOpenModal] = useState(false);
@@ -37,6 +38,16 @@ export default function TableItem({ tables }) {
     setDeleteTableToggle(!deleteTableToggle);
   };
   //Function edit
+  const editTableChange = (e) => {
+    setEditTableNewName(e.target.value);
+  };
+  const editConfirm = () => {
+    const query = db.collection("table").doc(editTableId);
+    query.update({
+      name: editTableNewName,
+    });
+    setEditTableToggle(!editTableToggle);
+  };
   return (
     <>
       <Modal
@@ -56,6 +67,26 @@ export default function TableItem({ tables }) {
         <p className="componentTitle">Xóa {deleteTableName} ?</p>
         <div className="cartToggleConfirm">
           <button className="deleteConfirmButton" onClick={deleteConfirm}>
+            Xác nhận
+          </button>
+        </div>
+      </Modal>
+      <Modal
+        show={editTableToggle}
+        onClose={() => {
+          setEditTableToggle(!editTableToggle);
+        }}
+      >
+        <p className="componentTitle">Sửa tên Bàn</p>
+        <div className="categoryEditInputBox">
+          <input
+            className="inputBoxEnter"
+            value={editTableNewName}
+            onChange={editTableChange}
+          />
+        </div>
+        <div className="cartToggleConfirm">
+          <button className="cartConfirmButton" onClick={editConfirm}>
             Xác nhận
           </button>
         </div>
@@ -119,7 +150,14 @@ export default function TableItem({ tables }) {
                         </div>
                       </TableCell>
                       <TableCell align="right">
-                        <div className="categoryIcon categoryDeleteIcon">
+                        <div
+                          className="categoryIcon categoryDeleteIcon"
+                          onClick={() => {
+                            setEditTableId(row.id);
+                            setEditTableToggle(!editTableToggle);
+                            setEditTableNewName(row.name);
+                          }}
+                        >
                           <EditIcon />
                         </div>
                       </TableCell>
@@ -133,6 +171,11 @@ export default function TableItem({ tables }) {
           </Table>
         </TableContainer>
       </div>
+      <DragDropContext>
+        <Droppable droppableId="characters">
+          {(provided) => <ul className="characters">123</ul>}
+        </Droppable>
+      </DragDropContext>
     </>
   );
 }

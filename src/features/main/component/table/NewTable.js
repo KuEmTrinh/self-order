@@ -1,17 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { db } from "../../../../app/firebase";
 import { firebase } from "../../../../app/firebase";
 export default function NewTable() {
+  const tableCurrentIndex = useSelector(
+    (state) => state.table.tableCurrentIndex
+  );
   const getRandomInt = (max) => {
     return Math.floor(Math.random() * max + 1);
   };
-
+  //useEffect
   const userInfomation = JSON.parse(useSelector((state) => state.login.data));
   const [inputValue, setInputValue] = useState("");
   const createTable = () => {
     if (inputValue.length > 0) {
       db.collection("table").add({
+        index: tableCurrentIndex,
         name: inputValue,
         uid: userInfomation.uid,
         code: getRandomInt(10000),

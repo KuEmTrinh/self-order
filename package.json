@@ -16,6 +16,7 @@
     "react": "^18.1.0",
     "react-animate-height": "^3.0.3",
     "react-animated-css": "^1.2.1",
+    "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^18.1.0",
     "react-image-file-resizer": "^0.4.8",
     "react-qr-code": "^2.0.7",

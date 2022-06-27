@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import QRCode from "react-qr-code";
 import { useReactToPrint } from "react-to-print";
+import "./Table.css"
 export default function TableQRCode(props) {
   const table = JSON.parse(props.table);
   const tableCode = table.code;
@@ -19,7 +20,7 @@ export default function TableQRCode(props) {
         <div className="qrCode">
           <QRCode value={props.qrLink} ref={componentRef} />
         </div>
-        <p className="componentTitle textCenter mt-1">{props.tableName}</p>
+        <p className="qrcodePrintTitle textCenter mt-1">{props.tableName}</p>
         <p className="textDescription">Quét mã để gọi món</p>
       </div>
     );
