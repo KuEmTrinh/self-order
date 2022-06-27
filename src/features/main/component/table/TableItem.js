@@ -74,7 +74,6 @@ export default function TableItem({ tables }) {
       });
       return query;
     });
-    window.location.reload(false);
   };
   return (
     <>
