@@ -23,21 +23,23 @@ export default function Payment({
   };
   useEffect(() => {
     const fetchData = async () => {
-      const data = [];
-      const query = await db
-        .collection("user")
-        .doc(userId)
-        .collection("method")
-        .orderBy("createdAt")
-        .get()
-        .then((snapshot) => {
-          snapshot.forEach((el) => {
-            data.push(el.data().name);
+      try {
+        const data = [];
+        const query = await db
+          .collection("user")
+          .doc(userId)
+          .collection("method")
+          .orderBy("createdAt")
+          .get()
+          .then((snapshot) => {
+            snapshot.forEach((el) => {
+              data.push(el.data().name);
+            });
           });
-        });
-      setPaymentData(data);
-      setPaymentMethod([data[0]]);
-      return query;
+        setPaymentData(data);
+        setPaymentMethod(data[0]);
+        return query;
+      } catch (error) {}
     };
     fetchData();
   }, []);
@@ -48,6 +50,9 @@ export default function Payment({
     });
   };
   const paymentConfirm = () => {
+    if (paymentMethod == "") {
+      setPaymentMethod(paymentMethod[0]);
+    }
     console.log("confirm");
     const query = db
       .collection("user")

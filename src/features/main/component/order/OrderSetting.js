@@ -97,7 +97,7 @@ export default function OrderSetting({
                   <tr className="orderSettingTableHeader">
                     <th>Bàn</th>
                     <th>Tên món</th>
-                    <th>SL</th>
+                    <th className="widthCountTable">SL</th>
                     <th>Giá</th>
                     <th>Tổng</th>
                     <th>T.Gian</th>
