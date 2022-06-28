@@ -18,6 +18,7 @@ export default function BillDetails({ onClose, bill, userId }) {
       .doc(tableId)
       .update({
         code: getRandomInt(10000),
+        paymentStatus: false,
       });
     return query;
   };
