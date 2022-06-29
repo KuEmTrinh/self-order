@@ -22,6 +22,7 @@ export default function CategoryList({ categoryList }) {
   const [editCategoryId, setEditCategoryId] = useState("");
   const [editCategoryNewName, setEditCategoryNewName] = useState("");
   const [editCategoryToggle, setEditCategoryToggle] = useState(false);
+  const [listChangeStatus, setListChangeStatus] = useState(false);
   //useEffect
   useEffect(() => {
     setCategoryData(categoryList);
@@ -60,6 +61,21 @@ export default function CategoryList({ categoryList }) {
     const [reorderData] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderData);
     setCategoryData(items);
+    setListChangeStatus(true);
+  };
+  const saveList = () => {
+    saveIndex(categoryData);
+  };
+  const saveIndex = (items) => {
+    items.map((el, index) => {
+      const query = db.collection("category").doc(el.id);
+      query.update({
+        index: index,
+      });
+      return query;
+    });
+    setListChangeStatus(false);
+    // window.location.reload(false);
   };
   return (
     <>
@@ -96,7 +112,21 @@ export default function CategoryList({ categoryList }) {
           </button>
         </div>
       </Modal>
-      <p className="componentTitle categoryList">Danh Mục</p>
+      <div className="orderBoxIcon">
+        <p className="componentTitle categoryList">Danh Sách Danh Mục</p>
+        {listChangeStatus ? (
+          <button
+            className="button confirmButton"
+            onClick={() => {
+              saveList();
+            }}
+          >
+            Lưu
+          </button>
+        ) : (
+          ""
+        )}
+      </div>
       {categoryData ? (
         <div className="billBox">
           <TableContainer component={Paper}>

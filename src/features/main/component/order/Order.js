@@ -159,7 +159,7 @@ export default function Order() {
             userId={userInfo.uid}
           ></OrderSetting>
           {compressToggle ? (
-            <OrderCompress order={order}></OrderCompress>
+            <OrderCompress order={order} userInfo={userInfo}></OrderCompress>
           ) : (
             <OrderItem
               userInfo={userInfo}

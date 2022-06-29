@@ -2,15 +2,23 @@ import React, { useState, useEffect } from "react";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import Grow from "@mui/material/Grow";
-export default function OrderCompress({ order }) {
+import { db } from "../../../../app/firebase";
+import { firebase } from "../../../../app/firebase";
+
+export default function OrderCompress({ order, userInfo }) {
   //useState
   const [orderCompressList, setOrderCompressList] = useState("");
   //useEffect
+  // useEffect(() => {
+  //   setOrderCompressList(order);
+  // }, []);
   useEffect(() => {
-    setOrderCompressList(order);
-  }, []);
-  useEffect(() => {
-    getOrderCompress(order);
+    const compressedOrderData = [...order];
+    const filterCompressedOrderData = compressedOrderData.filter(
+      (el) => el.status == 1
+    );
+    // console.log(filterCompressedOrderData);
+    getOrderCompress(filterCompressedOrderData);
   }, [order]);
   //Function
   const showChilrenItem = (index) => {
@@ -50,7 +58,20 @@ export default function OrderCompress({ order }) {
       i -= 1;
     }
     setOrderCompressList(compressedOrderList);
-    console.log(compressedOrderList);
+    // console.log(compressedOrderList);
+  };
+
+  const changeStatus = (id) => {
+    // console.log(id);
+    const query = db
+      .collection("user")
+      .doc(userInfo.uid)
+      .collection("order")
+      .doc(id)
+      .update({
+        status: 2,
+        updateAt: firebase.firestore.FieldValue.serverTimestamp(),
+      });
   };
   return (
     <div className="orderList">
@@ -60,7 +81,12 @@ export default function OrderCompress({ order }) {
             return (
               <>
                 {el.length == 1 ? (
-                  <div className="orderItem normalBorder">
+                  <div
+                    className="orderItem normalBorder"
+                    onClick={() => {
+                      changeStatus(el[0].id);
+                    }}
+                  >
                     <p className="tableName">{el[0].tableName}</p>
                     <div className="wrapFlex">
                       <p className="foodName">{el[0].vietnamese}</p>
@@ -102,7 +128,12 @@ export default function OrderCompress({ order }) {
                                 style={{ transformOrigin: "0 0 0" }}
                                 {...(el.show ? { timeout: index * 300 } : {})}
                               >
-                                <div className="orderItem normalBorder">
+                                <div
+                                  className="orderItem normalBorder"
+                                  onClick={() => {
+                                    changeStatus(compressEl.id);
+                                  }}
+                                >
                                   <p className="tableName">
                                     {compressEl.tableName}
                                   </p>

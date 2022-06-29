@@ -4,11 +4,16 @@ import { db } from "../../../../app/firebase";
 import { firebase } from "../../../../app/firebase";
 import { useSelector } from "react-redux";
 export default function NewCategory() {
+  const categoryCurrentIndex = useSelector(
+    (state) => state.category.categoryCurrentIndex
+  );
+  console.log(categoryCurrentIndex);
   const userInfomation = JSON.parse(useSelector((state) => state.login.data));
   const [inputValue, setInputValue] = useState("");
   const createCategory = () => {
     if (inputValue.length > 0) {
       db.collection("category").add({
+        index: categoryCurrentIndex,
         name: inputValue,
         uid: userInfomation.uid,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),

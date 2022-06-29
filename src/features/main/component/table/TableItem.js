@@ -205,7 +205,7 @@ export default function TableItem({ tables }) {
               saveList();
             }}
           >
-            Xác nhận
+            Lưu
           </button>
         ) : (
           ""
