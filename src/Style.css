@@ -14,7 +14,7 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .button-green{
-    background-color: #4CAF50;
+    background: linear-gradient(90deg, #3dd49d 0%, #3dd479 100%);
     color: #fff;
 }
 .flex{

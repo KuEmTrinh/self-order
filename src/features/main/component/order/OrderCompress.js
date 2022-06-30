@@ -8,10 +8,6 @@ import { firebase } from "../../../../app/firebase";
 export default function OrderCompress({ order, userInfo }) {
   //useState
   const [orderCompressList, setOrderCompressList] = useState("");
-  //useEffect
-  // useEffect(() => {
-  //   setOrderCompressList(order);
-  // }, []);
   useEffect(() => {
     const compressedOrderData = [...order];
     const filterCompressedOrderData = compressedOrderData.filter(
