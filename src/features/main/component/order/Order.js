@@ -9,6 +9,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CompressIcon from "@mui/icons-material/Compress";
 import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
 import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
+import ringer from "./notification.mp3";
+
 import "./Order.css";
 export default function Order() {
   //time duration function
@@ -33,6 +35,25 @@ export default function Order() {
       return hours + "h" + minutes + "p";
     }
   };
+
+  const diffForMin = (start, end) => {
+    start = start.split(":");
+    end = end.split(":");
+    var startDate = new Date(0, 0, 0, start[0], start[1], 0);
+    var endDate = new Date(0, 0, 0, end[0], end[1], 0);
+    var diff = endDate.getTime() - startDate.getTime();
+    var hours = Math.floor(diff / 1000 / 60 / 60);
+    diff -= hours * 1000 * 60 * 60;
+    var minutes = Math.floor(diff / 1000 / 60);
+    // If using time pickers with 24 hours format, add the below line get exact hours
+    if (hours < 0) hours = hours + 24;
+    if (minutes == 0) {
+      return null;
+    } else {
+      return hours * 60 + minutes;
+    }
+  };
+
   const toDateTime = (secs) => {
     var time = new Date(1970, 1, 0, 9);
     time.setSeconds(secs);
@@ -54,15 +75,19 @@ export default function Order() {
     let diffTime = diff(createdAtTime, currentTime);
     return diffTime;
   };
-
+  const playSound = () => {
+    // console.log("Play")
+    const audio = new Audio(ringer);
+    audio.play();
+  };
   //end time duration function
-
   const userInfo = JSON.parse(useSelector((state) => state.login.data));
   const [order, setOrder] = useState("");
   const [deleteItem, setDeleteItem] = useState(false);
   const [completeToggle, setCompleteToggle] = useState(false);
   const [settingToggle, setSettingToggle] = useState(false);
   const [compressToggle, setCompressToggle] = useState(false);
+  const [orderLength, setOrderLength] = useState();
   const deleteToggle = () => {
     setDeleteItem(!deleteItem);
   };
@@ -106,6 +131,7 @@ export default function Order() {
             createdAt: doc.data().createdAt,
             updateAt: doc.data().updateAt,
             timeDuration: getTimeDuration(doc.data().createdAt),
+            minDuration: 0,
           });
         });
         setOrder(order);
