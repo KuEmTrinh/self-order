@@ -30,7 +30,11 @@ export default function Main({
       {renderCheck ? (
         <div>
           {componentNav === "List" ? (
-            <Food userId={userId} tableId={tableId} paymentStatus={paymentStatus}></Food>
+            <Food
+              userId={userId}
+              tableId={tableId}
+              paymentStatus={paymentStatus}
+            ></Food>
           ) : (
             ""
           )}

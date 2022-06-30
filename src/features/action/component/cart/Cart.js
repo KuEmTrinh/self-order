@@ -5,6 +5,8 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import CartConfirm from "./CartConfirm";
+import Stack from "@mui/material/Stack";
+import LinearProgress from "@mui/material/LinearProgress";
 import {
   deleteFoodCart,
   plusFoodCart,
@@ -127,7 +129,9 @@ export default function Cart({ userId, tableInfo, tableId }) {
           </div>
         </>
       ) : (
-        "Loading"
+        <Stack sx={{ width: "100%", color: "grey.500" }} spacing={2}>
+          <LinearProgress color="inherit" />
+        </Stack>
       )}
     </>
   );

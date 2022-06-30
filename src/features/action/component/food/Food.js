@@ -2,8 +2,9 @@ import React from "react";
 import { db } from "../../../../app/firebase";
 import { useEffect, useState } from "react";
 import Categories from "../categories/Categories";
+import Stack from "@mui/material/Stack";
+import LinearProgress from "@mui/material/LinearProgress";
 export default function Food({ userId, tableId, paymentStatus }) {
-  console.log(paymentStatus);
   const uid = userId;
   const [data, setData] = useState("");
   useEffect(() => {
@@ -33,7 +34,9 @@ export default function Food({ userId, tableId, paymentStatus }) {
           paymentStatus={paymentStatus}
         ></Categories>
       ) : (
-        "Loading"
+        <Stack sx={{ width: "100%", color: "grey.500" }} spacing={2}>
+          <LinearProgress color="inherit" />
+        </Stack>
       )}
     </>
   );

@@ -11,6 +11,8 @@ import { pink } from "@mui/material/colors";
 import Modal from "../../../main/component/menu/Modal";
 import Payment from "./Payment";
 import ChangeHistory from "./ChangeHistory";
+import Stack from "@mui/material/Stack";
+import LinearProgress from "@mui/material/LinearProgress";
 export default function List({ userId, tableId, tableInfo, paymentStatus }) {
   const [listData, setListData] = useState("");
   const [totalCount, setTotalCount] = useState(0);
@@ -308,7 +310,9 @@ export default function List({ userId, tableId, tableInfo, paymentStatus }) {
           })}
         </div>
       ) : (
-        ""
+        <Stack sx={{ width: "100%", color: "grey.500" }} spacing={2}>
+          <LinearProgress color="inherit" />
+        </Stack>
       )}
     </div>
   );
