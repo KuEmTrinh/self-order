@@ -7,7 +7,7 @@ export default function Info() {
   return (
     <div className="userInfo flex flex-row align-center">
       <p className="name">{userInfomation.displayName}</p>
-      <img src={userInfomation.photoURL} className="photo" />
+      <img src={userInfomation.photoURL} className="photo" alt=""/>
     </div>
   );
 }
