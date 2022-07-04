@@ -5,7 +5,8 @@ import Menu from "./component/menu/Menu";
 import Table from "./component/table/Table";
 import Food from "./component/menu/Food";
 import Bill from "./component/bill/Bill";
-import Payment from "./component/payment/Payment"
+import Payment from "./component/payment/Payment";
+import Setting from "./component/setting/Setting";
 import "./Main.css";
 export default function Main() {
   return (
@@ -18,7 +19,7 @@ export default function Main() {
           <Route path="/table" element={<Table />} />
           <Route path="/bill" element={<Bill />} />
           <Route path="/method" element={<Payment />} />
-        {/* <Route path="/printer" element={<About />} /> */}
+          <Route path="/setting" element={<Setting />} />
           <Route path="*" element={<p>Không tìm thấy đường dẫn</p>} />
         </Routes>
       </div>

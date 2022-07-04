@@ -1,0 +1,84 @@
+.settingLink{
+    margin-top: 1rem;
+    display: flex;
+}
+.settingLinkItem{
+    color: #393939;
+    font-size: 15px;
+    padding: 0.6rem 1rem;
+    margin-right: 1rem;
+    background-color: #f6f6f6;
+    border-radius: 5px 5px 0px 0px;
+}
+.settingLinkItemActive{
+    background: linear-gradient(90deg, #3dd49d 0%, #3dd479 100%);
+    color: #fff;
+    font-weight: bold;
+    border-bottom: 3px solid #1f7c5a;
+    transition: 0.3s all linear;
+}
+.accountSettingTitle{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    color: #848484;
+    font-weight: bold;
+}
+.accountInfomation{
+    display: flex;
+}
+.accountImage{
+    width: 8rem;
+    height: 8rem;
+}
+.accountImage img{
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.wrapCenter{
+    display: flex;
+    justify-content: center;
+}
+.accountInfomationContent{
+    margin-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #393939;
+}
+.accountInfomationContent p {
+    padding: 0.5rem;
+}
+.accountInfomationName{
+    font-weight: bold;
+    font-size: 18px;
+}
+.accountInfomationRole{
+    color: #848484;
+    font-size: 15px;
+}
+.accountInfomationPhone{
+    color: #393939;
+    font-size: 16px;
+}
+.accountStatusInfomationActive{
+    display: flex;
+    align-items: center;
+}
+.accountStatusInfomationActive p {
+    color: #848484;
+    margin-left: 1rem;
+}
+.accountSettingInputLabel{
+    color: #848484;
+    font-weight: normal;
+    margin-top: 0.3rem;
+    margin-bottom: 0.5rem;
+}
+.accountSettingInput{
+    display: flex;
+}
+.accountSettingInputItem{
+    margin-right: 2rem;
+}

@@ -25,14 +25,16 @@ export default function NavLink() {
     <div className="linkList">
       <Link to="/" className="navlink">
         <div
-          className={activeLink == "/" ? "linkItem linkItemActive" : "linkItem"}
+          className={
+            activeLink === "/" ? "linkItem linkItemActive" : "linkItem"
+          }
           onClick={() => {
             setActiveLink("/");
           }}
         >
           <div className="linkItemIcon">
             <RestaurantMenuIcon
-              color={activeLink == "/" ? "" : "action"}
+              color={activeLink === "/" ? "" : "action"}
             ></RestaurantMenuIcon>
           </div>
           <p>Order</p>
@@ -41,7 +43,7 @@ export default function NavLink() {
       <Link to="/menu" className="navlink">
         <div
           className={
-            activeLink == "menu" ? "linkItem linkItemActive" : "linkItem"
+            activeLink === "menu" ? "linkItem linkItemActive" : "linkItem"
           }
           onClick={() => {
             setActiveLink("menu");
@@ -49,7 +51,7 @@ export default function NavLink() {
         >
           <div className="linkItemIcon">
             <MenuBookIcon
-              color={activeLink == "menu" ? "" : "action"}
+              color={activeLink === "menu" ? "" : "action"}
             ></MenuBookIcon>
           </div>
           <p>Thực đơn</p>
@@ -58,7 +60,7 @@ export default function NavLink() {
       <Link to="/table" className="navlink">
         <div
           className={
-            activeLink == "table" ? "linkItem linkItemActive" : "linkItem"
+            activeLink === "table" ? "linkItem linkItemActive" : "linkItem"
           }
           onClick={() => {
             setActiveLink("table");
@@ -66,7 +68,7 @@ export default function NavLink() {
         >
           <div className="linkItemIcon">
             <TableRestaurantIcon
-              color={activeLink == "table" ? "" : "action"}
+              color={activeLink === "table" ? "" : "action"}
             ></TableRestaurantIcon>
           </div>
           <p>Bàn</p>
@@ -75,7 +77,7 @@ export default function NavLink() {
       <Link to="/bill" className="navlink">
         <div
           className={
-            activeLink == "bill" ? "linkItem linkItemActive" : "linkItem"
+            activeLink === "bill" ? "linkItem linkItemActive" : "linkItem"
           }
           onClick={() => {
             setActiveLink("bill");
@@ -83,7 +85,7 @@ export default function NavLink() {
         >
           <div className="linkItemIcon">
             <PriceCheckIcon
-              color={activeLink == "bill" ? "" : "action"}
+              color={activeLink === "bill" ? "" : "action"}
             ></PriceCheckIcon>
           </div>
           <p>Hoá đơn</p>
@@ -92,7 +94,7 @@ export default function NavLink() {
       <Link to="/method" className="navlink">
         <div
           className={
-            activeLink == "method" ? "linkItem linkItemActive" : "linkItem"
+            activeLink === "method" ? "linkItem linkItemActive" : "linkItem"
           }
           onClick={() => {
             setActiveLink("method");
@@ -100,27 +102,27 @@ export default function NavLink() {
         >
           <div className="linkItemIcon">
             <CreditCardIcon
-              color={activeLink == "method" ? "" : "action"}
+              color={activeLink === "method" ? "" : "action"}
             ></CreditCardIcon>
           </div>
           <p>Phương thức</p>
         </div>
       </Link>
-      <Link to="/printer" className="navlink">
+      <Link to="/setting" className="navlink">
         <div
           className={
-            activeLink == "printer" ? "linkItem linkItemActive" : "linkItem"
+            activeLink === "setting" ? "linkItem linkItemActive" : "linkItem"
           }
           onClick={() => {
-            setActiveLink("printer");
+            setActiveLink("setting");
           }}
         >
           <div className="linkItemIcon">
             <PowerSettingsNewIcon
-              color={activeLink == "printer" ? "" : "action"}
+              color={activeLink === "setting" ? "" : "action"}
             ></PowerSettingsNewIcon>
           </div>
-          <p>Thông tin</p>
+          <p>Cài đặt</p>
         </div>
       </Link>
       <div className="logout">
@@ -132,9 +134,7 @@ export default function NavLink() {
             color="action"
           ></LogoutIcon>
         </p>
-        <p className="logOutText">
-          Đăng xuất
-        </p>
+        <p className="logOutText">Đăng xuất</p>
       </div>
     </div>
   );
