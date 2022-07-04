@@ -5,11 +5,11 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { authentication } from "../../../app/firebase";
 import { signOut } from "firebase/auth";
 import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
-import MenuBookIcon from '@mui/icons-material/MenuBook';
-import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
-import PriceCheckIcon from '@mui/icons-material/PriceCheck';
-import CreditCardIcon from '@mui/icons-material/CreditCard';
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import TableRestaurantIcon from "@mui/icons-material/TableRestaurant";
+import PriceCheckIcon from "@mui/icons-material/PriceCheck";
+import CreditCardIcon from "@mui/icons-material/CreditCard";
+import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 export default function NavLink() {
   const [activeLink, setActiveLink] = useState("/");
   const logOut = () => {
@@ -31,7 +31,9 @@ export default function NavLink() {
           }}
         >
           <div className="linkItemIcon">
-            <RestaurantMenuIcon color={activeLink == "/" ? "" : "action"}></RestaurantMenuIcon>
+            <RestaurantMenuIcon
+              color={activeLink == "/" ? "" : "action"}
+            ></RestaurantMenuIcon>
           </div>
           <p>Order</p>
         </div>
@@ -46,7 +48,9 @@ export default function NavLink() {
           }}
         >
           <div className="linkItemIcon">
-            <MenuBookIcon color={activeLink == "menu" ? "" : "action"}></MenuBookIcon>
+            <MenuBookIcon
+              color={activeLink == "menu" ? "" : "action"}
+            ></MenuBookIcon>
           </div>
           <p>Thực đơn</p>
         </div>
@@ -61,7 +65,9 @@ export default function NavLink() {
           }}
         >
           <div className="linkItemIcon">
-            <TableRestaurantIcon color={activeLink == "table" ? "" : "action"}></TableRestaurantIcon>
+            <TableRestaurantIcon
+              color={activeLink == "table" ? "" : "action"}
+            ></TableRestaurantIcon>
           </div>
           <p>Bàn</p>
         </div>
@@ -76,7 +82,9 @@ export default function NavLink() {
           }}
         >
           <div className="linkItemIcon">
-            <PriceCheckIcon color={activeLink == "bill" ? "" : "action"}></PriceCheckIcon>
+            <PriceCheckIcon
+              color={activeLink == "bill" ? "" : "action"}
+            ></PriceCheckIcon>
           </div>
           <p>Hoá đơn</p>
         </div>
@@ -91,7 +99,9 @@ export default function NavLink() {
           }}
         >
           <div className="linkItemIcon">
-            <CreditCardIcon color={activeLink == "method" ? "" : "action"}></CreditCardIcon>
+            <CreditCardIcon
+              color={activeLink == "method" ? "" : "action"}
+            ></CreditCardIcon>
           </div>
           <p>Phương thức</p>
         </div>
@@ -106,7 +116,9 @@ export default function NavLink() {
           }}
         >
           <div className="linkItemIcon">
-            <PowerSettingsNewIcon color={activeLink == "printer" ? "" : "action"}></PowerSettingsNewIcon>
+            <PowerSettingsNewIcon
+              color={activeLink == "printer" ? "" : "action"}
+            ></PowerSettingsNewIcon>
           </div>
           <p>Thông tin</p>
         </div>
@@ -117,7 +129,11 @@ export default function NavLink() {
             onClick={() => {
               logOut();
             }}
+            color="action"
           ></LogoutIcon>
+        </p>
+        <p className="logOutText">
+          Đăng xuất
         </p>
       </div>
     </div>

@@ -5,7 +5,7 @@
 .linkItem {
     padding: 15px 0;
     border-radius: 0px 5px 5px 0px;
-    margin: 15px 0;
+    margin: 5px 0;
     font-weight: 500;
     display: flex;
     align-items: center;
@@ -16,14 +16,10 @@
     transition: all 0.2s linear;
     color: aliceblue;
 }
-.linkList{
-    margin: 3rem 0;
-}
-
-.logout{
+/* .logout{
     margin-top: 6rem;
     cursor: pointer;
-}
+} */
 .linkItemActive {
     font-weight: bold;
     color: #393939;
@@ -32,7 +28,6 @@
     padding: 15px 0;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border-left: 5px solid #393939;
-
 }
 
 .linkItem p{
@@ -40,11 +35,19 @@
 }
 .logout{
     display: flex;
+    flex-direction: column;
+    padding: 35px;
 }
 .logOutIcon{
     margin: 0 auto;
 }
-
+.logOutText{
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #848484;
+}
 .linkItemIcon{
     padding-left: 2rem;
+    cursor: pointer;
 }
