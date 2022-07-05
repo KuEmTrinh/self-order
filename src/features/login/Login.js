@@ -23,15 +23,25 @@ export default function Login() {
     });
   }, []);
   const setUser = (user) => {
-    const userId = user.uid;
-    console.log(user);
-    db.collection("user").doc(userId).set({
-      name: user.displayName,
-      email: user.email,
-      emailVerified: user.emailVerified,
-      uid: user.uid,
-      photoURL: user.photoURL,
-    });
+    db.collection("user")
+      .doc(user.uid)
+      .get()
+      .then((doc) => {
+        console.log(doc);
+        if (doc.exists) {
+          console.log("Có dữ liệu");
+        } else {
+          const userId = user.uid;
+          console.log(user);
+          db.collection("user").doc(userId).set({
+            name: user.displayName,
+            email: user.email,
+            emailVerified: user.emailVerified,
+            uid: user.uid,
+            photoURL: user.photoURL,
+          });
+        }
+      });
   };
   const loginWithGoogle = () => {
     const provider = new GoogleAuthProvider();

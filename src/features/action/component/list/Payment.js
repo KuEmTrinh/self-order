@@ -7,7 +7,6 @@ export default function Payment({
   userId,
   tableId,
   listData,
-  resetList,
   tableName,
   totalCount,
   completeCount,
@@ -74,7 +73,6 @@ export default function Payment({
       });
     changeTablePaymentStatus(tableId);
     setOpenPayment(false);
-    // resetList();
     return query;
   };
   return (
