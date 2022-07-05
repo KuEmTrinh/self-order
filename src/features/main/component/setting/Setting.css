@@ -18,8 +18,8 @@
     transition: 0.3s all linear;
 }
 .accountSettingTitle{
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 0.6rem;
     color: #848484;
     font-weight: bold;
 }
@@ -81,4 +81,22 @@
 }
 .accountSettingInputItem{
     margin-right: 2rem;
+}
+
+.inputSetting{
+    display: none;
+}
+.accountSettingInputUpload{
+    display: flex;
+    align-items: center;
+    background-color: rgb(243, 243, 243);
+    color: #848484;
+    padding: 0.4rem 1rem;
+    border-radius: 5px;
+}
+.accountSettingInputUpload p{
+    margin-left: 1rem;
+    color: #848484;
+    font-weight: bold;
+    font-size: 0.8rem;
 }

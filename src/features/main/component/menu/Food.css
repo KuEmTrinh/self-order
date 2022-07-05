@@ -1,6 +1,6 @@
 .foods{
     overflow-x: auto;
-    width: calc(100vh);
+    width: calc(95vh);
 }
 .food{
     width: 10rem;
