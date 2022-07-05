@@ -7,7 +7,6 @@ export default function NewCategory() {
   const categoryCurrentIndex = useSelector(
     (state) => state.category.categoryCurrentIndex
   );
-  console.log(categoryCurrentIndex);
   const userInfomation = JSON.parse(useSelector((state) => state.login.data));
   const [inputValue, setInputValue] = useState("");
   const createCategory = () => {

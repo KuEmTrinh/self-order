@@ -36,7 +36,7 @@ export default function Account() {
         if (phone) {
           setUserPhone(phone);
         } else {
-          setUserPhone("000-000-0000 (Chưa cập nhật)");
+          setUserPhone("000-000-0000");
         }
       });
   };
