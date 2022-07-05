@@ -39,3 +39,9 @@
     font-size: 0.9rem;
     padding: 1rem;
 }
+.paymentTrue p{
+    margin-bottom: 1rem;
+}
+.paymentTrueButton{
+    font-weight: bold;
+}

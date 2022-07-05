@@ -12,6 +12,7 @@ export default function Payment({
   totalCount,
   completeCount,
   cancelCount,
+  setOpenPayment,
 }) {
   const [receiptMethod, setReceiptMethod] = useState(1);
   const [paymentData, setPaymentData] = useState("");
@@ -72,7 +73,8 @@ export default function Payment({
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       });
     changeTablePaymentStatus(tableId);
-    resetList();
+    setOpenPayment(false);
+    // resetList();
     return query;
   };
   return (

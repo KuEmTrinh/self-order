@@ -22,6 +22,30 @@ export default function BillDetails({ onClose, bill, userId }) {
       });
     return query;
   };
+  const resetList = () => {
+    const query = db.collection("user").doc(userId).collection("order");
+    query
+      .where("tableId", "==", bill.tableId)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.docs.map((doc) => {
+          const docChangeInfo = query
+            .doc(doc.id)
+            .collection("changeInfo")
+            .get()
+            .then((querySnapshot) => {
+              try {
+                querySnapshot.docs.map((doc) => {
+                  doc.ref.delete();
+                });
+              } catch (error) {
+                console.log("have no info");
+              }
+            });
+          doc.ref.delete();
+        });
+      });
+  };
   const completeBill = () => {
     const query = db
       .collection("user")
@@ -33,6 +57,7 @@ export default function BillDetails({ onClose, bill, userId }) {
       });
     randomCodeTable(bill.tableId);
     onClose();
+    resetList();
     return query;
   };
   const RenderComponent = React.forwardRef((props, ref) => {
