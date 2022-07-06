@@ -1,5 +1,5 @@
 .searchBox{
-    margin: 15px 15px 0 15px;
+    margin: 0px 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -20,4 +20,19 @@
 }
 .searchBoxInput::placeholder{
     color: #878787;
+}
+.historyOpenIcon{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    border-radius: 5px;
+    box-shadow: rgb(0 0 0 / 15%) 1.95px 1.95px 2.6px;
+    padding: 0px 10px 0px 10px;
+    background: linear-gradient(90deg, #3dd49d 0%, #3dd479 100%);
+    color: white;
+}
+.historyOpenIcon p{
+    font-weight: bold;
+    font-size: 13px;
+    margin-right: 5px;
 }

@@ -4,3 +4,11 @@
     left: 50%;
     transform: translate(-50%,-50%);
 }
+.loginButton{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    color: #fff !important;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    background-color: #393939;
+}

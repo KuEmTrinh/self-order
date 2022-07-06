@@ -10,7 +10,7 @@ import Setting from "./component/setting/Setting";
 import "./Main.css";
 export default function Main() {
   return (
-    <div className="main w-80per">
+    <div className="main">
       <div className="mainComponent">
         <Routes>
           <Route path="/" element={<Order />} />

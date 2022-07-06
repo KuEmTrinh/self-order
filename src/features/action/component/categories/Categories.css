@@ -8,7 +8,6 @@
 }
 .categoryBox{
     padding: 15px;
-    background-color: #fff;
     overflow-x: auto;
     display: flex;
     word-wrap: normal;
@@ -24,7 +23,8 @@
     position: fixed;
     width: 100%;
     z-index: 300;
-    background-color: #F6F6F6;
+    background-color: #f6f6f6f0;
+    padding-bottom: 15px;
 }
 .paymentTrue{
     position: fixed;

@@ -61,12 +61,12 @@ export default function Login() {
       ) : (
         <div className="center">
           <button
-            className="button button-m"
+            className="loginButton button-m"
             onClick={() => {
               loginWithGoogle();
             }}
           >
-            Login with Google
+            Đăng nhập bằng Gmail
           </button>
         </div>
       )}

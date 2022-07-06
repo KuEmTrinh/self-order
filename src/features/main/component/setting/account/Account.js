@@ -76,6 +76,7 @@ export default function Account() {
       name: userName,
       phoneNumber: userPhone,
     });
+    setInfoEditToggle(false);
   };
   const updateAccountInfomation = () => {
     if (file) {

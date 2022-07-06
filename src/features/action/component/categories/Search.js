@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../../../../app/firebase";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "./Search.css";
 import "./History.css";
 import History from "./History";
@@ -8,6 +9,21 @@ import HistoryIcon from "@mui/icons-material/History";
 import Fade from "@mui/material/Fade";
 import { setFoodData, setSearching, removeSearchingData } from "./searchSlice";
 export default function Search({ categoryList, categoryId, userId, tableId }) {
+  const theme = createTheme({
+    palette: {
+      grey: {
+        // This is green.A700 as hex.
+        main: "#A6A6A6",
+      },
+      black: {
+        // This is green.A700 as hex.
+        main: "#000",
+      },
+      white: {
+        main: "#fff",
+      },
+    },
+  });
   const dispatch = useDispatch();
   const [foods, setFoods] = useState([]);
   const [keyWord, setKeyWord] = useState("");
@@ -100,11 +116,12 @@ export default function Search({ categoryList, categoryId, userId, tableId }) {
         onChange={searchValueChange}
         placeholder="Tìm kiếm"
       ></input>
-      <HistoryIcon
-        color="action"
-        fontSize="large"
-        onClick={openHistoryBox}
-      ></HistoryIcon>
+      <div className="historyOpenIcon" onClick={openHistoryBox}>
+        <ThemeProvider theme={theme}>
+          <p>Xem</p>
+          <HistoryIcon color="white" fontSize="large"></HistoryIcon>
+        </ThemeProvider>
+      </div>
     </div>
   );
 }
