@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Setting.css";
 import Account from "./account/Account";
+import Restaurant from "./restaurant/Restaurant";
 export default function Setting() {
   const [activeLink, setActiveLink] = useState("account");
   return (
@@ -18,6 +19,18 @@ export default function Setting() {
           }}
         >
           <p>Tài khoản</p>
+        </div>
+        <div
+          className={
+            activeLink === "restaurant"
+              ? "settingLinkItem settingLinkItemActive"
+              : "settingLinkItem"
+          }
+          onClick={() => {
+            setActiveLink("restaurant");
+          }}
+        >
+          <p>Nhà hàng</p>
         </div>
         <div
           className={
@@ -57,6 +70,7 @@ export default function Setting() {
         </div>
       </div>
       {activeLink === "account" ? <Account></Account> : ""}
+      {activeLink === "restaurant" ? <Restaurant></Restaurant> : ""}
     </>
   );
 }

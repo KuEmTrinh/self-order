@@ -100,3 +100,64 @@
     font-weight: bold;
     font-size: 0.8rem;
 }
+.restaurantInfomation{
+    display: flex;
+}
+.restaurantImage{
+    width: 20rem;
+    height: 20rem;
+    object-fit: cover;
+    height: auto;
+}
+.restaurantImage img{
+    border-radius: 5px;
+}
+.restaurantContent{
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+}
+.restaurantContent p {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.restaurantName{
+    color: #393939;
+    font-weight: bold;
+    font-size: 18px;
+}
+.wrapContent{
+    display: flex;
+    flex-direction: column;
+}
+.restaurantAddress{
+    color: #848484;
+    font-size: 14px;
+}
+.restaurantPhoneNumber{
+    color: #393939;
+    font-size: 16px;
+}
+.restaurantSocialMediaList{
+    align-items: flex-end;
+    display: flex;
+}
+.restaurantSocialMediaIcon{
+    width: 26px;
+    padding: 5px;
+}
+.restaurantSocialMediaIconMessenger{
+    width: 32px;
+}
+.restaurantSocialMediaIconYoutube{
+    width: 32px;
+}
+.restaurantSocialMediaSettingContent{
+    display: flex;
+    align-items: center;
+}
+.restaurantSocialMediaIcon{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
