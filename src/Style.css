@@ -10,7 +10,8 @@
 }
 .button:hover {
     transition: all 0.1s linear;
-    color: black;
+    color: #fff;
+    font-weight: bold;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .button-green{
@@ -43,4 +44,11 @@
 }
 .w-100{
     width: 100%;
+}
+
+.waringRedColor{
+    background-color: #F76F72;
+}
+.usingActiveColor{
+    background: linear-gradient(90deg, #3dd49d 0%, #3dd479 100%);
 }

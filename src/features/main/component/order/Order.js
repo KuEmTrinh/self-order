@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { purple } from "@mui/material/colors";
 import { db } from "../../../../app/firebase";
 import { useSelector } from "react-redux";
 import OrderItem from "./OrderItem";
@@ -13,6 +15,23 @@ import ringer from "./notification.mp3";
 
 import "./Order.css";
 export default function Order() {
+  //color theme
+  const theme = createTheme({
+    palette: {
+      primary: {
+        // Purple and green play nicely together.
+        main: purple[500],
+      },
+      secondary: {
+        // This is green.A700 as hex.
+        main: "#11cb5f",
+      },
+      whiteColor: {
+        // This is green.A700 as hex.
+        main: "#fff",
+      },
+    },
+  });
   //time duration function
   const diff = (start, end) => {
     start = start.split(":");
@@ -144,32 +163,59 @@ export default function Order() {
         <>
           <div className="orderBoxIcon">
             <p className="componentTitle">Danh sách Order</p>
-            <div className="orderIconBox">
-              <div className="orderIconItem">
-                <DeleteIcon
-                  onClick={deleteToggle}
-                  color={deleteItem ? "" : "action"}
-                ></DeleteIcon>
+            <ThemeProvider theme={theme}>
+              <div className="orderIconBox">
+                <div
+                  className={
+                    deleteItem
+                      ? "orderIconItem waringRedColor"
+                      : "orderIconItem"
+                  }
+                >
+                  <DeleteIcon
+                    onClick={deleteToggle}
+                    color={deleteItem ? "whiteColor" : "action"}
+                  ></DeleteIcon>
+                </div>
+
+                <div
+                  className={
+                    completeToggle
+                      ? "orderIconItem usingActiveColor"
+                      : "orderIconItem"
+                  }
+                >
+                  <LibraryAddCheckIcon
+                    onClick={openCompleteBox}
+                    color={completeToggle ? "whiteColor" : "action"}
+                  ></LibraryAddCheckIcon>
+                </div>
+                <div
+                  className={
+                    settingToggle
+                      ? "orderIconItem usingActiveColor"
+                      : "orderIconItem"
+                  }
+                >
+                  <SettingsSuggestIcon
+                    onClick={openSettingTable}
+                    color={settingToggle ? "whiteColor" : "action"}
+                  ></SettingsSuggestIcon>
+                </div>
+                <div
+                  className={
+                    compressToggle
+                      ? "orderIconItem usingActiveColor"
+                      : "orderIconItem"
+                  }
+                >
+                  <CompressIcon
+                    onClick={openCompressToggle}
+                    color={compressToggle ? "whiteColor" : "action"}
+                  ></CompressIcon>
+                </div>
               </div>
-              <div className="orderIconItem">
-                <LibraryAddCheckIcon
-                  onClick={openCompleteBox}
-                  color={completeToggle ? "success" : "action"}
-                ></LibraryAddCheckIcon>
-              </div>
-              <div className="orderIconItem">
-                <SettingsSuggestIcon
-                  onClick={openSettingTable}
-                  color={settingToggle ? "primary" : "action"}
-                ></SettingsSuggestIcon>
-              </div>
-              <div className="orderIconItem">
-                <CompressIcon
-                  onClick={openCompressToggle}
-                  color={compressToggle ? "primary" : "action"}
-                ></CompressIcon>
-              </div>
-            </div>
+            </ThemeProvider>
           </div>
           <OrderComplete
             order={order}

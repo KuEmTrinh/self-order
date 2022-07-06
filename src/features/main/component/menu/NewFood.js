@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { storage } from "../../../../app/firebase";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import FileUploadIcon from "@mui/icons-material/FileUpload";
 import CircularProgress from "@mui/material/CircularProgress";
 import CheckIcon from "@mui/icons-material/Check";
 import { db } from "../../../../app/firebase";
@@ -101,7 +102,7 @@ export default function NewFood({ categoryId, categoryName }) {
 
   return (
     <div>
-      <p className="componentTitle">Tạo Sản Phẩm Cho {String(categoryName)}</p>
+      <p className="componentTitle">Tạo Sản Phẩm Cho "{String(categoryName)}"</p>
       <div className="mainNewFood">
         <table>
           <tbody>
@@ -153,18 +154,21 @@ export default function NewFood({ categoryId, categoryName }) {
               </td>
               <td>
                 <div className="inputBox flex align-center">
-                  <input
-                    type="file"
-                    onChange={handleChange}
-                    accept=""
-                    className="selectImageButton"
-                  />
+                  <label for="accountSettingInput">
+                    <div className="accountSettingInputUpload">
+                      <FileUploadIcon></FileUploadIcon>
+                      <p>Chọn ảnh</p>
+                      <input
+                        className="inputSetting"
+                        onChange={handleChange}
+                        id="accountSettingInput"
+                        type="file"
+                      ></input>
+                    </div>
+                  </label>
                 </div>
               </td>
             </tr>
-            <button className="button button-green" onClick={handleUpload}>
-              Tạo
-            </button>
             {resultBox ? (
               <div className="resultBox">
                 {percent === 100 ? (
@@ -196,6 +200,11 @@ export default function NewFood({ categoryId, categoryName }) {
             </div>
           </div>
         </div>
+      </div>
+      <div className="centerButton">
+        <button className="button button-green" onClick={handleUpload}>
+          Tạo
+        </button>
       </div>
     </div>
   );

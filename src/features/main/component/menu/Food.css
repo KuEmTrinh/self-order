@@ -1,6 +1,9 @@
 .foods{
-    overflow-x: auto;
-    width: calc(95vh);
+    justify-content: center;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    height: 70vh;
 }
 .food{
     width: 10rem;
@@ -73,4 +76,25 @@ img {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.createFoodHeader{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.backListIcon{
+    display: flex;
+    align-items: center;
+}
+.backListIcon p {
+    font-weight: bold;
+    color: #393939;
+    margin-left: 1rem;
+}
+.categoryFoodsTitle{
+    margin-top: 1rem;
+    margin-bottom: 0.6rem;
+    color: #848484;
+    font-weight: bold;
 }
