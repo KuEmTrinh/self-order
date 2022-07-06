@@ -53,6 +53,8 @@ export default function Restaurant() {
           <p className="accountSettingInputLabel">Địa chỉ</p>
           <input className="inputBoxEnter" />
         </div>
+      </div>
+      <div className="accountSettingInput mt-1">
         <div className="accountSettingInputItem">
           <p className="accountSettingInputLabel">Số điện thoại</p>
           <input className="inputBoxEnter" />

@@ -200,7 +200,7 @@ export default function TableItem({ tables }) {
         <p className="componentTitle categoryList">Danh Sách Bàn</p>
         {listChangeStatus ? (
           <button
-            className="button confirmButton"
+            className="button button-green"
             onClick={() => {
               saveList();
             }}

@@ -116,7 +116,7 @@ export default function CategoryList({ categoryList }) {
         <p className="componentTitle categoryList">Danh Sách Danh Mục</p>
         {listChangeStatus ? (
           <button
-            className="button confirmButton"
+            className="button button-green"
             onClick={() => {
               saveList();
             }}

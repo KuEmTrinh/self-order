@@ -85,7 +85,7 @@ export default function OrderSetting({
           <div className="orderBoxIcon">
             <p className="componentTitle">Chỉnh sữa thông tin</p>
             <div className="orderIconBox">
-              <button className="orderSettingButton" onClick={saveChangeData}>
+              <button className="button button-green" onClick={saveChangeData}>
                 Cập nhật
               </button>
             </div>
