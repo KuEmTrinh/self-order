@@ -22,8 +22,8 @@
 }
 .cartCountForIcon{
     position: absolute;
-    top:-1.5rem;
-    right: -1.5rem;
+    top:-1.2rem;
+    right: 0.5rem;
     padding: 0.4rem;
     background-color: #000;
     border-radius: 1rem;
@@ -31,4 +31,23 @@
 }
 .disableBackgroundIcon{
     background-color: #a6a6a6;
+}
+.navigationIconItem{
+    text-align: center;
+    width: 4rem;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+}
+.navigationIconItem p {
+    font-size: 11px;
+    font-weight: bold;
+}
+.textGrey{
+    color: #848484;
+}
+.textBlack{
+    color: #393939;
 }

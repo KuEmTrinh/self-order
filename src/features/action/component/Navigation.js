@@ -41,16 +41,18 @@ export default function Navigation() {
             onClick={() => {
               showComponent("List");
             }}
+            className="navigationIconItem"
           >
             <RestaurantMenuIcon
-              color={activeComponent == "List" ? "black" : "grey"}
+              color={activeComponent === "List" ? "black" : "grey"}
             ></RestaurantMenuIcon>
+            <p className={activeComponent === "List" ? "textBlack" : "textGrey"}>Gọi món</p>
           </div>
           <div
             onClick={() => {
               showComponent("Dashboard");
             }}
-            className="cartIcon"
+            className="cartIcon navigationIconItem"
           >
             {cartCountNumber > 0 ? (
               <p
@@ -68,24 +70,29 @@ export default function Navigation() {
             <ShoppingCartIcon
               color={activeComponent == "Dashboard" ? "black" : "grey"}
             ></ShoppingCartIcon>
+            <p className={activeComponent === "Dashboard" ? "textBlack" : "textGrey"}>Đã thêm</p>
           </div>
           <div
             onClick={() => {
               showComponent("OrderList");
             }}
+            className="navigationIconItem"
           >
-            <FormatListBulletedIcon
+            <PaymentsIcon
               color={activeComponent == "OrderList" ? "black" : "grey"}
-            ></FormatListBulletedIcon>
+            ></PaymentsIcon>
+            <p className={activeComponent === "OrderList" ? "textBlack" : "textGrey"}>Thanh toán</p>
           </div>
           <div
             onClick={() => {
               showComponent("Payment");
             }}
+            className="navigationIconItem"
           >
-            <PaymentsIcon
+            <FormatListBulletedIcon
               color={activeComponent == "Payment" ? "black" : "grey"}
-            ></PaymentsIcon>
+            ></FormatListBulletedIcon>
+            <p className={activeComponent === "Payment" ? "textBlack" : "textGrey"}>Tiện ích</p>
           </div>
         </ThemeProvider>
       </div>
