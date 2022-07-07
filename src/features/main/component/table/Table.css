@@ -14,3 +14,66 @@
 .printContent{
     padding: 0.5rem;
 }
+.subTitleComponent{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    color: #848484;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.tableViewTitle{
+    display: flex;
+    align-items: center;
+}
+.tableViewTitle p{
+    margin-left: 0.6rem;
+}
+.tableBox{
+    margin-top: 0 !important;
+}
+.changeViewIconBox{
+    padding: 0.3rem;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.changeViewIconBox{
+    display: flex;
+    align-items: center;
+}
+.changeViewIconBox p{
+    font-weight: bold;
+    font-size: 12px;
+    margin-right: 6px;
+    margin-left: 6px;
+}
+.changeViewIconBoxActive{
+    box-shadow: none;
+    background: linear-gradient(90deg, #3dd49d 0%, #3dd479 100%);
+    color: #fff;
+    transition: 0.3s all linear;
+}
+.qrCodeItemView{
+    padding: 0.5rem;
+}
+.qrCodeFade{
+    width: 75px;
+    height: 75px;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: #848484;
+    font-size: 14px;
+}
+.tableQrPrintList{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    overflow-y: auto;
+    max-height: 55vh;
+}

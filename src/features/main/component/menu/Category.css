@@ -12,10 +12,6 @@
     margin-right: 1rem;
     width: fit-content;
 }
-.categoryList{
-    margin-bottom: 1.3rem;
-}
-
 .resultBox{
     position: fixed;
     top: 50%;

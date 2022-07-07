@@ -43,9 +43,13 @@ export default function NewTable() {
           }}
         />
       </div>
-      <button className="button button-green" onClick={createTable}>
-        Tạo
-      </button>
+      {inputValue === "" ? (
+        ""
+      ) : (
+        <button className="button button-green" onClick={createTable}>
+          Tạo
+        </button>
+      )}
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import QRCode from "react-qr-code";
 import Modal from "../menu/Modal";
 import TableQRCode from "./TableQRCode";
 import Table from "@mui/material/Table";
@@ -13,6 +14,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { db } from "../../../../app/firebase";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import GridViewIcon from "@mui/icons-material/GridView";
+import QrItem from "./QrItem";
+import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 export default function TableItem({ tables }) {
   //useState
   const [tableData, setTableData] = useState("");
@@ -25,6 +30,7 @@ export default function TableItem({ tables }) {
   const [editTableNewName, setEditTableNewName] = useState("");
   const [editTableToggle, setEditTableToggle] = useState(false);
   const [listChangeStatus, setListChangeStatus] = useState(false);
+  const [changeView, setChangeView] = useState(false);
   //useEffect
   useEffect(() => {
     setTableData(tables);
@@ -211,36 +217,72 @@ export default function TableItem({ tables }) {
           ""
         )}
       </div>
-      <div className="billBox">
-        {tableData ? (
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>
-                    <p className="tableTitle">Id</p>
-                  </TableCell>
-                  <TableCell align="right">
-                    <p className="tableTitle">Tên bàn</p>
-                  </TableCell>
-                  <TableCell align="right">
-                    <p className="tableTitle">Mã Qr</p>
-                  </TableCell>
-                  <TableCell align="right">
-                    <p className="tableTitle">Xóa</p>
-                  </TableCell>
-                  <TableCell align="right">
-                    <p className="tableTitle">Sửa</p>
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              {renderDndList()}
-            </Table>
-          </TableContainer>
+      <div className="orderBoxIcon">
+        {changeView ? (
+          <div className="tableViewTitle">
+            <ListAltIcon color="action" />
+            <p className="subTitleComponent">Sắp xếp kiểu danh sách</p>
+          </div>
         ) : (
-          ""
+          <div className="tableViewTitle">
+            <GridViewIcon color="action" />
+            <p className="subTitleComponent">Sắp xếp kiểu in nhanh</p>
+          </div>
         )}
+        <div
+          className={
+            changeView
+              ? "changeViewIconBox changeViewIconBoxActive"
+              : "changeViewIconBox"
+          }
+          onClick={() => {
+            setChangeView(!changeView);
+          }}
+        >
+          <p>Thay đổi</p>
+          <ChangeCircleIcon />
+        </div>
       </div>
+      {tableData ? (
+        <>
+          {changeView ? (
+            <div className="billBox tableBox">
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>
+                        <p className="tableTitle">Id</p>
+                      </TableCell>
+                      <TableCell align="right">
+                        <p className="tableTitle">Tên bàn</p>
+                      </TableCell>
+                      <TableCell align="right">
+                        <p className="tableTitle">Mã Qr</p>
+                      </TableCell>
+                      <TableCell align="right">
+                        <p className="tableTitle">Xóa</p>
+                      </TableCell>
+                      <TableCell align="right">
+                        <p className="tableTitle">Sửa</p>
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  {renderDndList()}
+                </Table>
+              </TableContainer>
+            </div>
+          ) : (
+            <div className="tableQrPrintList">
+              {tableData.map((el) => {
+                return <QrItem table={JSON.stringify(el)} />;
+              })}
+            </div>
+          )}
+        </>
+      ) : (
+        ""
+      )}
     </>
   );
 }
