@@ -117,7 +117,7 @@ export default function Order() {
     setCompleteToggle(false);
   };
   const openSettingTable = () => {
-    setSettingToggle(true);
+    setSettingToggle(!settingToggle);
   };
   const closeSettingToggle = () => {
     setSettingToggle(false);

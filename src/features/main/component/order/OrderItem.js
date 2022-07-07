@@ -31,7 +31,7 @@ export default function OrderItem({ order, userInfo, deleteItem }) {
     audio.play();
   };
   const changeStatus = (id, index) => {
-    playSound();
+    // playSound();
     const newOrderList = cloneOrder;
     newOrderList[index].show = false;
     setCloneOrder([...newOrderList]);
