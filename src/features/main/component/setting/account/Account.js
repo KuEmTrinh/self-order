@@ -105,7 +105,7 @@ export default function Account() {
             <p className="accountInfomationPhone">{userPhone}</p>
             {infoEditToggle ? (
               <button
-                className="button button-green"
+                className="button button-green w-medium"
                 onClick={() => {
                   updateAccountInfomation();
                 }}

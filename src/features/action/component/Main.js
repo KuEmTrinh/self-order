@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import Cart from "./cart/Cart";
 import List from "./list/List";
 import Error from "./Error";
+import Info from "./info/Info";
 export default function Main({
   userId,
   tableInfo,
@@ -54,6 +55,16 @@ export default function Main({
               tableInfo={tableInfo}
               paymentStatus={paymentStatus}
             ></List>
+          ) : (
+            ""
+          )}
+          {componentNav === "Payment" ? (
+            <Info
+              userId={userId}
+              // tableId={tableId}
+              // tableInfo={tableInfo}
+              // paymentStatus={paymentStatus}
+            ></Info>
           ) : (
             ""
           )}

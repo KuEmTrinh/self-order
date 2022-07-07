@@ -8,6 +8,7 @@ import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import PaymentsIcon from "@mui/icons-material/Payments";
 import { setNavigation } from "./navigationSlice";
 import { useDispatch } from "react-redux";
+import InfoIcon from "@mui/icons-material/Info";
 const theme = createTheme({
   palette: {
     grey: {
@@ -46,7 +47,11 @@ export default function Navigation() {
             <RestaurantMenuIcon
               color={activeComponent === "List" ? "black" : "grey"}
             ></RestaurantMenuIcon>
-            <p className={activeComponent === "List" ? "textBlack" : "textGrey"}>Gọi món</p>
+            <p
+              className={activeComponent === "List" ? "textBlack" : "textGrey"}
+            >
+              Gọi món
+            </p>
           </div>
           <div
             onClick={() => {
@@ -70,7 +75,13 @@ export default function Navigation() {
             <ShoppingCartIcon
               color={activeComponent == "Dashboard" ? "black" : "grey"}
             ></ShoppingCartIcon>
-            <p className={activeComponent === "Dashboard" ? "textBlack" : "textGrey"}>Đã thêm</p>
+            <p
+              className={
+                activeComponent === "Dashboard" ? "textBlack" : "textGrey"
+              }
+            >
+              Đã thêm
+            </p>
           </div>
           <div
             onClick={() => {
@@ -81,7 +92,13 @@ export default function Navigation() {
             <PaymentsIcon
               color={activeComponent == "OrderList" ? "black" : "grey"}
             ></PaymentsIcon>
-            <p className={activeComponent === "OrderList" ? "textBlack" : "textGrey"}>Thanh toán</p>
+            <p
+              className={
+                activeComponent === "OrderList" ? "textBlack" : "textGrey"
+              }
+            >
+              Thanh toán
+            </p>
           </div>
           <div
             onClick={() => {
@@ -89,10 +106,16 @@ export default function Navigation() {
             }}
             className="navigationIconItem"
           >
-            <FormatListBulletedIcon
+            <InfoIcon
               color={activeComponent == "Payment" ? "black" : "grey"}
-            ></FormatListBulletedIcon>
-            <p className={activeComponent === "Payment" ? "textBlack" : "textGrey"}>Tiện ích</p>
+            ></InfoIcon>
+            <p
+              className={
+                activeComponent === "Payment" ? "textBlack" : "textGrey"
+              }
+            >
+              Thông tin
+            </p>
           </div>
         </ThemeProvider>
       </div>

@@ -143,25 +143,19 @@
     font-size: 16px;
 }
 .restaurantSocialMediaList{
-    align-items: flex-end;
-    display: flex;
-}
-.restaurantSocialMediaIcon{
-    width: 26px;
-    padding: 5px;
-}
-.restaurantSocialMediaIconMessenger{
-    width: 32px;
-}
-.restaurantSocialMediaIconYoutube{
-    width: 32px;
-}
-.restaurantSocialMediaSettingContent{
-    display: flex;
+    margin-top: 1rem;
     align-items: center;
-}
-.restaurantSocialMediaIcon{
     display: flex;
-    flex-direction: column;
-    align-items: center;
+}
+.socialMediaList{
+    display: flex;
+}
+.socialMediaItem{
+    margin-right: 1rem;
+}
+.w-medium{
+    width: 6rem;
+}
+.userInfoBox{
+    width: 100%;
 }
