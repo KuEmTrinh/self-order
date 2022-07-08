@@ -8,7 +8,13 @@ import { useDispatch } from "react-redux";
 import HistoryIcon from "@mui/icons-material/History";
 import Fade from "@mui/material/Fade";
 import { setFoodData, setSearching, removeSearchingData } from "./searchSlice";
-export default function Search({ categoryList, categoryId, userId, tableId }) {
+export default function Search({
+  categoryList,
+  categoryId,
+  userId,
+  tableId,
+  paymentStatus,
+}) {
   const theme = createTheme({
     palette: {
       grey: {
@@ -104,7 +110,11 @@ export default function Search({ categoryList, categoryId, userId, tableId }) {
         <Fade in={isOpen}>
           <div className="historyBox">
             <div className="historyBoxOpacity"></div>
-            <History userId={userId} tableId={tableId} closeBox={setIsOpen}></History>
+            <History
+              userId={userId}
+              tableId={tableId}
+              closeBox={setIsOpen}
+            ></History>
           </div>
         </Fade>
       ) : (
@@ -116,12 +126,16 @@ export default function Search({ categoryList, categoryId, userId, tableId }) {
         onChange={searchValueChange}
         placeholder="Tìm kiếm"
       ></input>
-      <div className="historyOpenIcon" onClick={openHistoryBox}>
-        <ThemeProvider theme={theme}>
-          <p>Xem</p>
-          <HistoryIcon color="white" fontSize="large"></HistoryIcon>
-        </ThemeProvider>
-      </div>
+      {paymentStatus ? (
+        ""
+      ) : (
+        <div className="historyOpenIcon" onClick={openHistoryBox}>
+          <ThemeProvider theme={theme}>
+            <p>Xem</p>
+            <HistoryIcon color="white" fontSize="large"></HistoryIcon>
+          </ThemeProvider>
+        </div>
+      )}
     </div>
   );
 }

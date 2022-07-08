@@ -58,6 +58,7 @@ export default function Categories({ data, tableId, userId, paymentStatus }) {
           categoryId={categoryId}
           tableId={tableId}
           userId={userId}
+          paymentStatus={paymentStatus}
         ></Search>
       </div>
       {categoryId && paymentStatus == false ? (
