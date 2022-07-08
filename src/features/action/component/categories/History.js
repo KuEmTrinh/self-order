@@ -87,7 +87,7 @@ export default function History({ userId, tableId, closeBox }) {
       .collection("user")
       .doc(userId)
       .collection("order")
-      .orderBy("createdAt")
+      .orderBy("createdAt", "desc")
       .where("tableId", "==", tableId)
       .onSnapshot((querySnapshot) => {
         const data = [];

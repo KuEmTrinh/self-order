@@ -107,7 +107,7 @@ export default function List({ userId, tableId, tableInfo, paymentStatus }) {
       .collection("user")
       .doc(userId)
       .collection("order")
-      .orderBy("createdAt")
+      .orderBy("createdAt", "desc")
       .where("tableId", "==", tableId)
       .onSnapshot((querySnapshot) => {
         const data = [];
