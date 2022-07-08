@@ -104,7 +104,7 @@ export default function Search({ categoryList, categoryId, userId, tableId }) {
         <Fade in={isOpen}>
           <div className="historyBox">
             <div className="historyBoxOpacity"></div>
-            <History userId={userId} tableId={tableId}></History>
+            <History userId={userId} tableId={tableId} closeBox={setIsOpen}></History>
           </div>
         </Fade>
       ) : (

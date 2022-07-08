@@ -4,6 +4,14 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { db } from "../../../../app/firebase";
 import { firebase } from "../../../../app/firebase";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import TextField from "@mui/material/TextField";
 export default function OrderSetting({
   settingToggle,
   closeSettingToggle,
@@ -14,12 +22,14 @@ export default function OrderSetting({
     setCloneOrderList(order);
   }, [order]);
   const [cloneOrderList, setCloneOrderList] = useState("");
+  const [changeData, setChangeData] = useState(false);
   const minusCount = (index) => {
     const newArray = cloneOrderList;
     newArray[index].count -= 1;
     newArray[index].changeStatus = true;
     newArray[index].newPrice -= newArray[index].price;
     setCloneOrderList([...newArray]);
+    setChangeData(true);
   };
 
   const plusCount = (index) => {
@@ -28,6 +38,7 @@ export default function OrderSetting({
     newArray[index].changeStatus = true;
     newArray[index].newPrice += parseInt(newArray[index].price);
     setCloneOrderList([...newArray]);
+    setChangeData(true);
   };
   const changePriceValue = (e, index) => {
     console.log(e.target.value);
@@ -37,6 +48,7 @@ export default function OrderSetting({
     changeItem.price = e.target.value;
     changeItem.newPrice = changeItem.count * changeItem.price;
     setCloneOrderList([...newArray]);
+    setChangeData(true);
   };
   const saveChangeData = () => {
     cloneOrderList.map((el, index) => {
@@ -66,12 +78,9 @@ export default function OrderSetting({
             newCount: parseInt(el.count),
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
           });
-        // console.log("this item is changed");
-        // console.log(el.maxCount + "->" + el.count);
-        // console.log(el.basePrice + "->" + el.price);
-        // return { changeStatusQuery, createHistory };
       }
     });
+    setChangeData(false);
   };
   return (
     <>
@@ -81,97 +90,133 @@ export default function OrderSetting({
           closeSettingToggle();
         }}
       >
-        <div className="orderSettingContent">
-          <div className="orderBoxIcon">
-            <p className="componentTitle">Chỉnh sữa thông tin</p>
-            <div className="orderIconBox">
-              <button className="button button-green" onClick={saveChangeData}>
-                Cập nhật
-              </button>
-            </div>
-          </div>
-          {cloneOrderList ? (
-            <div className="orderSettingBox">
-              <table className="orderSettingTable">
-                <tbody>
-                  <tr className="orderSettingTableHeader">
-                    <th>Bàn</th>
-                    <th>Tên món</th>
-                    <th className="widthCountTable">SL</th>
-                    <th>Giá</th>
-                    <th>Tổng</th>
-                    <th>T.Gian</th>
-                    {/* <th>Cập nhật</th> */}
-                  </tr>
-                  {cloneOrderList.map((el, index) => {
-                    return (
+        <div className="orderBoxIcon">
+          <p className="componentTitle">Cài đặt</p>
+          {changeData ? (
+            <button className="buttonActive" onClick={saveChangeData}>
+              Lưu
+            </button>
+          ) : (
+            <button className="buttonDisable">Lưu</button>
+          )}
+        </div>
+        <p className="subTitleComponent">
+          Điểu chỉnh thông số các mã order hiện tại
+        </p>
+        <div className="billBox">
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>
+                    <p className="tableTitle">Bàn</p>
+                  </TableCell>
+                  <TableCell align="right">
+                    <p className="tableTitle">Tên món</p>
+                  </TableCell>
+                  <TableCell align="left">
+                    <p className="tableTitle">Số lượng</p>
+                  </TableCell>
+                  <TableCell align="left">
+                    <p className="tableTitle">Giá</p>
+                  </TableCell>
+                  <TableCell align="right">
+                    <p className="tableTitle">Tổng</p>
+                  </TableCell>
+                  <TableCell align="right">
+                    <p className="tableTitle">Thời gian</p>
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {cloneOrderList ? (
+                  <>
+                    {cloneOrderList.map((row, index) => (
                       <>
-                        {el.status == 1 ? (
-                          <tr
-                            className={
-                              el.changeStatus
-                                ? "orderSettingTableItem orderSettingTableItemActive"
-                                : "orderSettingTableItem"
-                            }
+                        {row.status == 1 ? (
+                          <TableRow
+                            key={row.id}
+                            sx={{
+                              "&:last-child td, &:last-child th": { border: 0 },
+                            }}
                           >
-                            <th>{el.tableName}</th>
-                            <th>{el.vietnamese}</th>
-                            <th className="orderSettingTableCount">
+                            <TableCell component="th" scope="row">
+                              {row.tableName}
+                            </TableCell>
+                            <TableCell align="right">
+                              {row.vietnamese}
+                            </TableCell>
+                            <TableCell align="center">
                               <div className="orderSettingTableCountItem">
                                 <div className="orderSettingTableCountIcon">
-                                  {el.count > 1 ? (
-                                    <RemoveIcon
-                                      fontSize="small"
-                                      onClick={() => {
-                                        minusCount(index);
-                                      }}
-                                    ></RemoveIcon>
+                                  {row.count > 1 ? (
+                                    <div className="tableMinusIcon">
+                                      <RemoveIcon
+                                        fontSize="small"
+                                        onClick={() => {
+                                          minusCount(index);
+                                        }}
+                                        color="action"
+                                      ></RemoveIcon>
+                                    </div>
                                   ) : (
                                     ""
                                   )}
                                 </div>
                                 <div className="orderSettingTableCountNumber">
-                                  {el.count}
+                                  {row.count}
                                 </div>
                                 <div className="orderSettingTableCountIcon">
-                                  {el.count < el.maxCount ? (
-                                    <AddIcon
-                                      fontSize="small"
-                                      onClick={() => {
-                                        plusCount(index);
-                                      }}
-                                    ></AddIcon>
+                                  {row.count < row.maxCount ? (
+                                    <div className="tablePlusIcon">
+                                      <AddIcon
+                                        fontSize="small"
+                                        onClick={() => {
+                                          plusCount(index);
+                                        }}
+                                        color="action"
+                                      ></AddIcon>
+                                    </div>
                                   ) : (
                                     ""
                                   )}
                                 </div>
                               </div>
-                            </th>
-                            <th className="orderSettingTablePriceChange">
-                              <input
-                                value={el.price}
-                                onChange={(e) => {
-                                  changePriceValue(e, index);
-                                }}
-                                type="number"
-                              />
-                            </th>
-                            <th>{el.newPrice}</th>
-                            <th>{el.timeDuration}</th>
-                            {/* <th>{el.changeStatus ? "Cập nhật" : ""}</th> */}
-                          </tr>
+                            </TableCell>
+                            <TableCell align="right">
+                              <div className="tableInputBox">
+                                <TextField
+                                  id="outlined-number"
+                                  label="Giá"
+                                  type="number"
+                                  InputLabelProps={{
+                                    shrink: true,
+                                  }}
+                                  size="small"
+                                  value={row.price}
+                                  onChange={(e) => {
+                                    changePriceValue(e, index);
+                                  }}
+                                />
+                              </div>
+                            </TableCell>
+                            <TableCell align="right">{row.newPrice}</TableCell>
+                            <TableCell align="right">
+                              {row.timeDuration}
+                            </TableCell>
+                          </TableRow>
                         ) : (
                           ""
                         )}
                       </>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            ""
-          )}
+                    ))}
+                  </>
+                ) : (
+                  ""
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </div>
       </Modal>
     </>

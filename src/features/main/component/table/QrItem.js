@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import QRCode from "react-qr-code";
 import { useReactToPrint } from "react-to-print";
 import "./Table.css";
+import PrintIcon from "@mui/icons-material/Print";
 export default function QrItem(props) {
   const table = JSON.parse(props.table);
   const tableCode = table.code;
@@ -23,7 +24,9 @@ export default function QrItem(props) {
             <QRCode size={152} value={props.qrLink} ref={componentRef} />
           </div>
         ) : (
-          <div className="qrCodeFade"><p>QrCode</p></div>
+          <div className="qrCodeFade">
+            <p>QrCode</p>
+          </div>
         )}
         <p className="qrcodePrintTitle textCenter mt-1">{props.tableName}</p>
       </div>
@@ -40,9 +43,9 @@ export default function QrItem(props) {
       ) : (
         "Loading"
       )}
-      <div className="printButton">
+      <div className="buttonPrintBox">
         <button
-          className="button button-green "
+          className="button buttonPrintIcon"
           onClick={() => {
             setShowQrCode(true);
             setTimeout(() => {
@@ -53,7 +56,8 @@ export default function QrItem(props) {
             }, 200);
           }}
         >
-          In
+          <p className="buttonPrintText">in</p>
+          <PrintIcon fontSize="small" color="action"></PrintIcon>
         </button>
       </div>
     </div>

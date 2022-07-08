@@ -35,9 +35,13 @@ export default function Payment() {
           }}
         />
       </div>
-      <button className="button button-green" onClick={createTable}>
-        Tạo
-      </button>
+      {inputValue === "" ? (
+        ""
+      ) : (
+        <button className="button button-green" onClick={createTable}>
+          Tạo
+        </button>
+      )}
       <Method userId={uid}></Method>
     </div>
   );

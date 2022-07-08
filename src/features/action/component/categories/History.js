@@ -7,10 +7,11 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
+import CloseIcon from "@mui/icons-material/Close";
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
-export default function History({ userId, tableId }) {
+export default function History({ userId, tableId, closeBox }) {
   const dispatch = useDispatch();
   const [historyData, setHistoryData] = useState("");
   const [disableButton, setDisableButton] = useState(false);
@@ -120,7 +121,16 @@ export default function History({ userId, tableId }) {
           </Alert>
         </Snackbar>
       </Stack>
+      <div
+        className="closeBoxIcon"
+        onClick={() => {
+          closeBox(false);
+        }}
+      >
+        <CloseIcon fontSize="small" color="action"></CloseIcon>
+      </div>
       <p className="componentTitle">Lịch sử gọi món</p>
+
       {historyData ? (
         <div className="historyList">
           {historyData.map((el, index) => {

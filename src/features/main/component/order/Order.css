@@ -36,6 +36,7 @@
     color: #fff;
 }
 .orderList{
+    margin-top: 1rem;   
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -135,6 +136,9 @@
 }
 .orderSettingTableCountItem{
     display: flex;
+    align-items: center;
+    height: 30px;
+    width: 70px;
     justify-content: space-between;
 }
 .orderSettingTableCountIcon{
@@ -185,4 +189,44 @@
     padding: 0.1rem;
     border-radius:50%;
     background-color: #f5f5f5;
+}
+.tableInputBox{
+    width: 7rem;
+}
+
+.tablePlusIcon, .tableMinusIcon{
+   border: 1px solid #848484;
+   border-radius: 50%;
+   display: flex;
+   align-items: center;
+}
+
+.buttonDisable{
+    padding: 7px 18px;
+    border: none;
+    color: rgb(67, 67, 67);
+    border-radius: 3px;
+    font-weight: bold;
+}
+.buttonActive{
+    padding: 7px 18px;
+    border: none;
+    color: #fff;
+    border-radius: 3px;
+    font-weight: bold;
+    background: linear-gradient(90deg, #3dd49d 0%, #3dd479 100%);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.buttonPrintIcon{
+    display: flex;
+    align-items: center;
+    justify-self: center;
+}
+.buttonPrintBox{
+    display: flex;
+    justify-content: center;
+}
+.buttonPrintText{
+    color: #848484;
+    margin-right: 2px;
 }

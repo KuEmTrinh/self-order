@@ -38,14 +38,18 @@ export default function NewCategory() {
           }}
         />
       </div>
-      <button
-        className="button button-green"
-        onClick={() => {
-          createCategory();
-        }}
-      >
-        Tạo
-      </button>
+      {inputValue === "" ? (
+        ""
+      ) : (
+        <button
+          className="button button-green"
+          onClick={() => {
+            createCategory();
+          }}
+        >
+          Tạo
+        </button>
+      )}
     </>
   );
 }
