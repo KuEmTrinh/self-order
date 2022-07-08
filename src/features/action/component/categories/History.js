@@ -8,6 +8,7 @@ import MuiAlert from "@mui/material/Alert";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import CloseIcon from "@mui/icons-material/Close";
+import LinearProgress from "@mui/material/LinearProgress";
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -86,6 +87,7 @@ export default function History({ userId, tableId, closeBox }) {
       .collection("user")
       .doc(userId)
       .collection("order")
+      .orderBy("createdAt")
       .where("tableId", "==", tableId)
       .onSnapshot((querySnapshot) => {
         const data = [];
@@ -179,7 +181,9 @@ export default function History({ userId, tableId, closeBox }) {
           })}
         </div>
       ) : (
-        "Loading"
+        <Stack sx={{ width: "60%", color: "grey.500" }} spacing={2}>
+          <LinearProgress color="inherit" />
+        </Stack>
       )}
     </div>
   );
