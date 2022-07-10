@@ -2,21 +2,21 @@
     display: flex;
     padding: 1rem;
     flex-wrap: wrap;
-    margin-top: 7rem;
     justify-content: space-between;
     align-content: flex-start;
     padding-bottom: 5rem;
+    margin-top: 8.2rem;
 }
 .foodOrderItem{
     width: 45%;
-    margin-bottom: 2rem;
+    margin-bottom: 1.6rem;
 }
 .foodOrderImage{
     position: relative;
     flex-shrink: 0;
     width: 100%;
     padding-top: 100%;
-    margin-bottom: 1.2rem;
+    margin-bottom: 0.8rem;
     border-radius: 1rem;
     overflow: hidden;
     box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
@@ -42,7 +42,7 @@ img{
     position: relative;
 }
 .foodOrderDetails{
-    line-height: 1.5rem;
+    line-height: 1.3rem;
     width: 85%;
 }
 .foodOrderVietnamese{
@@ -68,7 +68,7 @@ img{
     border: none;
     background-color: #272727;
     color: white;
-    padding: 1.8rem 0.4rem;
+    padding: 1.5rem 0.4rem;
     border-radius: 0.3rem;
     font-weight: bold;
     cursor: pointer;
@@ -78,7 +78,7 @@ img{
     width: auto;
     border: none;
     background-color: rgb(234, 234, 234);
-    padding: 1.8rem 0.8rem;
+    padding: 1.5rem 0.8rem;
     border-radius: 0.3rem;
     font-weight: bold;
     cursor: pointer;
@@ -89,7 +89,7 @@ img{
     height: fit-content;
     width: auto;
     border: none;
-    padding: 1.5rem 0.7rem;
+    padding: 1.2rem 0.7rem;
     border-radius: 0.3rem;
     font-weight: bold;
     cursor: pointer;

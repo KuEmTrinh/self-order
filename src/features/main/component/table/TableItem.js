@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import QRCode from "react-qr-code";
 import Modal from "../menu/Modal";
 import TableQRCode from "./TableQRCode";
 import Table from "@mui/material/Table";

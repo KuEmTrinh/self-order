@@ -82,6 +82,7 @@
     height: calc(100vh - 7rem);
     padding-bottom: 5rem;
     overflow-y: auto;
+    margin-top: 1rem;
 }
 .historyList::-webkit-scrollbar {
   display: none;

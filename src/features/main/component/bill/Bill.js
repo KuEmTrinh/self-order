@@ -15,6 +15,10 @@ import PrintIcon from "@mui/icons-material/Print";
 import Modal from "../../../main/component/menu/Modal";
 import BillDetails from "./BillDetails";
 import { green } from "@mui/material/colors";
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import GridViewIcon from "@mui/icons-material/GridView";
+import ChangeCircleIcon from "@mui/icons-material/ChangeCircle";
+import TableBill from "./TableBill";
 export default function Bill() {
   const userInfomation = JSON.parse(useSelector((state) => state.login.data));
   const uid = userInfomation.uid;
@@ -25,6 +29,7 @@ export default function Bill() {
   const [billSales, setBillSales] = useState(0);
   const [billTotal, setBillTotal] = useState(0);
   const [billWaiting, setBillWaiting] = useState(0);
+  const [changeView, setChangeView] = useState(false);
   const getDataFromBill = (data) => {
     let billSalesSum = 0;
     let billTotalSum = 0;
@@ -117,76 +122,108 @@ export default function Bill() {
         </div>
       </div>
       <p className="componentTitle mt-1">Danh sách Hoá đơn</p>
-      <div className="billBox">
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  <p className="tableTitle">Tên</p>
-                </TableCell>
-                <TableCell align="right">
-                  <p className="tableTitle">Tổng Món</p>
-                </TableCell>
-                <TableCell align="right">
-                  <p className="tableTitle">Phương thức</p>
-                </TableCell>
-                <TableCell align="right">
-                  <p className="tableTitle">Hoá đơn</p>
-                </TableCell>
-                <TableCell align="right">
-                  <p className="tableTitle">Tổng</p>
-                </TableCell>
-                <TableCell align="right">
-                  <p className="tableTitle">Trạng thái</p>
-                </TableCell>
-                <TableCell align="right">
-                  <p className="tableTitle">In</p>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {billData ? (
-                <>
-                  {billData.map((row, index) => (
-                    <TableRow
-                      key={row.id}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell component="th" scope="row">
-                        {row.tableName}
-                      </TableCell>
-                      <TableCell align="right">{row.totalOrder}</TableCell>
-                      <TableCell align="right">{row.method}</TableCell>
-                      <TableCell align="right">
-                        {row.receipt == 1 ? "Có" : "Không"}
-                      </TableCell>
-                      <TableCell align="right">{row.total}</TableCell>
-                      <TableCell align="right">
-                        {row.status == 1 ? (
-                          <HourglassBottomIcon color="action" />
-                        ) : (
-                          <CheckCircleIcon sx={{ color: green[500] }} />
-                        )}
+      <div className="orderBoxIcon">
+        {changeView ? (
+          <div className="tableViewTitle">
+            <GridViewIcon color="action" />
+            <p className="subTitleComponent">In hóa đơn theo bàn</p>
+          </div>
+        ) : (
+          <div className="tableViewTitle">
+            <ListAltIcon color="action" />
+            <p className="subTitleComponent">In hóa đơn theo yêu cầu</p>
+          </div>
+        )}
+        <div
+          className={
+            changeView
+              ? "changeViewIconBox changeViewIconBoxActive"
+              : "changeViewIconBox"
+          }
+          onClick={() => {
+            setChangeView(!changeView);
+          }}
+        >
+          <p>Thay đổi</p>
+          <ChangeCircleIcon />
+        </div>
+      </div>
+      {billData ? (
+        <>
+          {changeView ? (
+            <TableBill></TableBill>
+          ) : (
+            <div className="billBox">
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>
+                        <p className="tableTitle">Tên</p>
                       </TableCell>
                       <TableCell align="right">
-                        <PrintIcon
-                          color="action"
-                          onClick={() => {
-                            openDetails(index);
-                          }}
-                        />
+                        <p className="tableTitle">Tổng Món</p>
+                      </TableCell>
+                      <TableCell align="right">
+                        <p className="tableTitle">Phương thức</p>
+                      </TableCell>
+                      <TableCell align="right">
+                        <p className="tableTitle">Hoá đơn</p>
+                      </TableCell>
+                      <TableCell align="right">
+                        <p className="tableTitle">Tổng</p>
+                      </TableCell>
+                      <TableCell align="right">
+                        <p className="tableTitle">Trạng thái</p>
+                      </TableCell>
+                      <TableCell align="right">
+                        <p className="tableTitle">In</p>
                       </TableCell>
                     </TableRow>
-                  ))}
-                </>
-              ) : (
-                ""
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
+                  </TableHead>
+                  <TableBody>
+                    {billData.map((row, index) => (
+                      <TableRow
+                        key={row.id}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell component="th" scope="row">
+                          {row.tableName}
+                        </TableCell>
+                        <TableCell align="right">{row.totalOrder}</TableCell>
+                        <TableCell align="right">{row.method}</TableCell>
+                        <TableCell align="right">
+                          {row.receipt == 1 ? "Có" : "Không"}
+                        </TableCell>
+                        <TableCell align="right">{row.total}</TableCell>
+                        <TableCell align="right">
+                          {row.status == 1 ? (
+                            <HourglassBottomIcon color="action" />
+                          ) : (
+                            <CheckCircleIcon sx={{ color: green[500] }} />
+                          )}
+                        </TableCell>
+                        <TableCell align="right">
+                          <PrintIcon
+                            color="action"
+                            onClick={() => {
+                              openDetails(index);
+                            }}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </div>
+          )}
+        </>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

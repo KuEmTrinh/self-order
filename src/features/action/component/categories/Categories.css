@@ -1,13 +1,13 @@
 .categoryLabel{
     padding: 8px 16px;
-    background-color: rgb(245, 245, 245);
     border-radius: 5px;
-    margin-right: 1rem;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
     min-width: fit-content;
+    color: #848484;
+    font-weight: bold;
 }
 .categoryBox{
-    padding: 15px;
+    padding: 5px 15px 15px 15px;
     overflow-x: auto;
     display: flex;
     word-wrap: normal;
@@ -16,6 +16,7 @@
 .active {
     background: linear-gradient(90deg, #3dd49d 0%, #3dd479 100%);
     color: white;
+    transition: 0.3s all linear;
 }
 .wrapTopBox{
     top: 0;
@@ -44,4 +45,13 @@
 }
 .paymentTrueButton{
     font-weight: bold;
+}
+.categoryTitle{
+    padding: 15px 15px 0 15px;
+    font-weight: bold;
+    color: #272727;
+    font-size: 18px;
+}
+.categoryBox::-webkit-scrollbar{
+    display: none;
 }

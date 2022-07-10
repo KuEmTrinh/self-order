@@ -33,6 +33,7 @@ export default function Categories({ data, tableId, userId, paymentStatus }) {
   return (
     <>
       <div className="wrapTopBox">
+        <p className="categoryTitle">Danh sách món ăn</p>
         <div className="categoryBox">
           {data.map((element, index) => {
             return (
