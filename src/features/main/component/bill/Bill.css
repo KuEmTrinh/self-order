@@ -114,13 +114,15 @@
     display: flex;
 }
 .tableBillList{
-    width: 50%;
+    width: 65%;
 }
 .tableList{
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: flex-start;
+    overflow-y: auto;
+    max-height: 14rem;
 }
 .tableItem{
     width: 3.5rem;
@@ -146,7 +148,7 @@
     color: #fff;
 }
 .orderData{
-    width: 50%;
+    width: 35%;
     overflow-y: auto;
 }
 .orderDataItem{
@@ -170,4 +172,39 @@
 }
 .orderDataItemCount, .orderDataItemPrice{
     color: #848484;
+}
+.tableBillOrderDetails{
+    display: flex;
+    width: 95%;
+    justify-content: space-between;
+}
+.tableBillContent{
+    padding: 1.5rem 2.5rem;
+    background-color: #f6f6f6;
+    border-radius: 5px;
+    color: #272727;
+    font-weight: bold;
+}
+.tableBillSubTitle, .returnPriceSubTitle{
+    text-align: center;
+    font-weight: bold;
+    color: #848484;
+    font-size: 14px;
+    margin-top: 0.5rem;
+}
+.tableBillPriceInput{
+    margin-top: 1rem;
+}
+.tableBillPriceBox{
+    width: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.returnPriceCount{
+    margin-top: 0.5rem;
+    padding: 1rem 2rem;
+    background-color: #f6f6f6;
+    color: #393939;
+    border-radius: 5px;
 }

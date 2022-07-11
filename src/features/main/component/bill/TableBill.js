@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../../../../app/firebase";
 import { useSelector } from "react-redux";
+import TextField from "@mui/material/TextField";
+
 export default function TableBill() {
   const userInfomation = JSON.parse(useSelector((state) => state.login.data));
   const uid = userInfomation.uid;
   const [tableList, setTableList] = useState();
   const [tableId, setTableId] = useState("");
-  const [tableName, setTableName] = useState("");
+  const [tableName, setTableName] = useState("Trống");
   const [orderData, setOrderData] = useState("");
+  const [tableFoodTotal, setTableFoodTotal] = useState("");
+  const [tablePriceTotal, setTablePriceTotal] = useState("");
+  const [inputPrice, setInputPrice] = useState("");
+  const [returnPrice, setReturnPrice] = useState(0);
   //useEffect
   useEffect(() => {
     getTableListData();
@@ -36,6 +42,8 @@ export default function TableBill() {
           });
         });
         setOrderData(data);
+        getTableInfo(data);
+        setReturnPrice(0);
       });
     return query;
   }, [tableId]);
@@ -55,6 +63,27 @@ export default function TableBill() {
       });
       setTableList(data);
     });
+  };
+  const getTableInfo = (data) => {
+    let tablePriceTotal = 0;
+    let foodTotal = 0;
+    data.map((el) => {
+      if (el.status === 2) {
+        tablePriceTotal += parseInt(el.newPrice);
+      }
+      foodTotal += parseInt(el.count);
+    });
+    setTablePriceTotal(tablePriceTotal);
+    setTableFoodTotal(foodTotal);
+    setInputPrice(tablePriceTotal);
+  };
+  const tablePriceTotalChange = (e) => {
+    let returnPrice = 0;
+    returnPrice = e.target.value - tablePriceTotal;
+    setInputPrice(e.target.value);
+    if (returnPrice >= 0) {
+      setReturnPrice(returnPrice);
+    }
   };
   return (
     <div className="tableBill">
@@ -91,7 +120,38 @@ export default function TableBill() {
         <div className="tableBillListTop">
           <p className="subTitleComponent">Thông số hóa đơn</p>
           <div className="tableBillOrderDetails">
-            <p className="tableBillName">{tableName}</p>
+            <div className="tableBillName">
+              <p className="tableBillContent">{tableName}</p>
+              <p className="tableBillSubTitle">Bàn</p>
+            </div>
+            <div className="tableBillFoodTotol">
+              <p className="tableBillContent">{tableFoodTotal}</p>
+              <p className="tableBillSubTitle">Món</p>
+            </div>
+            <div className="tableBillPriceTotal">
+              <p className="tableBillContent">{tablePriceTotal}</p>
+              <p className="tableBillSubTitle">Tổng</p>
+            </div>
+          </div>
+          <div className="tableBillPriceBox">
+            <div className="tableBillPriceInput">
+              <TextField
+                id="outlined-number"
+                label="Khách trả"
+                type="number"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                onChange={(e) => {
+                  tablePriceTotalChange(e);
+                }}
+                value={inputPrice}
+              />
+            </div>
+            <div className="tableBillReturnBox">
+              <p className="returnPriceSubTitle">Thối lại</p>
+              <p className="returnPriceCount">{returnPrice}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -104,8 +164,8 @@ export default function TableBill() {
                 <div className="orderDataItem" key={el.index}>
                   <p className="orderDataItemName">{el.vietnamese}</p>
                   <div className="orderDataItemInfo">
-                    <p className="orderDataItemCount">2</p>
-                    <p className="orderDataItemPrice">600</p>
+                    <p className="orderDataItemCount">{el.count}</p>
+                    <p className="orderDataItemPrice">{el.newPrice}</p>
                   </div>
                 </div>
               );
