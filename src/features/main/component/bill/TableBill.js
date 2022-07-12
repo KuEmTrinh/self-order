@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../../../../app/firebase";
 import { useSelector } from "react-redux";
-import TextField from "@mui/material/TextField";
-
+import TablePayment from "./TablePayment";
+import Modal from "../menu/Modal";
 export default function TableBill() {
   const userInfomation = JSON.parse(useSelector((state) => state.login.data));
   const uid = userInfomation.uid;
@@ -12,12 +12,17 @@ export default function TableBill() {
   const [orderData, setOrderData] = useState("");
   const [tableFoodTotal, setTableFoodTotal] = useState("");
   const [tablePriceTotal, setTablePriceTotal] = useState("");
+  const [paymentToggle, setPaymentToggle] = useState(false);
   const [inputPrice, setInputPrice] = useState("");
   const [returnPrice, setReturnPrice] = useState(0);
   //useEffect
   useEffect(() => {
     getTableListData();
   }, []);
+  useEffect(() => {
+    setReturnPrice(inputPrice - tablePriceTotal);
+  }, [inputPrice]);
+
   useEffect(() => {
     const query = db
       .collection("user")
@@ -77,16 +82,23 @@ export default function TableBill() {
     setTableFoodTotal(foodTotal);
     setInputPrice(tablePriceTotal);
   };
-  const tablePriceTotalChange = (e) => {
-    let returnPrice = 0;
-    returnPrice = e.target.value - tablePriceTotal;
-    setInputPrice(e.target.value);
-    if (returnPrice >= 0) {
-      setReturnPrice(returnPrice);
-    }
-  };
   return (
     <div className="tableBill">
+      <Modal
+        show={paymentToggle}
+        onClose={() => {
+          setPaymentToggle(false);
+        }}
+      >
+        <TablePayment
+          tablePriceTotal={tablePriceTotal}
+          setInputPrice={setInputPrice}
+          setReturnPrice={setReturnPrice}
+          inputPrice={inputPrice}
+          returnPrice={returnPrice}
+        />
+      </Modal>
+
       <div className="tableBillList">
         <div className="tableBillListTop">
           <p className="subTitleComponent">Danh sách bàn</p>
@@ -133,26 +145,18 @@ export default function TableBill() {
               <p className="tableBillSubTitle">Tổng</p>
             </div>
           </div>
-          <div className="tableBillPriceBox">
-            <div className="tableBillPriceInput">
-              <TextField
-                id="outlined-number"
-                label="Khách trả"
-                type="number"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                onChange={(e) => {
-                  tablePriceTotalChange(e);
-                }}
-                value={inputPrice}
-              />
+          {orderData != "" ? (
+            <div
+              className="tableBillPaymentBox"
+              onClick={() => {
+                setPaymentToggle(true);
+              }}
+            >
+              <p className="tableBillPaymentButton">Thanh toán</p>
             </div>
-            <div className="tableBillReturnBox">
-              <p className="returnPriceSubTitle">Thối lại</p>
-              <p className="returnPriceCount">{returnPrice}</p>
-            </div>
-          </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
       <div className="orderData">

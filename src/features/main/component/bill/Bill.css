@@ -196,7 +196,7 @@
     margin-top: 1rem;
 }
 .tableBillPriceBox{
-    width: 95%;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -207,4 +207,43 @@
     background-color: #f6f6f6;
     color: #393939;
     border-radius: 5px;
+}
+.tableBillPaymentBox{
+    width: 95%;
+    text-align: center;
+    background: linear-gradient(90deg, #3dd49d 0%, #3dd479 100%);
+    color: #fff;
+    padding: 1rem 0;
+    font-weight: bold;
+    margin-top: 1rem;
+    border-radius: 2rem;
+    font-size: 18px;
+}
+.tablePaymentBox{
+    width: 50vh;
+    box-sizing: border-box;
+}
+.tablePriceTotalBox{
+    box-sizing: border-box;
+    width: 100%;
+    padding: 1rem;
+    text-align: center;
+    background-color: #f6f6f6;
+    margin-top: 0.5rem;
+    border-radius: 5px;
+}
+.paymentMoneyBox{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+.paymentMoneyLabel{
+    width: 22%;
+    background-color: #f6f6f6;
+    border-radius: 5px;
+    color: #393939;
+    font-size: 14px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
