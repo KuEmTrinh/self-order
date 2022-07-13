@@ -12,6 +12,7 @@ export default function OrderFilter({
   const userInfomation = JSON.parse(useSelector((state) => state.login.data));
   const uid = userInfomation.uid;
   const [updateTime, setUpdateTime] = useState("");
+  const [newCategory, setNewCategory] = useState("");
   const queryUpdateTime = () => {
     const query = db
       .collection("user")
@@ -26,14 +27,19 @@ export default function OrderFilter({
     let lastUpdateTime = JSON.parse(localStorage.getItem("categoryUpdateTime"));
     console.log(updateTime.seconds);
     console.log(lastUpdateTime.seconds);
-    if (updateTime.seconds === lastUpdateTime.seconds) {
-      console.log("do not thing");
-    } else {
+    if (updateTime.seconds != lastUpdateTime.seconds) {
       setNewCategoryListData();
     }
   }, [updateTime]);
   useEffect(() => {
-    queryUpdateTime();
+    try {
+      console.log("lay bo nho tam thoi");
+      let categoryList = JSON.parse(localStorage.getItem("category"));
+      setShowCategoryList(categoryList);
+    } catch (error) {}
+    setTimeout(() => {
+      queryUpdateTime();
+    }, 100);
   }, []);
   const setNewCategoryListData = () => {
     const query = db
@@ -50,16 +56,17 @@ export default function OrderFilter({
             show: true,
           });
         });
-        setShowCategoryList(data);
         localStorage.setItem("category", JSON.stringify(data));
       });
     return query;
   };
+
   const categoryItemShowOff = (index) => {
     const changeList = [...showCategoryList];
     changeList[index].show = !changeList[index].show;
     setShowCategoryList([...changeList]);
     localStorage.setItem("category", JSON.stringify(changeList));
+    console.log("da luu vao bo nho tam thoi");
   };
   return (
     <>
