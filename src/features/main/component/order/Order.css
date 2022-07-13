@@ -230,3 +230,40 @@
     color: #848484;
     margin-right: 2px;
 }
+.orderFeatureIconBox{
+    display: flex;
+}
+.orderFeatureIconItem{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    background: #fff;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.orderFeatureIconTitle{
+    color: #848484;
+    font-size: 12px;
+}
+.orderFilterBox{
+    width: 30rem;
+}
+.categoryFilterList{
+    margin-top: 1rem;
+}
+.categoryFilterWrap{
+    display: inline-block;
+}
+.categoryFilterItem{
+    display: flex;
+    align-items: center;
+    background: #fff;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 5px;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+}
+.categoryFilterName{
+    color: #848484;
+    padding-left: 10px;
+}

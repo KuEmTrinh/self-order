@@ -36,6 +36,7 @@ export default function CartConfirm({ cartData, userId, tableInfo, tableId }) {
     }
     db.collection("user").doc(userId).collection("order").add({
       foodId: el.id,
+      categoryId: el.categoryId,
       changeStatus: false,
       tableName: tableInfo.name,
       tableId: tableId,

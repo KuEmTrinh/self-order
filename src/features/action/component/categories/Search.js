@@ -41,6 +41,7 @@ export default function Search({
   useEffect(() => {
     const data = [];
     categoryList.map((el) => {
+      const categoryId = el.id;
       const fetchFoodData = async () => {
         const query = await db
           .collection("category")
@@ -51,6 +52,7 @@ export default function Search({
             querySnapshot.docs.map((el) => {
               let queryData = el.data();
               queryData.id = el.id;
+              queryData.categoryId = categoryId;
               data.push(queryData);
             });
           });
@@ -58,6 +60,7 @@ export default function Search({
       };
       fetchFoodData();
     });
+    console.log(data);
     setFoods(data);
   }, []);
   const searchData = (keyWord) => {

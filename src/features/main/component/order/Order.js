@@ -7,12 +7,13 @@ import OrderItem from "./OrderItem";
 import OrderComplete from "./OrderComplete";
 import OrderSetting from "./OrderSetting";
 import OrderCompress from "./OrderCompress";
+import OrderFilter from "./OrderFilter";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CompressIcon from "@mui/icons-material/Compress";
 import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
 import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
 import ringer from "./notification.mp3";
-
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import "./Order.css";
 export default function Order() {
   //color theme
@@ -106,6 +107,7 @@ export default function Order() {
   const [completeToggle, setCompleteToggle] = useState(false);
   const [settingToggle, setSettingToggle] = useState(false);
   const [compressToggle, setCompressToggle] = useState(false);
+  const [filterToggle, setFilterToggle] = useState(false);
   const [orderLength, setOrderLength] = useState();
   const deleteToggle = () => {
     setDeleteItem(!deleteItem);
@@ -125,7 +127,15 @@ export default function Order() {
   const openCompressToggle = () => {
     setCompressToggle(!compressToggle);
   };
-  useEffect(() => {
+  const openFilterToggle = () => {
+    setFilterToggle(!filterToggle);
+  };
+  const closeFilterToggle = () => {
+    setFilterToggle(false);
+  };
+  const fetchData = () => {
+    let localStorageCategoryList = JSON.parse(localStorage.getItem("category"));
+    console.log(localStorageCategoryList);
     const query = db
       .collection("user")
       .doc(userInfo.uid)
@@ -134,28 +144,37 @@ export default function Order() {
       .onSnapshot((querySnapshot) => {
         const order = [];
         querySnapshot.docs.map((doc) => {
-          order.push({
-            id: doc.id,
-            foodId: doc.data().foodId,
-            vietnamese: doc.data().vietnamese,
-            tableName: doc.data().tableName,
-            count: doc.data().count,
-            maxCount: doc.data().count,
-            price: parseInt(doc.data().price),
-            basePrice: parseInt(doc.data().price),
-            newPrice: parseInt(doc.data().newPrice),
-            status: doc.data().status,
-            changeStatus: false,
-            show: true,
-            createdAt: doc.data().createdAt,
-            updateAt: doc.data().updateAt,
-            timeDuration: getTimeDuration(doc.data().createdAt),
-            minDuration: 0,
-          });
+          let checkId = doc.data().categoryId;
+          let checkItem = localStorageCategoryList.find(
+            (el) => el.id === checkId
+          );
+          if (checkItem.show) {
+            order.push({
+              id: doc.id,
+              foodId: doc.data().foodId,
+              vietnamese: doc.data().vietnamese,
+              tableName: doc.data().tableName,
+              count: doc.data().count,
+              maxCount: doc.data().count,
+              price: parseInt(doc.data().price),
+              basePrice: parseInt(doc.data().price),
+              newPrice: parseInt(doc.data().newPrice),
+              status: doc.data().status,
+              changeStatus: false,
+              show: true,
+              createdAt: doc.data().createdAt,
+              updateAt: doc.data().updateAt,
+              timeDuration: getTimeDuration(doc.data().createdAt),
+              minDuration: 0,
+            });
+          }
         });
         setOrder(order);
       });
     return query;
+  };
+  useEffect(() => {
+    fetchData();
   }, []);
   return (
     <>
@@ -171,22 +190,21 @@ export default function Order() {
                       ? "orderIconItem waringRedColor"
                       : "orderIconItem"
                   }
+                  onClick={deleteToggle}
                 >
                   <DeleteIcon
-                    onClick={deleteToggle}
                     color={deleteItem ? "whiteColor" : "action"}
                   ></DeleteIcon>
                 </div>
-
                 <div
                   className={
                     completeToggle
                       ? "orderIconItem usingActiveColor"
                       : "orderIconItem"
                   }
+                  onClick={openCompleteBox}
                 >
                   <LibraryAddCheckIcon
-                    onClick={openCompleteBox}
                     color={completeToggle ? "whiteColor" : "action"}
                   ></LibraryAddCheckIcon>
                 </div>
@@ -196,9 +214,9 @@ export default function Order() {
                       ? "orderIconItem usingActiveColor"
                       : "orderIconItem"
                   }
+                  onClick={openSettingTable}
                 >
                   <SettingsSuggestIcon
-                    onClick={openSettingTable}
                     color={settingToggle ? "whiteColor" : "action"}
                   ></SettingsSuggestIcon>
                 </div>
@@ -208,11 +226,23 @@ export default function Order() {
                       ? "orderIconItem usingActiveColor"
                       : "orderIconItem"
                   }
+                  onClick={openCompressToggle}
                 >
                   <CompressIcon
-                    onClick={openCompressToggle}
                     color={compressToggle ? "whiteColor" : "action"}
                   ></CompressIcon>
+                </div>
+                <div
+                  className={
+                    filterToggle
+                      ? "orderIconItem usingActiveColor"
+                      : "orderIconItem"
+                  }
+                  onClick={openFilterToggle}
+                >
+                  <FilterAltIcon
+                    color={filterToggle ? "whiteColor" : "action"}
+                  ></FilterAltIcon>
                 </div>
               </div>
             </ThemeProvider>
@@ -230,6 +260,10 @@ export default function Order() {
             order={order}
             userId={userInfo.uid}
           ></OrderSetting>
+          <OrderFilter
+            filterToggle={filterToggle}
+            closeFilterToggle={closeFilterToggle}
+          ></OrderFilter>
           {compressToggle ? (
             <OrderCompress order={order} userInfo={userInfo}></OrderCompress>
           ) : (

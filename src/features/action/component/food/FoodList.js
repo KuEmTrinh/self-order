@@ -72,6 +72,7 @@ export default function FoodList({ categoryId,paymentStatus }) {
             imgUrl: doc.data().imgUrl,
             status: doc.data().status,
             createAt: doc.data().createAt,
+            categoryId: categoryId,
           });
         });
         setFoodList(food);
