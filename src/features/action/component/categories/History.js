@@ -94,6 +94,7 @@ export default function History({ userId, tableId, closeBox }) {
         querySnapshot.docs.map((doc) => {
           data.push({
             id: doc.data().foodId,
+            categoryId: doc.data().categoryId,
             vietnamese: doc.data().vietnamese,
             japanese: doc.data().japanese,
             count: doc.data().count,
