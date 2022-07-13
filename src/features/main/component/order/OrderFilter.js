@@ -29,40 +29,32 @@ export default function OrderFilter({
     if (updateTime.seconds === lastUpdateTime.seconds) {
       console.log("do not thing");
     } else {
-      console.log("should be change");
+      setNewCategoryListData();
     }
   }, [updateTime]);
   useEffect(() => {
     queryUpdateTime();
   }, []);
-  useEffect(() => {
+  const setNewCategoryListData = () => {
     const query = db
       .collection("category")
       .where("uid", "==", uid)
-      .orderBy("index");
-    const observer = query.onSnapshot((querySnapshot) => {
-      const data = [];
-      querySnapshot.docs.map((doc) => {
-        data.push({
-          id: doc.id,
-          name: doc.data().name,
-          show: true,
+      .orderBy("index")
+      .get()
+      .then((querySnapshot) => {
+        const data = [];
+        querySnapshot.docs.map((doc) => {
+          data.push({
+            id: doc.id,
+            name: doc.data().name,
+            show: true,
+          });
         });
-      });
-      let localStorageCategoryList = JSON.parse(
-        localStorage.getItem("category")
-      );
-      if (localStorageCategoryList) {
-        setShowCategoryList(localStorageCategoryList);
-      } else {
         setShowCategoryList(data);
-      }
-      if (localStorageCategoryList.length != data.length) {
         localStorage.setItem("category", JSON.stringify(data));
-      }
-    });
-    return observer;
-  }, []);
+      });
+    return query;
+  };
   const categoryItemShowOff = (index) => {
     const changeList = [...showCategoryList];
     changeList[index].show = !changeList[index].show;
