@@ -16,6 +16,8 @@ import ringer from "./notification.mp3";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import "./Order.css";
 export default function Order() {
+  const userInfomation = JSON.parse(useSelector((state) => state.login.data));
+  const uid = userInfomation.uid;
   //color theme
   const theme = createTheme({
     palette: {
@@ -133,9 +135,26 @@ export default function Order() {
   const closeFilterToggle = () => {
     setFilterToggle(false);
   };
+  const queryCategoryData = () => {
+    const query = db
+      .collection("category")
+      .where("uid", "==", uid)
+      .orderBy("index");
+    const observer = query.onSnapshot((querySnapshot) => {
+      const data = [];
+      querySnapshot.docs.map((doc) => {
+        data.push({
+          id: doc.id,
+          name: doc.data().name,
+          show: true,
+        });
+      });
+      localStorage.setItem("category", JSON.stringify(data));
+    });
+    return observer;
+  };
   const fetchData = () => {
     let localStorageCategoryList = JSON.parse(localStorage.getItem("category"));
-    console.log(localStorageCategoryList);
     const query = db
       .collection("user")
       .doc(userInfo.uid)
@@ -174,7 +193,15 @@ export default function Order() {
     return query;
   };
   useEffect(() => {
-    fetchData();
+    let localStorageCategoryList = JSON.parse(localStorage.getItem("category"));
+    if (localStorageCategoryList) {
+      fetchData();
+    } else {
+      queryCategoryData();
+      setTimeout(() => {
+        fetchData();
+      }, 1000);
+    }
   }, []);
   return (
     <>
