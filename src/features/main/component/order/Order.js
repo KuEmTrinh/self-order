@@ -110,6 +110,7 @@ export default function Order() {
   const [settingToggle, setSettingToggle] = useState(false);
   const [compressToggle, setCompressToggle] = useState(false);
   const [filterToggle, setFilterToggle] = useState(false);
+  const [showCategoryList, setShowCategoryList] = useState("");
   const [orderLength, setOrderLength] = useState();
   const deleteToggle = () => {
     setDeleteItem(!deleteItem);
@@ -203,6 +204,11 @@ export default function Order() {
       }, 1000);
     }
   }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      fetchData();
+    }, 100);
+  }, [showCategoryList]);
   return (
     <>
       {order ? (
@@ -290,6 +296,8 @@ export default function Order() {
           <OrderFilter
             filterToggle={filterToggle}
             closeFilterToggle={closeFilterToggle}
+            showCategoryList={showCategoryList}
+            setShowCategoryList={setShowCategoryList}
           ></OrderFilter>
           {compressToggle ? (
             <OrderCompress order={order} userInfo={userInfo}></OrderCompress>

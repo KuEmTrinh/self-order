@@ -3,10 +3,14 @@ import { useSelector } from "react-redux";
 import { db } from "../../../../app/firebase";
 import Modal from "../menu/Modal";
 import Checkbox from "@mui/material/Checkbox";
-export default function OrderFilter({ filterToggle, closeFilterToggle }) {
+export default function OrderFilter({
+  filterToggle,
+  closeFilterToggle,
+  showCategoryList,
+  setShowCategoryList
+}) {
   const userInfomation = JSON.parse(useSelector((state) => state.login.data));
   const uid = userInfomation.uid;
-  const [showCategoryList, setShowCategoryList] = useState("");
   // useEffect
   useEffect(() => {
     const query = db
