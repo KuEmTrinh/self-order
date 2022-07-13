@@ -11,6 +11,9 @@ export default function NewCategory() {
   const [inputValue, setInputValue] = useState("");
   const createCategory = () => {
     if (inputValue.length > 0) {
+      db.collection("user").doc(userInfomation.uid).update({
+        categoryUpdate: firebase.firestore.FieldValue.serverTimestamp(),
+      });
       db.collection("category").add({
         index: categoryCurrentIndex,
         name: inputValue,

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { db } from "../../../../app/firebase";
+import { firebase } from "../../../../app/firebase";
 import Modal from "../../../main/component/menu/Modal";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -14,6 +16,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 export default function CategoryList({ categoryList }) {
+  const userInfomation = JSON.parse(useSelector((state) => state.login.data));
   let navigate = useNavigate();
   const [categoryData, setCategoryData] = useState("");
   const [deleteCategoryId, setDeleteCategoryId] = useState("");
@@ -29,6 +32,9 @@ export default function CategoryList({ categoryList }) {
   }, [categoryList]);
   //function
   const deleteConfirm = () => {
+    db.collection("user").doc(userInfomation.uid).update({
+      categoryUpdate: firebase.firestore.FieldValue.serverTimestamp(),
+    });
     const query = db.collection("category").doc(deleteCategoryId);
     query
       .collection("food")
@@ -49,6 +55,9 @@ export default function CategoryList({ categoryList }) {
     setEditCategoryNewName(e.target.value);
   };
   const editConfirm = () => {
+    db.collection("user").doc(userInfomation.uid).update({
+      categoryUpdate: firebase.firestore.FieldValue.serverTimestamp(),
+    });
     const query = db.collection("category").doc(editCategoryId);
     query.update({
       name: editCategoryNewName,

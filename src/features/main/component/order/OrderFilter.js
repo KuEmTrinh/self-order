@@ -7,11 +7,34 @@ export default function OrderFilter({
   filterToggle,
   closeFilterToggle,
   showCategoryList,
-  setShowCategoryList
+  setShowCategoryList,
 }) {
   const userInfomation = JSON.parse(useSelector((state) => state.login.data));
   const uid = userInfomation.uid;
-  // useEffect
+  const [updateTime, setUpdateTime] = useState("");
+  const queryUpdateTime = () => {
+    const query = db
+      .collection("user")
+      .doc(uid)
+      .onSnapshot((querySnapshot) => {
+        setUpdateTime(querySnapshot.data().categoryUpdate);
+      });
+    return query;
+  };
+  useEffect(() => {
+    console.log("category some thing change");
+    let lastUpdateTime = JSON.parse(localStorage.getItem("categoryUpdateTime"));
+    console.log(updateTime.seconds);
+    console.log(lastUpdateTime.seconds);
+    if (updateTime.seconds === lastUpdateTime.seconds) {
+      console.log("do not thing");
+    } else {
+      console.log("should be change");
+    }
+  }, [updateTime]);
+  useEffect(() => {
+    queryUpdateTime();
+  }, []);
   useEffect(() => {
     const query = db
       .collection("category")
@@ -26,7 +49,6 @@ export default function OrderFilter({
           show: true,
         });
       });
-
       let localStorageCategoryList = JSON.parse(
         localStorage.getItem("category")
       );

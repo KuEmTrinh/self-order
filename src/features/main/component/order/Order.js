@@ -112,6 +112,19 @@ export default function Order() {
   const [filterToggle, setFilterToggle] = useState(false);
   const [showCategoryList, setShowCategoryList] = useState("");
   const [orderLength, setOrderLength] = useState();
+  const queryUpdateTime = () => {
+    const query = db
+      .collection("user")
+      .doc(uid)
+      .get()
+      .then((querySnapshot) => {
+        localStorage.setItem(
+          "categoryUpdateTime",
+          JSON.stringify(querySnapshot.data().categoryUpdate)
+        );
+      });
+    return query;
+  };
   const deleteToggle = () => {
     setDeleteItem(!deleteItem);
   };
@@ -199,6 +212,9 @@ export default function Order() {
       fetchData();
     } else {
       queryCategoryData();
+      setTimeout(() => {
+        queryUpdateTime();
+      }, 500);
       setTimeout(() => {
         fetchData();
       }, 1000);
