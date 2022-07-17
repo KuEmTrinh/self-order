@@ -1,6 +1,8 @@
 import React from "react";
 import TextField from "@mui/material/TextField";
-
+import PrintIcon from "@mui/icons-material/Print";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { useReactToPrint } from "react-to-print";
 export default function TablePayment({
   tablePriceTotal,
   setInputPrice,
@@ -19,6 +21,7 @@ export default function TablePayment({
   return (
     <div className="tablePaymentBox">
       <p className="componentTitle">In hoá đơn</p>
+      <p className="subTitleComponent">Số dư thanh toán</p>
       <div className="tablePriceTotalBox">
         <p>{tablePriceTotal}</p>
       </div>
@@ -43,20 +46,20 @@ export default function TablePayment({
           <p className="returnPriceCount">{returnPrice}</p>
         </div>
       </div>
-      <p className="subTitleComponent">Chọn tiền</p>
-      <div className="paymentMoneyBox">
-        <div
-          className="paymentMoneyLabel"
-          onClick={() => {
-            const newPrice = inputPrice + 10000;
-            setInputPrice(newPrice);
-          }}
-        >
-          10000
+      <p className="subTitleComponent">Xác nhận thanh toán</p>
+      <div className="tableBillButtonBox">
+        <div className="tableBillCompleteReceipt">
+          <p className="tableBillCompleteReceiptText">Hoàn thành</p>
+          <div className="tableBillCompleteReceiptIcon">
+            <CheckCircleIcon></CheckCircleIcon>
+          </div>
         </div>
-        <div className="paymentMoneyLabel">5000</div>
-        <div className="paymentMoneyLabel">1000</div>
-        <div className="paymentMoneyLabel">500</div>
+        <div className="tableBillPrintReceipt">
+          <p className="tableBillPrintText">In hóa đơn</p>
+          <div className="tableBillPrintIcon">
+            <PrintIcon></PrintIcon>
+          </div>
+        </div>
       </div>
     </div>
   );

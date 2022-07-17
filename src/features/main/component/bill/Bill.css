@@ -247,3 +247,21 @@
     padding-top: 1rem;
     padding-bottom: 1rem;
 }
+.tableBillButtonBox{
+    display: flex;
+    justify-content: space-between;
+}
+.tableBillCompleteReceipt, .tableBillPrintReceipt{
+    display: flex;
+    align-items: center;
+    background-color: #f6f6f6;
+    width: 40%;
+    padding: 0.7rem;
+    justify-content: center;
+    border-radius: 5px;
+}
+.tableBillCompleteReceiptText, .tableBillPrintText{
+    font-weight: bold;
+    font-size: 14px;
+    margin-right: 1rem;
+}
