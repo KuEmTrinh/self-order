@@ -23,23 +23,21 @@ export default function OrderFilter({
     return query;
   };
   useEffect(() => {
-    console.log("category some thing change");
     let lastUpdateTime = JSON.parse(localStorage.getItem("categoryUpdateTime"));
-    console.log(updateTime.seconds);
-    console.log(lastUpdateTime.seconds);
-    if (updateTime.seconds != lastUpdateTime.seconds) {
-      setNewCategoryListData();
+    if (updateTime) {
+      if (updateTime.seconds != lastUpdateTime.seconds) {
+        setNewCategoryListData();
+      }
     }
   }, [updateTime]);
   useEffect(() => {
-    try {
-      console.log("lay bo nho tam thoi");
-      let categoryList = JSON.parse(localStorage.getItem("category"));
-      setShowCategoryList(categoryList);
-    } catch (error) {}
+    queryUpdateTime();
     setTimeout(() => {
-      queryUpdateTime();
-    }, 100);
+      try {
+        let categoryList = JSON.parse(localStorage.getItem("category"));
+        setShowCategoryList(categoryList);
+      } catch (error) {}
+    }, 500);
   }, []);
   const setNewCategoryListData = () => {
     const query = db

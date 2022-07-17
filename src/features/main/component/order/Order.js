@@ -209,6 +209,7 @@ export default function Order() {
   useEffect(() => {
     let localStorageCategoryList = JSON.parse(localStorage.getItem("category"));
     if (localStorageCategoryList) {
+      console.log("have localstorage list")
       fetchData();
     } else {
       queryCategoryData();
