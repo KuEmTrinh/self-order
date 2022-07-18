@@ -11,6 +11,8 @@ export default function TableBill() {
   const [tableName, setTableName] = useState("Trống");
   const [orderData, setOrderData] = useState("");
   const [tableFoodTotal, setTableFoodTotal] = useState("");
+  const [tableFoodCancel, setTableFoodCancel] = useState("");
+  const [tableFoodComplete, setTableFoodComplete] = useState("");
   const [tablePriceTotal, setTablePriceTotal] = useState("");
   const [paymentToggle, setPaymentToggle] = useState(false);
   const [inputPrice, setInputPrice] = useState("");
@@ -72,15 +74,23 @@ export default function TableBill() {
   const getTableInfo = (data) => {
     let tablePriceTotal = 0;
     let foodTotal = 0;
+    let foodCancel = 0;
+    let foodComplete = 0;
     data.map((el) => {
       if (el.status === 2) {
         tablePriceTotal += parseInt(el.newPrice);
+        foodComplete += parseInt(el.count);
       }
       foodTotal += parseInt(el.count);
+      if (el.status === 3) {
+        foodCancel += parseInt(el.count);
+      }
     });
     setTablePriceTotal(tablePriceTotal);
     setTableFoodTotal(foodTotal);
     setInputPrice(tablePriceTotal);
+    setTableFoodCancel(foodCancel);
+    setTableFoodComplete(foodComplete);
   };
   return (
     <div className="tableBill">
@@ -96,6 +106,11 @@ export default function TableBill() {
           setReturnPrice={setReturnPrice}
           inputPrice={inputPrice}
           returnPrice={returnPrice}
+          orderData={orderData}
+          tableName={tableName}
+          tableFoodTotal={tableFoodTotal}
+          tableFoodCancel={tableFoodCancel}
+          tableFoodComplete={tableFoodComplete}
         />
       </Modal>
 
@@ -168,7 +183,7 @@ export default function TableBill() {
                 <div className="orderDataItem" key={el.index}>
                   <p className="orderDataItemName">{el.vietnamese}</p>
                   <div className="orderDataItemInfo">
-                    <p className="orderDataItemCount">{el.count}</p>
+                    <p className="orderDataItemCount">({el.count})</p>
                     <p className="orderDataItemPrice">{el.newPrice}</p>
                   </div>
                 </div>

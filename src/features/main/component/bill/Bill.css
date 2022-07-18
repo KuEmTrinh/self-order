@@ -265,3 +265,6 @@
     font-size: 14px;
     margin-right: 1rem;
 }
+.hiddenBox{
+    display: none;
+}

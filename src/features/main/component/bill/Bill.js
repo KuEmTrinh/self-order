@@ -100,7 +100,7 @@ export default function Bill() {
           userId={uid}
         ></BillDetails>
       </Modal>
-      <p className="componentTitle">Chỉ Báo</p>
+      <p className="componentTitle">Chỉ báo hôm nay</p>
       <div className="totalBox">
         <div className="totalBoxItemLeft">
           <p className="totalBoxItemCount">{billSales}</p>

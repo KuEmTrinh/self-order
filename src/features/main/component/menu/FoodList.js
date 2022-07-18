@@ -37,6 +37,7 @@ export default function FoodList({ categoryId }) {
           price: doc.data().price,
           imgUrl: doc.data().imgUrl,
           status: doc.data().status,
+          properties: doc.data().properties,
           createAt: doc.data().createAt,
         });
       });

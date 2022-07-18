@@ -52,6 +52,7 @@ export default function NewFood({ categoryId, categoryName }) {
       japanese: foodJapanese,
       price: foodPrice,
       status: true,
+      properties: false,
       imgUrl: downloadURL,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     });

@@ -11,3 +11,81 @@
 .foodDetail{
     width: 75%;
 }
+.foodEditMainBox{
+    display: flex;
+    width: 33rem;
+    justify-content: space-between;
+}
+.foodEdit , .foodEditSubBox{
+    width: 48%;
+}
+.propertiesToggleButton{
+    box-sizing: border-box;
+    font-weight: bold;
+    width: 100%;
+    padding: 0.7rem;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 12px;
+}
+.propertiesToggleButtonActive{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background: linear-gradient(90deg, #3dd49d 0%, #3dd479 100%);
+    color: #fff;
+}
+.propertiesToggleButtonDisable{
+    background-color: #f6f6f6;
+    color: #272727;
+}
+.propertiesNewButton{
+    display: flex;
+    width: 45%;
+    background-color: #f6f6f6;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    padding: 0.4rem 0;
+}
+.propertiesButtonTitle{
+    font-weight: bold;
+    font-size: 11px;
+    color: #272727;
+    margin-left: 0.4rem;
+}
+.propertiesCreateBox{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.propertyRadioElement{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.propertySubtitle{
+    color: #848484;
+    font-weight: bold;
+    font-size: 12px;
+    margin-top: 0.8rem;
+}
+.radioPriceText{
+    color: #848484;
+    font-weight: bold;
+    font-size: 14px;
+}
+.radioListItem{
+    display: flex;
+    align-items: center;
+}
+.propertyCreateButton{
+    box-sizing: border-box;
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background: linear-gradient(90deg, #3dd49d 0%, #3dd479 100%);
+    color: #fff;
+    text-align: center;
+    padding: 0.7rem;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
