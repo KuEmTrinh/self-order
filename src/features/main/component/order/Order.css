@@ -267,3 +267,22 @@
     color: #848484;
     padding-left: 10px;
 }
+.deviceSelectList{
+    display: flex;
+}
+.deviceItem{
+    margin-right: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #f6f6f6;
+    color: #272727;
+    font-weight: bold;
+    border-radius: 5px;
+    font-size: 14px;
+    box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+}
+.deviceItemActive{
+    background: linear-gradient(90deg, #3dd49d 0%, #3dd479 100%);
+    color: #fff;
+    transition: 0.3s all linear;
+    box-shadow: none;
+}

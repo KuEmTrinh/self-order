@@ -3,97 +3,132 @@ import { useSelector } from "react-redux";
 import { db } from "../../../../app/firebase";
 import Modal from "../menu/Modal";
 import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
 export default function OrderFilter({
   filterToggle,
   closeFilterToggle,
-  showCategoryList,
-  setShowCategoryList,
+  selectDevice,
+  setSelectDevice,
+  categoryShowList,
+  setCategoryShowList,
+  categoryList,
+  uid,
 }) {
-  const userInfomation = JSON.parse(useSelector((state) => state.login.data));
-  const uid = userInfomation.uid;
-  const [updateTime, setUpdateTime] = useState("");
-  const [newCategory, setNewCategory] = useState("");
-  const queryUpdateTime = () => {
+  const [deviceList, setDeviceList] = useState("");
+  //function
+  const fetchDeviceData = () => {
     const query = db
       .collection("user")
       .doc(uid)
+      .collection("device")
+      .orderBy("name")
       .onSnapshot((querySnapshot) => {
-        setUpdateTime(querySnapshot.data().categoryUpdate);
-      });
-    return query;
-  };
-  useEffect(() => {
-    let lastUpdateTime = JSON.parse(localStorage.getItem("categoryUpdateTime"));
-    if (updateTime) {
-      if (updateTime.seconds != lastUpdateTime.seconds) {
-        setNewCategoryListData();
-      }
-    }
-  }, [updateTime]);
-  useEffect(() => {
-    queryUpdateTime();
-    setTimeout(() => {
-      try {
-        let categoryList = JSON.parse(localStorage.getItem("category"));
-        setShowCategoryList(categoryList);
-      } catch (error) {}
-    }, 500);
-  }, []);
-  const setNewCategoryListData = () => {
-    const query = db
-      .collection("category")
-      .where("uid", "==", uid)
-      .orderBy("index")
-      .get()
-      .then((querySnapshot) => {
         const data = [];
         querySnapshot.docs.map((doc) => {
           data.push({
             id: doc.id,
             name: doc.data().name,
-            show: true,
+            list: doc.data().list,
           });
         });
-        localStorage.setItem("category", JSON.stringify(data));
+        setDeviceList(data);
       });
     return query;
   };
-
-  const categoryItemShowOff = (index) => {
-    const changeList = [...showCategoryList];
-    changeList[index].show = !changeList[index].show;
-    setShowCategoryList([...changeList]);
-    localStorage.setItem("category", JSON.stringify(changeList));
-    console.log("da luu vao bo nho tam thoi");
+  const changeData = (name, status) => {
+    if (status) {
+      const oldList = [...selectDevice.list];
+      oldList.push(name);
+      const query = db
+        .collection("user")
+        .doc(uid)
+        .collection("device")
+        .doc(selectDevice.id)
+        .update({
+          list: [...oldList],
+        });
+    } else {
+      const oldList = [...selectDevice.list];
+      const newList = oldList.filter((element) => element != name);
+      const query = db
+        .collection("user")
+        .doc(uid)
+        .collection("device")
+        .doc(selectDevice.id)
+        .update({
+          list: [...newList],
+        });
+    }
   };
-  return (
-    <>
-      <Modal show={filterToggle} onClose={closeFilterToggle}>
+  useEffect(() => {
+    console.log(deviceList);
+  }, [deviceList]);
+  useEffect(() => {
+    fetchDeviceData();
+  }, []);
+  function renderComponent() {
+    return (
+      <>
         <div className="orderFilterBox">
           <p className="componentTitle">Lọc danh sách</p>
-          {showCategoryList ? (
-            <div className="categoryFilterList">
-              {showCategoryList.map((el, index) => {
+          <p className="subTitleComponent">Chọn thiết bị</p>
+          {deviceList ? (
+            <div className="deviceSelectList">
+              {deviceList.map((el) => {
                 return (
                   <div
-                    key={index}
-                    className="categoryFilterWrap"
+                    className={
+                      el.id === selectDevice.id
+                        ? "deviceItem deviceItemActive"
+                        : "deviceItem"
+                    }
                     onClick={() => {
-                      categoryItemShowOff(index);
+                      setSelectDevice(el);
                     }}
                   >
-                    <div className="categoryFilterItem">
-                      <p className="categoryFilterName">{el.name}</p>
-                      <Checkbox checked={el.show} />
-                    </div>
+                    {el.name}
                   </div>
                 );
               })}
             </div>
           ) : (
-            "Loading"
+            "loading"
+          )}
+          {categoryList && selectDevice ? (
+            <div className="showCategoryList">
+              <p className="subTitleComponent">Danh sách</p>
+              {categoryList.map((el) => {
+                let find = selectDevice.list.find(
+                  (element) => element === el.name
+                );
+                el.show = true;
+                if (find) {
+                  el.show = false;
+                }
+                return (
+                  <div className="showCategoryItem">
+                    <FormControlLabel
+                      control={<Checkbox checked={el.show} />}
+                      label={el.name}
+                      onChange={() => {
+                        changeData(el.name, el.show);
+                      }}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <p className="subTitleComponent">Mặc định</p>
           )}
         </div>
+      </>
+    );
+  }
+  return (
+    <>
+      <Modal show={filterToggle} onClose={closeFilterToggle}>
+        {renderComponent()}
       </Modal>
     </>
   );

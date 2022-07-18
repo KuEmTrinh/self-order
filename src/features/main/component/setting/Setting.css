@@ -159,3 +159,21 @@
 .userInfoBox{
     width: 100%;
 }
+.deviceInputBox{
+    display: flex;
+    align-items: center;
+}
+.deviceCreateButton{
+    margin-left: 1rem;
+    padding: 0.8rem 2rem;
+    color: #fff;
+    background: linear-gradient(90deg, #3dd49d 0%, #3dd479 100%);
+    font-weight: bold;
+    border-radius: 5px;
+    font-size: 14px;
+}
+.deviceList{
+    overflow-y: auto;
+    max-height: 55vh;
+    padding: 0.2rem;
+}

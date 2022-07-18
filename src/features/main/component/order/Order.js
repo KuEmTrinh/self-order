@@ -110,21 +110,10 @@ export default function Order() {
   const [settingToggle, setSettingToggle] = useState(false);
   const [compressToggle, setCompressToggle] = useState(false);
   const [filterToggle, setFilterToggle] = useState(false);
-  const [showCategoryList, setShowCategoryList] = useState("");
-  const [orderLength, setOrderLength] = useState();
-  const queryUpdateTime = () => {
-    const query = db
-      .collection("user")
-      .doc(uid)
-      .get()
-      .then((querySnapshot) => {
-        localStorage.setItem(
-          "categoryUpdateTime",
-          JSON.stringify(querySnapshot.data().categoryUpdate)
-        );
-      });
-    return query;
-  };
+  
+  const [selectDevice, setSelectDevice] = useState("");
+  const [categoryShowList, setCategoryShowList] = useState("");
+  const [categoryList, setCategoryList] = useState("");
   const deleteToggle = () => {
     setDeleteItem(!deleteItem);
   };
@@ -149,26 +138,25 @@ export default function Order() {
   const closeFilterToggle = () => {
     setFilterToggle(false);
   };
-  const queryCategoryData = () => {
+  const fetchCategoryData = () => {
     const query = db
       .collection("category")
       .where("uid", "==", uid)
-      .orderBy("index");
-    const observer = query.onSnapshot((querySnapshot) => {
-      const data = [];
-      querySnapshot.docs.map((doc) => {
-        data.push({
-          id: doc.id,
-          name: doc.data().name,
-          show: true,
+      .orderBy("index")
+      .get()
+      .then((snapshot) => {
+        const data = [];
+        snapshot.docs.map((doc) => {
+          data.push({
+            id: doc.id,
+            name: doc.data().name,
+            show: true,
+          });
         });
+        setCategoryList(data);
       });
-      localStorage.setItem("category", JSON.stringify(data));
-    });
-    return observer;
   };
   const fetchData = () => {
-    let localStorageCategoryList = JSON.parse(localStorage.getItem("category"));
     const query = db
       .collection("user")
       .doc(userInfo.uid)
@@ -177,55 +165,33 @@ export default function Order() {
       .onSnapshot((querySnapshot) => {
         const order = [];
         querySnapshot.docs.map((doc) => {
-          let checkId = doc.data().categoryId;
-          let checkItem = localStorageCategoryList.find(
-            (el) => el.id === checkId
-          );
-          if (checkItem.show) {
-            order.push({
-              id: doc.id,
-              foodId: doc.data().foodId,
-              vietnamese: doc.data().vietnamese,
-              tableName: doc.data().tableName,
-              count: doc.data().count,
-              maxCount: doc.data().count,
-              price: parseInt(doc.data().price),
-              basePrice: parseInt(doc.data().price),
-              newPrice: parseInt(doc.data().newPrice),
-              status: doc.data().status,
-              changeStatus: false,
-              show: true,
-              createdAt: doc.data().createdAt,
-              updateAt: doc.data().updateAt,
-              timeDuration: getTimeDuration(doc.data().createdAt),
-              minDuration: 0,
-            });
-          }
+          order.push({
+            id: doc.id,
+            foodId: doc.data().foodId,
+            vietnamese: doc.data().vietnamese,
+            tableName: doc.data().tableName,
+            count: doc.data().count,
+            maxCount: doc.data().count,
+            price: parseInt(doc.data().price),
+            basePrice: parseInt(doc.data().price),
+            newPrice: parseInt(doc.data().newPrice),
+            status: doc.data().status,
+            changeStatus: false,
+            show: true,
+            createdAt: doc.data().createdAt,
+            updateAt: doc.data().updateAt,
+            timeDuration: getTimeDuration(doc.data().createdAt),
+            minDuration: 0,
+          });
         });
         setOrder(order);
       });
     return query;
   };
   useEffect(() => {
-    let localStorageCategoryList = JSON.parse(localStorage.getItem("category"));
-    if (localStorageCategoryList) {
-      console.log("have localstorage list")
-      fetchData();
-    } else {
-      queryCategoryData();
-      setTimeout(() => {
-        queryUpdateTime();
-      }, 500);
-      setTimeout(() => {
-        fetchData();
-      }, 1000);
-    }
+    fetchData();
+    fetchCategoryData();
   }, []);
-  useEffect(() => {
-    setTimeout(() => {
-      fetchData();
-    }, 100);
-  }, [showCategoryList]);
   return (
     <>
       {order ? (
@@ -313,8 +279,12 @@ export default function Order() {
           <OrderFilter
             filterToggle={filterToggle}
             closeFilterToggle={closeFilterToggle}
-            showCategoryList={showCategoryList}
-            setShowCategoryList={setShowCategoryList}
+            selectDevice={selectDevice}
+            setSelectDevice={setSelectDevice}
+            categoryShowList={categoryShowList}
+            setCategoryShowList={setCategoryShowList}
+            uid={uid}
+            categoryList={categoryList}
           ></OrderFilter>
           {compressToggle ? (
             <OrderCompress order={order} userInfo={userInfo}></OrderCompress>
