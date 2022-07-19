@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { db } from "../../../../app/firebase";
 import Modal from "../menu/Modal";
 import Checkbox from "@mui/material/Checkbox";
@@ -15,6 +15,7 @@ export default function OrderFilter({
   uid,
 }) {
   const [deviceList, setDeviceList] = useState("");
+  const [showList, setShowList] = useState("");
   //function
   const fetchDeviceData = () => {
     const query = db
@@ -61,8 +62,22 @@ export default function OrderFilter({
     }
   };
   useEffect(() => {
-    console.log(deviceList);
-  }, [deviceList]);
+    console.log(categoryList);
+    const filterList = [...categoryList];
+    console.log(filterList);
+    if (selectDevice) {
+      selectDevice.list.map((el) => {
+        filterList.map((element) => {
+          element.show = true;
+          if (element.name == el) {
+            element.show = false;
+          }
+        });
+      });
+      // console.log(filterList);
+      setShowList([...filterList]);
+    }
+  }, [selectDevice]);
   useEffect(() => {
     fetchDeviceData();
   }, []);
@@ -94,24 +109,43 @@ export default function OrderFilter({
           ) : (
             "loading"
           )}
-          {categoryList && selectDevice ? (
+          {selectDevice ? (
+            <>
+              {showList ? (
+                <div className="showCategoryList">
+                  <p className="subTitleComponent">Danh sách</p>
+                  {showList.map((item) => {
+                    return (
+                      <div className="showCategoryItem">
+                        <FormControlLabel
+                          control={<Checkbox checked={item.show} />}
+                          label={item.name}
+                          onChange={() => {
+                            // changeData(el.name, el.show);
+                          }}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                ""
+              )}
+            </>
+          ) : (
+            "false"
+          )}
+          {/* {categoryList && selectDevice ? (
             <div className="showCategoryList">
               <p className="subTitleComponent">Danh sách</p>
               {categoryList.map((el) => {
-                let find = selectDevice.list.find(
-                  (element) => element === el.name
-                );
-                el.show = true;
-                if (find) {
-                  el.show = false;
-                }
                 return (
                   <div className="showCategoryItem">
                     <FormControlLabel
-                      control={<Checkbox checked={el.show} />}
+                      control={<Checkbox checked={true} />}
                       label={el.name}
                       onChange={() => {
-                        changeData(el.name, el.show);
+                        // changeData(el.name, el.show);
                       }}
                     />
                   </div>
@@ -120,7 +154,7 @@ export default function OrderFilter({
             </div>
           ) : (
             <p className="subTitleComponent">Mặc định</p>
-          )}
+          )} */}
         </div>
       </>
     );

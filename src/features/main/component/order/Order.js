@@ -110,7 +110,7 @@ export default function Order() {
   const [settingToggle, setSettingToggle] = useState(false);
   const [compressToggle, setCompressToggle] = useState(false);
   const [filterToggle, setFilterToggle] = useState(false);
-  
+
   const [selectDevice, setSelectDevice] = useState("");
   const [categoryShowList, setCategoryShowList] = useState("");
   const [categoryList, setCategoryList] = useState("");
