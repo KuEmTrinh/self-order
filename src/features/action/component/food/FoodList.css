@@ -129,3 +129,22 @@ img{
     font-size: 16px;
     color: #272727;
 }
+.foodPropertyTotalPrice{
+    font-weight: bold;
+    font-size: 17px;
+    color: #272727;
+    padding-left: 0.9rem;
+}
+.foodRadioList{
+    padding-left: 0.9rem;
+}
+.foodPropertyConfirmButton{
+    font-weight: bold;
+    background: linear-gradient(90deg, #3dd49d 0%, #3dd479 100%);
+    color: white;
+    font-size: 14px;
+    text-align: center;
+    padding: 0.5rem;
+    border-radius: 5px;
+    margin-top: 1rem;
+}

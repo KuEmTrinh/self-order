@@ -136,39 +136,56 @@ export default function OrderItem({ order, userInfo, deleteItem }) {
                             changeStatus(el.id, index);
                           }}
                         >
-                          <p className="tableName">{el.tableName}</p>
-                          <div className="wrapFlex">
-                            <p className="foodName">{el.vietnamese}</p>
-                            <p
-                              className={
-                                el.count > 1
-                                  ? "foodCount foodCountSpecial"
-                                  : "foodCount"
-                              }
-                            >
-                              {el.count}
-                            </p>
-                            {el.minDuration >= 5 ? (
+                          <div className="orderItemMainInfo">
+                            <p className="tableName">{el.tableName}</p>
+                            <div className="wrapFlex">
+                              <p className="foodName">{el.vietnamese}</p>
+                              <p
+                                className={
+                                  el.count > 1
+                                    ? "foodCount foodCountSpecial"
+                                    : "foodCount"
+                                }
+                              >
+                                {el.count}
+                              </p>
+                              {el.minDuration >= 5 ? (
+                                <>
+                                  {el.minDuration >= 10 ? (
+                                    <div className="durationTimeIcon">
+                                      <AccessAlarmsIcon
+                                        sx={{
+                                          color: "#f44336",
+                                        }}
+                                        fontSize="small"
+                                      ></AccessAlarmsIcon>
+                                    </div>
+                                  ) : (
+                                    <div className="durationTimeIcon">
+                                      <AccessAlarmsIcon
+                                        sx={{
+                                          color: "#ff9800",
+                                        }}
+                                        fontSize="small"
+                                      ></AccessAlarmsIcon>
+                                    </div>
+                                  )}
+                                </>
+                              ) : (
+                                ""
+                              )}
+                            </div>
+                          </div>
+                          <div className="propertyDetailsBox mt-05">
+                            {el.details ? (
                               <>
-                                {el.minDuration >= 10 ? (
-                                  <div className="durationTimeIcon">
-                                    <AccessAlarmsIcon
-                                      sx={{
-                                        color: "#f44336",
-                                      }}
-                                      fontSize="small"
-                                    ></AccessAlarmsIcon>
-                                  </div>
-                                ) : (
-                                  <div className="durationTimeIcon">
-                                    <AccessAlarmsIcon
-                                      sx={{
-                                        color: "#ff9800",
-                                      }}
-                                      fontSize="small"
-                                    ></AccessAlarmsIcon>
-                                  </div>
-                                )}
+                                {el.details.map((item) => {
+                                  return (
+                                    <span className="orderDetailsItem">
+                                      {item}
+                                    </span>
+                                  );
+                                })}
                               </>
                             ) : (
                               ""

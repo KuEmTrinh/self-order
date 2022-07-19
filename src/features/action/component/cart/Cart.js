@@ -12,11 +12,15 @@ import {
   plusFoodCart,
   minusFoodCart,
   setTotalCart,
+  minusSpecialFood,
+  plusSpecialFood,
 } from "../food/foodSlice";
 export default function Cart({ userId, tableInfo, tableId }) {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.food.data);
+  const specialData = useSelector((state) => state.food.specialData);
   const [cartData, setCartData] = useState("");
+  const [specialCartData, setSpecialCartData] = useState("");
   const deleteCartItem = (id) => {
     dispatch(deleteFoodCart(id));
   };
@@ -55,6 +59,10 @@ export default function Cart({ userId, tableInfo, tableId }) {
     dispatch(setTotalCart(total));
     setCartData(newArray);
   }, [data]);
+  useEffect(() => {
+    const newData = [...specialData];
+    setSpecialCartData(newData);
+  }, [specialData]);
   const countPlus = (id) => {
     dispatch(plusFoodCart(id));
   };
@@ -63,16 +71,17 @@ export default function Cart({ userId, tableInfo, tableId }) {
   };
 
   return (
-    <>
+    <div className="cart">
+      <CartConfirm
+        cartData={cartData}
+        userId={userId}
+        tableInfo={tableInfo}
+        tableId={tableId}
+        specialCartData={specialCartData}
+      ></CartConfirm>
       {cartData ? (
         <>
-          <CartConfirm
-            cartData={cartData}
-            userId={userId}
-            tableInfo={tableInfo}
-            tableId={tableId}
-          ></CartConfirm>
-          <div className="cart">
+          <>
             {cartData.map((el, index) => {
               return (
                 <div className="cartItem" key={index}>
@@ -126,13 +135,89 @@ export default function Cart({ userId, tableInfo, tableId }) {
                 </div>
               );
             })}
-          </div>
+          </>
         </>
       ) : (
         <Stack sx={{ width: "100%", color: "grey.500" }} spacing={2}>
           <LinearProgress color="inherit" />
         </Stack>
       )}
-    </>
+      {specialCartData ? (
+        <>
+          <>
+            {specialCartData.map((el, index) => {
+              return (
+                <div className="cartItem" key={index}>
+                  <div
+                    className="cartItemDelete"
+                    onClick={() => {
+                      deleteCartItem(el.id);
+                    }}
+                  >
+                    <HighlightOffIcon
+                      fontSize="medium"
+                      style={{ color: "#c43c35" }}
+                    ></HighlightOffIcon>
+                  </div>
+                  <div className="cartImage">
+                    <img src={el.imgUrl} />
+                  </div>
+                  <div className="cartItemRight">
+                    <div className="cartInfomation">
+                      <p className="cartVietnamese">{el.vietnamese}</p>
+                      <p className="cartJapanese">{el.japanese}</p>
+                      <p className="cartPrice">{el.total}</p>
+                      <div className="propertyDetailsBox">
+                        {el.details ? (
+                          <>
+                            {el.details.map((item) => {
+                              return (
+                                <span className="propertyDetailsItem">
+                                  {item}
+                                </span>
+                              );
+                            })}
+                          </>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    </div>
+                    <div className="cartCount flex align-center">
+                      {el.countNumber > 1 ? (
+                        <div
+                          className="cartCountMinus"
+                          onClick={() => {
+                            dispatch(minusSpecialFood(index));
+                          }}
+                        >
+                          <RemoveIcon></RemoveIcon>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+
+                      <p className="cartCountNumber">{el.countNumber}</p>
+                      <div
+                        className="cartCountPlus"
+                        onClick={() => {
+                          dispatch(plusSpecialFood(index));
+                        }}
+                      >
+                        <AddIcon></AddIcon>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </>
+        </>
+      ) : (
+        <Stack sx={{ width: "100%", color: "grey.500" }} spacing={2}>
+          <LinearProgress color="inherit" />
+        </Stack>
+      )}
+    </div>
   );
 }

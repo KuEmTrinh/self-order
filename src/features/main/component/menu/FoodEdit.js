@@ -6,6 +6,7 @@ import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../../../../app/firebase";
 import { firebase } from "../../../../app/firebase";
 import RadioList from "./RadioList";
+import CheckboxList from "./CheckboxList";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import imageCompression from "browser-image-compression";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
@@ -17,6 +18,8 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+import FormGroup from "@mui/material/FormGroup";
+import Checkbox from "@mui/material/Checkbox";
 export default function FoodEdit(props) {
   const editFood = JSON.parse(props.food);
   const [foodVietnamese, setFoodVietnamese] = useState("");
@@ -33,6 +36,9 @@ export default function FoodEdit(props) {
   const [propertyRadioPriceInput, setPropertyRadioPriceInput] = useState("");
   const [propertyRadioList, setPropertyRadioList] = useState("");
   const [radioList, setRadioList] = useState("");
+  const [propertyCheckboxName, setPropertyCheckboxName] = useState("");
+  const [propertyCheckboxPrice, setPropertyCheckboxPrice] = useState("");
+  const [propertyCheckboxList, setPropertyCheckboxList] = useState("");
   useEffect(() => {
     setFoodVietnamese(editFood.vietnamese);
     setFoodJapanese(editFood.japanese);
@@ -145,6 +151,12 @@ export default function FoodEdit(props) {
   const propertyRadioTitleChangeValue = (e) => {
     setPropertyRadioTitle(e.target.value);
   };
+  const propertyCheckboxNameValue = (e) => {
+    setPropertyCheckboxName(e.target.value);
+  };
+  const propertyCheckboxPriceValue = (e) => {
+    setPropertyCheckboxPrice(e.target.value);
+  };
   const createRadioElement = () => {
     let price = "";
     if (propertyRadioPriceInput === "") {
@@ -161,6 +173,23 @@ export default function FoodEdit(props) {
     setPropertyRadioList([...list]);
     setPropertyRadioPriceInput("");
     setPropertyRadioInput("");
+  };
+  const createCheckboxElement = () => {
+    let price = "";
+    if (propertyCheckboxPrice === "") {
+      price = 0;
+    } else {
+      price = propertyCheckboxPrice;
+    }
+    let property = {
+      name: propertyCheckboxName,
+      price: price,
+    };
+    let list = [...propertyCheckboxList];
+    list.push(property);
+    setPropertyCheckboxList([...list]);
+    setPropertyCheckboxName("");
+    setPropertyCheckboxPrice("");
   };
   const createRadioItem = () => {
     const foodInfo = JSON.parse(props.food);
@@ -180,6 +209,22 @@ export default function FoodEdit(props) {
     setTimeout(() => {
       radioListQuery("");
     }, 500);
+  };
+  const createCheckboxItem = () => {
+    const foodInfo = JSON.parse(props.food);
+    const query = db
+      .collection("category")
+      .doc(props.categoryId)
+      .collection("food")
+      .doc(foodInfo.id)
+      .update({
+        checkbox: propertyCheckboxList,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+    setPropertyCheckboxList("");
+    // setTimeout(() => {
+    //   radioListQuery("");
+    // }, 500);
   };
   const radioListQuery = () => {
     const foodInfo = JSON.parse(props.food);
@@ -405,7 +450,86 @@ export default function FoodEdit(props) {
                     ""
                   )}
                   {propertyType === "checkBox" ? (
-                    <div className="propertyCheckBox"></div>
+                    <div className="propertyRadioBox">
+                      <div className="propertyRadioElement">
+                        <TextField
+                          label="Tên thuộc tính"
+                          id="outlined-start-adornment"
+                          sx={{ m: 1, width: "25ch" }}
+                          size="small"
+                          onChange={(e) => {
+                            propertyCheckboxNameValue(e);
+                          }}
+                          value={propertyCheckboxName}
+                        />
+                        <TextField
+                          label="giá"
+                          id="outlined-start-adornment"
+                          sx={{ m: 1, width: "10ch" }}
+                          size="small"
+                          onChange={(e) => {
+                            propertyCheckboxPriceValue(e);
+                          }}
+                          value={propertyCheckboxPrice}
+                        />
+                        {propertyCheckboxName !== "" ? (
+                          <AddBoxIcon
+                            fontSize="large"
+                            onClick={() => {
+                              createCheckboxElement();
+                            }}
+                          ></AddBoxIcon>
+                        ) : (
+                          <AddBoxIcon
+                            fontSize="large"
+                            color="action"
+                          ></AddBoxIcon>
+                        )}
+                      </div>
+                      <p className="propertySubtitle">Danh sách thuộc tính</p>
+                      <div className="propertyRadioList">
+                        <FormControl>
+                          <FormLabel id="demo-radio-buttons-group-label">
+                            Khác
+                          </FormLabel>
+                          {propertyCheckboxList ? (
+                            <FormGroup>
+                              {propertyCheckboxList.map((el) => {
+                                return (
+                                  <div className="radioListItem">
+                                    <FormControlLabel
+                                      control={<Checkbox />}
+                                      label={el.name}
+                                    />
+                                    {el.price !== 0 ? (
+                                      <p className="radioPriceText">
+                                        ({el.price})
+                                      </p>
+                                    ) : (
+                                      ""
+                                    )}
+                                  </div>
+                                );
+                              })}
+                            </FormGroup>
+                          ) : (
+                            ""
+                          )}
+                        </FormControl>
+                      </div>
+                      {propertyCheckboxList.length >= 1 ? (
+                        <div
+                          className="propertyCreateButton"
+                          onClick={() => {
+                            createCheckboxItem();
+                          }}
+                        >
+                          Tạo thuộc tính
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                    </div>
                   ) : (
                     ""
                   )}
@@ -421,6 +545,7 @@ export default function FoodEdit(props) {
         <div className="foodEditPreviewBox">
           <p className="subTitleComponent">Xem trước</p>
           <RadioList radioList={radioList}></RadioList>
+          <CheckboxList checkboxList={editFood.checkbox}></CheckboxList>
         </div>
       </div>
     </div>

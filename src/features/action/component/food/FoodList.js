@@ -15,6 +15,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import Checkbox from "@mui/material/Checkbox";
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -35,6 +36,10 @@ export default function FoodList({ categoryId, paymentStatus }) {
   const [countNumber, setCountNumber] = useState(1);
   const [foodPropertyTotalPrice, setFoodPropertyTotalPrice] = useState();
   const [foodBasePrice, setFoodBasePrice] = useState();
+  const [foodPrice, setFoodPrice] = useState();
+  const [checkboxList, setCheckboxList] = useState("");
+  const [checkboxPrice, setCheckboxPrice] = useState("");
+  const [foodSelectIndex, setFoodSelectIndex] = useState("");
   const addToCart = (index) => {
     setDisableButton(true);
     setTimeout(() => {
@@ -67,6 +72,10 @@ export default function FoodList({ categoryId, paymentStatus }) {
     horizontal: "right",
   });
   const { vertical, horizontal } = state;
+
+  useEffect(() => {
+    setCountNumber(1);
+  }, []);
   useEffect(() => {
     setShowItem(false);
     const query = db
@@ -85,6 +94,7 @@ export default function FoodList({ categoryId, paymentStatus }) {
             status: doc.data().status,
             createdAt: doc.data().createdAt,
             properties: doc.data().properties,
+            checkbox: doc.data().checkbox,
             categoryId: categoryId,
           });
         });
@@ -97,7 +107,15 @@ export default function FoodList({ categoryId, paymentStatus }) {
     return query;
   }, [categoryId]);
   const openPropertiesBox = (id, index) => {
-    let price = foodList[index].price;
+    setFoodSelectIndex(index);
+    if (searchingStatus) {
+      setCheckboxList(searchData[index].checkbox);
+      var price = searchData[index].price;
+    } else {
+      setCheckboxList(foodList[index].checkbox);
+      var price = foodList[index].price;
+    }
+    setFoodPrice(price);
     let priceNumber = parseInt(price) * 1;
     setFoodPropertyTotalPrice(priceNumber);
     setFoodBasePrice(priceNumber);
@@ -125,7 +143,6 @@ export default function FoodList({ categoryId, paymentStatus }) {
           });
         });
         setProperties(properties);
-        console.log(properties);
         setRadioList(data);
       });
   };
@@ -141,11 +158,52 @@ export default function FoodList({ categoryId, paymentStatus }) {
     };
     let foodPropertyPrice = 0;
     newArray.map((el) => (foodPropertyPrice += parseInt(el.price)));
-    setFoodPropertyTotalPrice(
-      (foodBasePrice + foodPropertyPrice) * countNumber
-    );
+    setFoodBasePrice(parseInt(foodPrice) + foodPropertyPrice);
     setProperties(newArray);
   };
+  const addPropertyFood = () => {
+    const sendFoodData = foodList[foodSelectIndex];
+    let details = [];
+    checkboxList.map((el) => {
+      if (el.checked) {
+        details.push(el.name);
+      }
+    });
+    properties.map((el) => {
+      details.push(el.listName + ":" + el.name);
+    });
+    sendFoodData.countNumber = countNumber;
+    sendFoodData.total = foodPropertyTotalPrice;
+    sendFoodData.details = details;
+    sendFoodData.basePrice = foodBasePrice + checkboxPrice;
+    const data = JSON.stringify(sendFoodData);
+    console.log(data);
+    dispatch(addFoodToCart(data));
+  };
+  useEffect(() => {
+    setFoodPropertyTotalPrice((foodBasePrice + checkboxPrice) * countNumber);
+  }, [foodBasePrice]);
+  useEffect(() => {
+    setFoodPropertyTotalPrice((foodBasePrice + checkboxPrice) * countNumber);
+  }, [countNumber]);
+  useEffect(() => {
+    setFoodPropertyTotalPrice((foodBasePrice + checkboxPrice) * countNumber);
+  }, [checkboxPrice]);
+  useEffect(() => {
+    if (checkboxList) {
+      let plusPrice = 0;
+      checkboxList.map((el) => {
+        if (el.checked) {
+          if (el.check == false) {
+            plusPrice -= parseInt(el.price);
+          } else {
+            plusPrice += parseInt(el.price);
+          }
+        }
+      });
+      setCheckboxPrice(plusPrice);
+    }
+  }, [checkboxList]);
   return (
     <>
       <Modal
@@ -204,6 +262,37 @@ export default function FoodList({ categoryId, paymentStatus }) {
           ) : (
             <p className="subTitleComponent">Không có dữ liệu</p>
           )}
+          {checkboxList && checkboxList !== "" ? (
+            <>
+              <p className="radioListPreviewTitle">Khác</p>
+              {checkboxList.map((el, index) => {
+                return (
+                  <div className="radioListItem">
+                    <FormControlLabel
+                      control={<Checkbox size="small" />}
+                      label={el.name}
+                      onChange={() => {
+                        let newArray = [...checkboxList];
+                        if (newArray[index].checked) {
+                          newArray[index].checked = !newArray[index].checked;
+                        } else {
+                          newArray[index].checked = true;
+                        }
+                        setCheckboxList([...newArray]);
+                      }}
+                    />
+                    {el.price !== 0 ? (
+                      <p className="radioPriceText">({el.price})</p>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                );
+              })}
+            </>
+          ) : (
+            ""
+          )}
         </div>
         <p className="subTitleComponent">Số lượng</p>
         <div className="countSettingBox">
@@ -212,7 +301,6 @@ export default function FoodList({ categoryId, paymentStatus }) {
               <RemoveCircleIcon
                 onClick={() => {
                   setCountNumber(countNumber - 1);
-                  setFoodPropertyTotalPrice(foodBasePrice * (countNumber + 1));
                 }}
               ></RemoveCircleIcon>
             ) : (
@@ -224,13 +312,27 @@ export default function FoodList({ categoryId, paymentStatus }) {
             <AddCircleIcon
               onClick={() => {
                 setCountNumber(countNumber + 1);
-                setFoodPropertyTotalPrice(foodBasePrice * (countNumber + 1));
               }}
             ></AddCircleIcon>
           </div>
         </div>
         <p className="subTitleComponent">Tổng</p>
-        <p>{foodPropertyTotalPrice}</p>
+        {countNumber > 1 ? (
+          <p className="foodPropertyTotalPrice">
+            {foodBasePrice + checkboxPrice} x {countNumber} ={" "}
+            {foodPropertyTotalPrice}
+          </p>
+        ) : (
+          <p className="foodPropertyTotalPrice">{foodPropertyTotalPrice}</p>
+        )}
+        <div
+          className="foodPropertyConfirmButton"
+          onClick={() => {
+            addPropertyFood();
+          }}
+        >
+          Thêm
+        </div>
       </Modal>
       <Stack spacing={2} sx={{ width: "100%" }}>
         <Snackbar
@@ -298,7 +400,7 @@ export default function FoodList({ categoryId, paymentStatus }) {
                                   openPropertiesBox(el.id, index);
                                 }}
                               >
-                                Xem
+                                Chọn
                               </button>
                             ) : (
                               <button
@@ -350,14 +452,27 @@ export default function FoodList({ categoryId, paymentStatus }) {
                   ) : (
                     <>
                       {el.status ? (
-                        <button
-                          className="foodOrderButton"
-                          onClick={() => {
-                            addToCart(index);
-                          }}
-                        >
-                          Chọn
-                        </button>
+                        <>
+                          {el.properties ? (
+                            <button
+                              className="foodOrderButton"
+                              onClick={() => {
+                                openPropertiesBox(el.id, index);
+                              }}
+                            >
+                              Xem
+                            </button>
+                          ) : (
+                            <button
+                              className="foodOrderButton"
+                              onClick={() => {
+                                addToCart(index);
+                              }}
+                            >
+                              Chọn
+                            </button>
+                          )}
+                        </>
                       ) : (
                         <button className="foodSoldOutButton" disabled>
                           Hết

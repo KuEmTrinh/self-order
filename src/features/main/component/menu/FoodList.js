@@ -38,6 +38,7 @@ export default function FoodList({ categoryId }) {
           imgUrl: doc.data().imgUrl,
           status: doc.data().status,
           properties: doc.data().properties,
+          checkbox: doc.data().checkbox,
           createAt: doc.data().createAt,
         });
       });

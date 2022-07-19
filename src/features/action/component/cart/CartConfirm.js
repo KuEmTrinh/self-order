@@ -10,7 +10,13 @@ import MuiAlert from "@mui/material/Alert";
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
-export default function CartConfirm({ cartData, userId, tableInfo, tableId }) {
+export default function CartConfirm({
+  cartData,
+  specialCartData,
+  userId,
+  tableInfo,
+  tableId,
+}) {
   const dispatch = useDispatch();
   //alert
   const [open, setOpen] = useState(false);
@@ -53,14 +59,42 @@ export default function CartConfirm({ cartData, userId, tableInfo, tableId }) {
     });
     dispatch(clearCart());
   };
+  const createSpecialOrder = (el) => {
+    db.collection("user").doc(userId).collection("order").add({
+      foodId: el.id,
+      categoryId: el.categoryId,
+      changeStatus: false,
+      tableName: tableInfo.name,
+      tableId: tableId,
+      vietnamese: el.vietnamese,
+      japanese: el.japanese,
+      newPrice: el.total,
+      price: el.basePrice,
+      basePrice: el.price,
+      count: el.countNumber,
+      imgUrl: el.imgUrl,
+      details: el.details,
+      status: 1,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      updateAt: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    dispatch(clearCart());
+  };
   const openModalBox = () => {
     setConfirmToggle(true);
   };
   const orderConfirm = () => {
     setConfirmToggle(false);
-    cartData.map((el) => {
-      createOrder(el);
-    });
+    if (cartData) {
+      cartData.map((el) => {
+        createOrder(el);
+      });
+    }
+    if (specialCartData) {
+      specialCartData.map((el) => {
+        createSpecialOrder(el);
+      });
+    }
     setMessage("Hoàn thành");
     setOpen(true);
   };
@@ -92,7 +126,7 @@ export default function CartConfirm({ cartData, userId, tableInfo, tableId }) {
         </div>
       </Modal>
       <div className="cartConfirm">
-        {cartData.length > 0 ? (
+        {cartData.length || specialCartData.length > 0 ? (
           <button className="cartConfirmButton" onClick={openModalBox}>
             Order
           </button>

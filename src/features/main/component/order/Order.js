@@ -136,7 +136,7 @@ export default function Order() {
   const closeFilterToggle = () => {
     setFilterToggle(false);
   };
-  
+
   const fetchData = () => {
     const query = db
       .collection("user")
@@ -157,6 +157,7 @@ export default function Order() {
             basePrice: parseInt(doc.data().price),
             newPrice: parseInt(doc.data().newPrice),
             status: doc.data().status,
+            details: doc.data().details,
             changeStatus: false,
             show: true,
             createdAt: doc.data().createdAt,

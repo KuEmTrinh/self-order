@@ -118,3 +118,16 @@
 .cartHistoryItemBox{
     z-index: 200;
 }
+.propertyDetailsBox{
+    margin-top: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+}
+.propertyDetailsItem{
+    font-size: 11px;
+    padding: 0.3rem 0.6rem;
+    margin-right: 0.3rem;
+    margin-bottom: 0.3rem;
+    background-color: #f6f6f6;
+    border-radius: 4px;
+}

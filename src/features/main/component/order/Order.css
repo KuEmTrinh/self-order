@@ -1,5 +1,6 @@
 .orderItem{
     display: flex;
+    flex-direction: column;
     background-color: #F5F5F5;
     width: 11.8rem;
     padding: 0.7rem 1rem;
@@ -285,4 +286,21 @@
     color: #fff;
     transition: 0.3s all linear;
     box-shadow: none;
+}
+.orderItemMainInfo{
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.orderItemDetails{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.orderDetailsItem{
+    font-size: 13px;
+    background-color: #fff;
+    padding: 6px 12px;
+    margin-right: 5px;
+    margin-bottom: 5px;
 }
