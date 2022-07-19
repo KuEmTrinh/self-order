@@ -147,6 +147,7 @@ export default function FoodList({ categoryId, paymentStatus }) {
       });
   };
   const setFoodProperties = (e, index) => {
+    setCountNumber(1);
     const newArray = JSON.parse(JSON.stringify(properties));
     let name = e.target.value;
     const cloneArray = JSON.parse(JSON.stringify(radioList[index].list));
