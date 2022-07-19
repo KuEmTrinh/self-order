@@ -107,6 +107,7 @@ export default function FoodList({ categoryId, paymentStatus }) {
     return query;
   }, [categoryId]);
   const openPropertiesBox = (id, index) => {
+    setCountNumber(1);
     setFoodSelectIndex(index);
     if (searchingStatus) {
       setCheckboxList(searchData[index].checkbox);
@@ -147,7 +148,6 @@ export default function FoodList({ categoryId, paymentStatus }) {
       });
   };
   const setFoodProperties = (e, index) => {
-    setCountNumber(1);
     const newArray = JSON.parse(JSON.stringify(properties));
     let name = e.target.value;
     const cloneArray = JSON.parse(JSON.stringify(radioList[index].list));
