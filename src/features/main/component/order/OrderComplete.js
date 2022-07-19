@@ -3,7 +3,11 @@ import Modal from "../../../main/component/menu/Modal";
 import { firebase } from "../../../../app/firebase";
 import { db } from "../../../../app/firebase";
 
-export default function OrderComplete({ userInfo,completeToggle, closeCompleteToggle}) {
+export default function OrderComplete({
+  userInfo,
+  completeToggle,
+  closeCompleteToggle,
+}) {
   useEffect(() => {
     const query = db
       .collection("user")
@@ -20,6 +24,7 @@ export default function OrderComplete({ userInfo,completeToggle, closeCompleteTo
             count: doc.data().count,
             status: doc.data().status,
             createdAt: doc.data().createdAt,
+            details: doc.data().details,
             updateAt: doc.data().updateAt,
           });
         });
@@ -65,21 +70,34 @@ export default function OrderComplete({ userInfo,completeToggle, closeCompleteTo
                         changeStatus(el.id);
                       }}
                     >
-                      <p className="tableName">{el.tableName}</p>
-                      <div className="wrapFlex">
-                        <p className="foodName">{el.vietnamese}</p>
-                        <p
-                          className={
-                            el.count > 1
-                              ? el.status == 2
-                                ? "foodCount foodCountSpecial foodCountSpecialGreen"
-                                : "foodCount foodCountSpecial foodCountSpecialWarning"
-                              : "foodCount"
-                          }
-                        >
-                          {el.count}
-                        </p>
+                      <div className="orderItemMainInfo">
+                        <p className="tableName">{el.tableName}</p>
+                        <div className="wrapFlex">
+                          <p className="foodName">{el.vietnamese}</p>
+                          <p
+                            className={
+                              el.count > 1
+                                ? el.status == 2
+                                  ? "foodCount foodCountSpecial foodCountSpecialGreen"
+                                  : "foodCount foodCountSpecial foodCountSpecialWarning"
+                                : "foodCount"
+                            }
+                          >
+                            {el.count}
+                          </p>
+                        </div>
                       </div>
+                      {el.details ? (
+                        <div className="propertyDetailsBox mt-05">
+                          {el.details.map((item) => {
+                            return (
+                              <span className="orderDetailsItem">{item}</span>
+                            );
+                          })}
+                        </div>
+                      ) : (
+                        ""
+                      )}
                     </div>
                   ) : (
                     ""

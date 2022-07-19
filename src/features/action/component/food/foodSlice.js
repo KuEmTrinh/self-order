@@ -61,6 +61,9 @@ export const foodSlice = createSlice({
       state.specialData[action.payload].total +=
         state.specialData[action.payload].basePrice;
     },
+    deleteSpecialFood: (state, action) => {
+      state.specialData.splice(action.payload, 1);
+    },
     setTotalCart: (state, action) => {
       state.total = action.payload;
     },
@@ -79,7 +82,8 @@ export const {
   setTotalCart,
   clearCart,
   minusSpecialFood,
-  plusSpecialFood
+  plusSpecialFood,
+  deleteSpecialFood
 } = foodSlice.actions;
 
 export default foodSlice.reducer;

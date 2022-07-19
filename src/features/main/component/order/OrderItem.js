@@ -176,21 +176,19 @@ export default function OrderItem({ order, userInfo, deleteItem }) {
                               )}
                             </div>
                           </div>
-                          <div className="propertyDetailsBox mt-05">
-                            {el.details ? (
-                              <>
-                                {el.details.map((item) => {
-                                  return (
-                                    <span className="orderDetailsItem">
-                                      {item}
-                                    </span>
-                                  );
-                                })}
-                              </>
-                            ) : (
-                              ""
-                            )}
-                          </div>
+                          {el.details ? (
+                            <div className="propertyDetailsBox mt-05">
+                              {el.details.map((item) => {
+                                return (
+                                  <span className="orderDetailsItem">
+                                    {item}
+                                  </span>
+                                );
+                              })}
+                            </div>
+                          ) : (
+                            ""
+                          )}
                         </div>
                       </Zoom>
                     </>
@@ -207,19 +205,34 @@ export default function OrderItem({ order, userInfo, deleteItem }) {
                             openDeleteToggle(el.id, index);
                           }}
                         >
-                          <p className="tableName">{el.tableName}</p>
-                          <div className="wrapFlex">
-                            <p className="foodName">{el.vietnamese}</p>
-                            <p
-                              className={
-                                el.count > 1
-                                  ? "foodCount foodCountSpecial"
-                                  : "foodCount"
-                              }
-                            >
-                              {el.count}
-                            </p>
+                          <div className="orderItemMainInfo">
+                            <p className="tableName">{el.tableName}</p>
+                            <div className="wrapFlex">
+                              <p className="foodName">{el.vietnamese}</p>
+                              <p
+                                className={
+                                  el.count > 1
+                                    ? "foodCount foodCountSpecial"
+                                    : "foodCount"
+                                }
+                              >
+                                {el.count}
+                              </p>
+                            </div>
                           </div>
+                          {el.details ? (
+                            <div className="propertyDetailsBox mt-05">
+                              {el.details.map((item) => {
+                                return (
+                                  <span className="orderDetailsItem">
+                                    {item}
+                                  </span>
+                                );
+                              })}
+                            </div>
+                          ) : (
+                            ""
+                          )}
                         </div>
                       </Zoom>
                     </>

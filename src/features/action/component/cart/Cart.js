@@ -14,6 +14,7 @@ import {
   setTotalCart,
   minusSpecialFood,
   plusSpecialFood,
+  deleteSpecialFood,
 } from "../food/foodSlice";
 export default function Cart({ userId, tableInfo, tableId }) {
   const dispatch = useDispatch();
@@ -151,7 +152,7 @@ export default function Cart({ userId, tableInfo, tableId }) {
                   <div
                     className="cartItemDelete"
                     onClick={() => {
-                      deleteCartItem(el.id);
+                      dispatch(deleteSpecialFood(index));
                     }}
                   >
                     <HighlightOffIcon

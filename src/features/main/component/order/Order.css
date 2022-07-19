@@ -299,8 +299,10 @@
 }
 .orderDetailsItem{
     font-size: 13px;
+    font-weight: bold;
     background-color: #fff;
     padding: 6px 12px;
     margin-right: 5px;
     margin-bottom: 5px;
+    border-radius: 5px;
 }

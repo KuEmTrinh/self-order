@@ -179,6 +179,13 @@ export default function FoodList({ categoryId, paymentStatus }) {
     const data = JSON.stringify(sendFoodData);
     console.log(data);
     dispatch(addFoodToCart(data));
+    setShowModal(!showModal);
+    setMessage("Đã thêm");
+    setOpen(true);
+    setDisableButton(true);
+    setTimeout(() => {
+      setDisableButton(false);
+    }, 1000);
   };
   useEffect(() => {
     setFoodPropertyTotalPrice((foodBasePrice + checkboxPrice) * countNumber);

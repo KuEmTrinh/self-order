@@ -22,7 +22,12 @@ const theme = createTheme({
   },
 });
 export default function Navigation() {
-  const cartCount = useSelector((state) => state.food.data.length);
+  const specialDataCount = useSelector((state) => state.food.specialData);
+  let numberCount = 0;
+  specialDataCount.map((el) => (numberCount += el.countNumber));
+  const cartCount = useSelector(
+    (state) => state.food.data.length + numberCount
+  );
   const [cartCountNumber, setCartCountNumber] = useState("");
   useEffect(() => {
     setCartCountNumber(cartCount);
