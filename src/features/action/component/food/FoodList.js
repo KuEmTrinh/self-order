@@ -9,10 +9,16 @@ import MuiAlert from "@mui/material/Alert";
 import CircularProgress from "@mui/material/CircularProgress";
 import Zoom from "@mui/material/Zoom";
 import Box from "@mui/material/Box";
+import Modal from "../../../main/component/menu/Modal";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import { list } from "firebase/storage";
+
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
-export default function FoodList({ categoryId,paymentStatus }) {
+export default function FoodList({ categoryId, paymentStatus }) {
   const dispatch = useDispatch();
   const searchData = useSelector((state) => state.search.data);
   const searchingStatus = useSelector((state) => state.search.searching);
@@ -23,6 +29,9 @@ export default function FoodList({ categoryId,paymentStatus }) {
   const [message, setMessage] = useState("");
   const [disableButton, setDisableButton] = useState(false);
   const [showItem, setShowItem] = useState(false);
+  const [radioList, setRadioList] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [properties, setProperties] = useState("");
   const addToCart = (index) => {
     setDisableButton(true);
     setTimeout(() => {
@@ -71,7 +80,8 @@ export default function FoodList({ categoryId,paymentStatus }) {
             price: doc.data().price,
             imgUrl: doc.data().imgUrl,
             status: doc.data().status,
-            createAt: doc.data().createAt,
+            createdAt: doc.data().createdAt,
+            properties: doc.data().properties,
             categoryId: categoryId,
           });
         });
@@ -83,8 +93,106 @@ export default function FoodList({ categoryId,paymentStatus }) {
     }, 150);
     return query;
   }, [categoryId]);
+  const openPropertiesBox = (id) => {
+    setShowModal(!showModal);
+    const query = db
+      .collection("category")
+      .doc(categoryId)
+      .collection("food")
+      .doc(id)
+      .collection("radio")
+      .get()
+      .then((snapshot) => {
+        const data = [];
+        const properties = [];
+        snapshot.docs.map((doc) => {
+          properties.push(doc.data().list[0]);
+          data.push({
+            id: doc.id,
+            name: doc.data().name,
+            list: doc.data().list,
+          });
+        });
+        setProperties(properties);
+        setRadioList(data);
+      });
+  };
+  const setFoodProperties = (e, index) => {
+    const newArray = JSON.parse(JSON.stringify(properties));
+    let name = e.target.value;
+    const cloneArray = JSON.parse(JSON.stringify(radioList[index].list));
+    const filterItem = cloneArray.filter((item) => item.name === name);
+    newArray[index] = {
+      name: name,
+      price: filterItem[0].price,
+    };
+    console.log(newArray);
+    setProperties(newArray);
+  };
   return (
     <>
+      <Modal
+        show={showModal}
+        onClose={() => {
+          setShowModal(false);
+        }}
+      >
+        <p className="subTitleComponent">Tuỳ chọn chi tiết</p>
+        <div className="foodRadioList">
+          {radioList ? (
+            <>
+              {radioList.map((el, index) => {
+                return (
+                  <div className="radioListPreviewBox">
+                    <p className="radioListPreviewTitle">{el.name}</p>
+                    <div className="radioPreviewListItem">
+                      <RadioGroup
+                        aria-labelledby="demo-radio-buttons-group-label"
+                        defaultValue={el.list[0].name}
+                        name="radio-buttons-group"
+                        onChange={(e) => {
+                          setFoodProperties(e, index);
+                        }}
+                      >
+                        {el.list.map((item) => {
+                          return (
+                            <div className="radioListItem">
+                              <FormControlLabel
+                                value={item.name}
+                                control={<Radio size="small" />}
+                                label={item.name}
+                                margin="none"
+                              />
+                              {item.price !== 0 ? (
+                                <p
+                                  className="radioPriceText"
+                                  onChange={(e) => {
+                                    console.log(e.target.value);
+                                  }}
+                                >
+                                  ({item.price})
+                                </p>
+                              ) : (
+                                ""
+                              )}
+                            </div>
+                          );
+                        })}
+                      </RadioGroup>
+                    </div>
+                  </div>
+                );
+              })}
+            </>
+          ) : (
+            <p className="subTitleComponent">Không có dữ liệu</p>
+          )}
+        </div>
+        <p className="subTitleComponent">Số lượng</p>
+        <div className="countSettingBox">
+          
+        </div>
+      </Modal>
       <Stack spacing={2} sx={{ width: "100%" }}>
         <Snackbar
           anchorOrigin={{ vertical, horizontal }}
@@ -109,7 +217,7 @@ export default function FoodList({ categoryId,paymentStatus }) {
           ) : (
             <>
               {searchingStatus ? (
-                  <p className="searchResultData">Không có kết quả phù hợp</p>
+                <p className="searchResultData">Không có kết quả phù hợp</p>
               ) : (
                 ""
               )}
@@ -143,14 +251,27 @@ export default function FoodList({ categoryId,paymentStatus }) {
                     ) : (
                       <>
                         {el.status ? (
-                          <button
-                            className="foodOrderButton"
-                            onClick={() => {
-                              addToCart(index);
-                            }}
-                          >
-                            Chọn
-                          </button>
+                          <>
+                            {el.properties ? (
+                              <button
+                                className="foodOrderButton"
+                                onClick={() => {
+                                  openPropertiesBox(el.id);
+                                }}
+                              >
+                                Xem
+                              </button>
+                            ) : (
+                              <button
+                                className="foodOrderButton"
+                                onClick={() => {
+                                  addToCart(index);
+                                }}
+                              >
+                                Chọn
+                              </button>
+                            )}
+                          </>
                         ) : (
                           <button className="foodSoldOutButton" disabled>
                             Hết

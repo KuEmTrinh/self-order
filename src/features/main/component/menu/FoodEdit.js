@@ -4,6 +4,8 @@ import { db } from "../../../../app/firebase";
 import { useState, useEffect } from "react";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../../../../app/firebase";
+import { firebase } from "../../../../app/firebase";
+import RadioList from "./RadioList";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import imageCompression from "browser-image-compression";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
@@ -30,10 +32,12 @@ export default function FoodEdit(props) {
   const [propertyRadioInput, setPropertyRadioInput] = useState("");
   const [propertyRadioPriceInput, setPropertyRadioPriceInput] = useState("");
   const [propertyRadioList, setPropertyRadioList] = useState("");
+  const [radioList, setRadioList] = useState("");
   useEffect(() => {
     setFoodVietnamese(editFood.vietnamese);
     setFoodJapanese(editFood.japanese);
     setFoodPrice(editFood.price);
+    radioListQuery();
   }, []);
   useEffect(() => {
     if (!file) {
@@ -159,8 +163,46 @@ export default function FoodEdit(props) {
     setPropertyRadioInput("");
   };
   const createRadioItem = () => {
-    console.log("created")
-  }
+    const foodInfo = JSON.parse(props.food);
+    const query = db
+      .collection("category")
+      .doc(props.categoryId)
+      .collection("food")
+      .doc(foodInfo.id)
+      .collection("radio")
+      .add({
+        name: propertyRadioTitle,
+        list: propertyRadioList,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+    setPropertyRadioTitle("");
+    setPropertyRadioList("");
+    setTimeout(() => {
+      radioListQuery("");
+    }, 500);
+  };
+  const radioListQuery = () => {
+    const foodInfo = JSON.parse(props.food);
+    const query = db
+      .collection("category")
+      .doc(props.categoryId)
+      .collection("food")
+      .doc(foodInfo.id)
+      .collection("radio")
+      .get()
+      .then((snapshot) => {
+        const data = [];
+        snapshot.docs.map((doc) => {
+          data.push({
+            id: doc.id,
+            name: doc.data().name,
+            list: doc.data().list,
+          });
+        });
+        // console.log(data);
+        setRadioList(data);
+      });
+  };
   return (
     <div className="foodEditBox">
       <p className="componentTitle">Tùy chỉnh món</p>
@@ -267,7 +309,7 @@ export default function FoodEdit(props) {
                         <TextField
                           label="Tên tùy chọn đơn"
                           id="outlined-start-adornment"
-                          sx={{ m: 1, width: "25ch" }}
+                          sx={{ m: 1, width: "22ch" }}
                           onChange={(e) => {
                             propertyRadioTitleChangeValue(e);
                           }}
@@ -347,7 +389,12 @@ export default function FoodEdit(props) {
                       </div>
                       {propertyRadioTitle !== "" &&
                       propertyRadioList.length >= 2 ? (
-                        <div className="propertyCreateButton" onClick={()=>{createRadioItem()}}>
+                        <div
+                          className="propertyCreateButton"
+                          onClick={() => {
+                            createRadioItem();
+                          }}
+                        >
                           Tạo thuộc tính
                         </div>
                       ) : (
@@ -370,6 +417,10 @@ export default function FoodEdit(props) {
           ) : (
             ""
           )}
+        </div>
+        <div className="foodEditPreviewBox">
+          <p className="subTitleComponent">Xem trước</p>
+          <RadioList radioList={radioList}></RadioList>
         </div>
       </div>
     </div>

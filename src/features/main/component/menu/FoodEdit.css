@@ -13,11 +13,17 @@
 }
 .foodEditMainBox{
     display: flex;
-    width: 33rem;
+    width: 40rem;
     justify-content: space-between;
 }
-.foodEdit , .foodEditSubBox{
-    width: 48%;
+.foodEdit{
+    width: 30%;
+}
+.foodEditSubBox{
+    width: 35%;
+}
+.foodEditPreviewBox{
+    width:30%;
 }
 .propertiesToggleButton{
     box-sizing: border-box;
