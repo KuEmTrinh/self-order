@@ -164,11 +164,13 @@ export default function FoodList({ categoryId, paymentStatus }) {
   const addPropertyFood = () => {
     const sendFoodData = foodList[foodSelectIndex];
     let details = [];
-    checkboxList.map((el) => {
-      if (el.checked) {
-        details.push(el.name);
-      }
-    });
+    if (checkboxList) {
+      checkboxList.map((el) => {
+        if (el.checked) {
+          details.push(el.name);
+        }
+      });
+    }
     properties.map((el) => {
       details.push(el.listName + ":" + el.name);
     });
