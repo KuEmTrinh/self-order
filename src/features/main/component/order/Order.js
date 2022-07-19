@@ -110,10 +110,8 @@ export default function Order() {
   const [settingToggle, setSettingToggle] = useState(false);
   const [compressToggle, setCompressToggle] = useState(false);
   const [filterToggle, setFilterToggle] = useState(false);
-
   const [selectDevice, setSelectDevice] = useState("");
   const [categoryShowList, setCategoryShowList] = useState("");
-  const [categoryList, setCategoryList] = useState("");
   const deleteToggle = () => {
     setDeleteItem(!deleteItem);
   };
@@ -138,24 +136,7 @@ export default function Order() {
   const closeFilterToggle = () => {
     setFilterToggle(false);
   };
-  const fetchCategoryData = () => {
-    const query = db
-      .collection("category")
-      .where("uid", "==", uid)
-      .orderBy("index")
-      .get()
-      .then((snapshot) => {
-        const data = [];
-        snapshot.docs.map((doc) => {
-          data.push({
-            id: doc.id,
-            name: doc.data().name,
-            show: true,
-          });
-        });
-        setCategoryList(data);
-      });
-  };
+  
   const fetchData = () => {
     const query = db
       .collection("user")
@@ -190,7 +171,6 @@ export default function Order() {
   };
   useEffect(() => {
     fetchData();
-    fetchCategoryData();
   }, []);
   return (
     <>
@@ -284,7 +264,6 @@ export default function Order() {
             categoryShowList={categoryShowList}
             setCategoryShowList={setCategoryShowList}
             uid={uid}
-            categoryList={categoryList}
           ></OrderFilter>
           {compressToggle ? (
             <OrderCompress order={order} userInfo={userInfo}></OrderCompress>

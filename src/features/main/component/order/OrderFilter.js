@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 // import { useSelector } from "react-redux";
 import { db } from "../../../../app/firebase";
+import { arrayUnion, arrayRemove } from "firebase/firestore";
 import Modal from "../menu/Modal";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -11,11 +12,11 @@ export default function OrderFilter({
   setSelectDevice,
   categoryShowList,
   setCategoryShowList,
-  categoryList,
   uid,
 }) {
   const [deviceList, setDeviceList] = useState("");
   const [showList, setShowList] = useState("");
+  const [categoryList, setCategoryList] = useState("");
   //function
   const fetchDeviceData = () => {
     const query = db
@@ -36,39 +37,48 @@ export default function OrderFilter({
       });
     return query;
   };
-  const changeData = (name, status) => {
-    if (status) {
-      const oldList = [...selectDevice.list];
-      oldList.push(name);
-      const query = db
-        .collection("user")
-        .doc(uid)
-        .collection("device")
-        .doc(selectDevice.id)
-        .update({
-          list: [...oldList],
+  const fetchCategoryData = () => {
+    const query = db
+      .collection("category")
+      .where("uid", "==", uid)
+      .orderBy("index")
+      .get()
+      .then((snapshot) => {
+        const data = [];
+        snapshot.docs.map((doc) => {
+          data.push({
+            id: doc.id,
+            name: doc.data().name,
+            show: true,
+          });
         });
+        setCategoryList(data);
+      });
+  };
+  const changeData = (index, name) => {
+    let newArray = JSON.parse(JSON.stringify(showList));
+    const query = db
+      .collection("user")
+      .doc(uid)
+      .collection("device")
+      .doc(selectDevice.id);
+    if (newArray[index].show) {
+      query.update({
+        list: arrayUnion(name),
+      });
     } else {
-      const oldList = [...selectDevice.list];
-      const newList = oldList.filter((element) => element != name);
-      const query = db
-        .collection("user")
-        .doc(uid)
-        .collection("device")
-        .doc(selectDevice.id)
-        .update({
-          list: [...newList],
-        });
+      query.update({
+        list: arrayRemove(name),
+      });
     }
+    newArray[index].show = !newArray[index].show;
+    setShowList(newArray);
   };
   useEffect(() => {
-    console.log(categoryList);
-    const filterList = [...categoryList];
-    console.log(filterList);
+    const filterList = JSON.parse(JSON.stringify(categoryList));
     if (selectDevice) {
       selectDevice.list.map((el) => {
         filterList.map((element) => {
-          element.show = true;
           if (element.name == el) {
             element.show = false;
           }
@@ -80,6 +90,7 @@ export default function OrderFilter({
   }, [selectDevice]);
   useEffect(() => {
     fetchDeviceData();
+    fetchCategoryData();
   }, []);
   function renderComponent() {
     return (
@@ -114,14 +125,14 @@ export default function OrderFilter({
               {showList ? (
                 <div className="showCategoryList">
                   <p className="subTitleComponent">Danh sách</p>
-                  {showList.map((item) => {
+                  {showList.map((item, index) => {
                     return (
                       <div className="showCategoryItem">
                         <FormControlLabel
                           control={<Checkbox checked={item.show} />}
                           label={item.name}
                           onChange={() => {
-                            // changeData(el.name, el.show);
+                            changeData(index, item.name);
                           }}
                         />
                       </div>
@@ -133,28 +144,8 @@ export default function OrderFilter({
               )}
             </>
           ) : (
-            "false"
-          )}
-          {/* {categoryList && selectDevice ? (
-            <div className="showCategoryList">
-              <p className="subTitleComponent">Danh sách</p>
-              {categoryList.map((el) => {
-                return (
-                  <div className="showCategoryItem">
-                    <FormControlLabel
-                      control={<Checkbox checked={true} />}
-                      label={el.name}
-                      onChange={() => {
-                        // changeData(el.name, el.show);
-                      }}
-                    />
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
             <p className="subTitleComponent">Mặc định</p>
-          )} */}
+          )}
         </div>
       </>
     );
