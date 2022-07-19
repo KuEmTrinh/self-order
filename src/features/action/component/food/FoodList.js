@@ -13,8 +13,8 @@ import Modal from "../../../main/component/menu/Modal";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { list } from "firebase/storage";
-
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -32,6 +32,9 @@ export default function FoodList({ categoryId, paymentStatus }) {
   const [radioList, setRadioList] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [properties, setProperties] = useState("");
+  const [countNumber, setCountNumber] = useState(1);
+  const [foodPropertyTotalPrice, setFoodPropertyTotalPrice] = useState();
+  const [foodBasePrice, setFoodBasePrice] = useState();
   const addToCart = (index) => {
     setDisableButton(true);
     setTimeout(() => {
@@ -93,7 +96,11 @@ export default function FoodList({ categoryId, paymentStatus }) {
     }, 150);
     return query;
   }, [categoryId]);
-  const openPropertiesBox = (id) => {
+  const openPropertiesBox = (id, index) => {
+    let price = foodList[index].price;
+    let priceNumber = parseInt(price) * 1;
+    setFoodPropertyTotalPrice(priceNumber);
+    setFoodBasePrice(priceNumber);
     setShowModal(!showModal);
     const query = db
       .collection("category")
@@ -106,7 +113,11 @@ export default function FoodList({ categoryId, paymentStatus }) {
         const data = [];
         const properties = [];
         snapshot.docs.map((doc) => {
-          properties.push(doc.data().list[0]);
+          properties.push({
+            name: doc.data().list[0].name,
+            price: doc.data().list[0].price,
+            listName: doc.data().name,
+          });
           data.push({
             id: doc.id,
             name: doc.data().name,
@@ -114,6 +125,7 @@ export default function FoodList({ categoryId, paymentStatus }) {
           });
         });
         setProperties(properties);
+        console.log(properties);
         setRadioList(data);
       });
   };
@@ -125,8 +137,13 @@ export default function FoodList({ categoryId, paymentStatus }) {
     newArray[index] = {
       name: name,
       price: filterItem[0].price,
+      listName: radioList[index].name,
     };
-    console.log(newArray);
+    let foodPropertyPrice = 0;
+    newArray.map((el) => (foodPropertyPrice += parseInt(el.price)));
+    setFoodPropertyTotalPrice(
+      (foodBasePrice + foodPropertyPrice) * countNumber
+    );
     setProperties(newArray);
   };
   return (
@@ -143,7 +160,7 @@ export default function FoodList({ categoryId, paymentStatus }) {
             <>
               {radioList.map((el, index) => {
                 return (
-                  <div className="radioListPreviewBox">
+                  <div className="radioListPreviewBox" key={el.id}>
                     <p className="radioListPreviewTitle">{el.name}</p>
                     <div className="radioPreviewListItem">
                       <RadioGroup
@@ -190,8 +207,30 @@ export default function FoodList({ categoryId, paymentStatus }) {
         </div>
         <p className="subTitleComponent">Số lượng</p>
         <div className="countSettingBox">
-          
+          <div className="countSettingMinusButton">
+            {countNumber > 1 ? (
+              <RemoveCircleIcon
+                onClick={() => {
+                  setCountNumber(countNumber - 1);
+                  setFoodPropertyTotalPrice(foodBasePrice * (countNumber + 1));
+                }}
+              ></RemoveCircleIcon>
+            ) : (
+              <RemoveCircleIcon color="action"></RemoveCircleIcon>
+            )}
+          </div>
+          <div className="countSettingNumber">{countNumber}</div>
+          <div className="countSettingMinusButton">
+            <AddCircleIcon
+              onClick={() => {
+                setCountNumber(countNumber + 1);
+                setFoodPropertyTotalPrice(foodBasePrice * (countNumber + 1));
+              }}
+            ></AddCircleIcon>
+          </div>
         </div>
+        <p className="subTitleComponent">Tổng</p>
+        <p>{foodPropertyTotalPrice}</p>
       </Modal>
       <Stack spacing={2} sx={{ width: "100%" }}>
         <Snackbar
@@ -256,7 +295,7 @@ export default function FoodList({ categoryId, paymentStatus }) {
                               <button
                                 className="foodOrderButton"
                                 onClick={() => {
-                                  openPropertiesBox(el.id);
+                                  openPropertiesBox(el.id, index);
                                 }}
                               >
                                 Xem

@@ -109,3 +109,23 @@ img{
     border-radius: 5px;
     box-shadow: rgb(0 0 0 / 15%) 1.95px 1.95px 2.6px;
 }
+.countSettingBox{
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    align-items: center;
+}
+.countSettingMinusButton, .countSettingNumber{
+    width: 3rem;
+    text-align: center;
+}
+.countSettingMinusButton{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.countSettingNumber{
+    font-weight: bold;
+    font-size: 16px;
+    color: #272727;
+}
