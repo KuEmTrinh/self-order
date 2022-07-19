@@ -59,7 +59,7 @@ export const foodSlice = createSlice({
     plusSpecialFood: (state, action) => {
       state.specialData[action.payload].countNumber += 1;
       state.specialData[action.payload].total +=
-        state.specialData[action.payload].basePrice;
+        parseInt(state.specialData[action.payload].basePrice);
     },
     deleteSpecialFood: (state, action) => {
       state.specialData.splice(action.payload, 1);
