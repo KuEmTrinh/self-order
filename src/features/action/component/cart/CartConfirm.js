@@ -32,10 +32,18 @@ export default function CartConfirm({
     horizontal: "right",
   });
   const { vertical, horizontal } = state;
-
+  const changeStatusUsingTable = () => {
+    const query = db.collection("table").doc(tableId).update({
+      useStatus: true,
+    });
+    return query;
+  };
   //confirm order
   const [confirmToggle, setConfirmToggle] = useState(false);
   const createOrder = (el) => {
+    if (tableInfo.useStatus === false) {
+      changeStatusUsingTable();
+    }
     if (el.newPrice) {
     } else {
       el.newPrice = el.price;

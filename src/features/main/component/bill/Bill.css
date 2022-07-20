@@ -127,12 +127,12 @@
 .tableItem{
     width: 3.5rem;
     height: 3.5rem;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 5px;
+    margin:9px;
 }
 .tableItemName{
    font-weight: bold;   
@@ -142,6 +142,7 @@
 .tableItemActive{
     transition: 0.3s all linear;
     background: linear-gradient(90deg, #3dd49d 0%, #3dd479 100%);
+    box-shadow: none;
 }
 .tableItemActive p{
     transition: 0.3s all linear;
@@ -267,4 +268,10 @@
 }
 .hiddenBox{
     display: none;
+}
+.tableItemUsing{
+    background-color: #96e2b1;
+}
+.tableItemUsing p{
+    color: #fff;
 }

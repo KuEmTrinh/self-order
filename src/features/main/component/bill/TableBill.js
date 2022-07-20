@@ -59,17 +59,27 @@ export default function TableBill() {
     const query = db
       .collection("table")
       .where("uid", "==", uid)
-      .orderBy("index");
-    query.get().then((snapshot) => {
-      const data = [];
-      snapshot.docs.map((doc) => {
-        data.push({
-          id: doc.id,
-          name: doc.data().name,
+      .orderBy("index")
+      .onSnapshot((querySnapshot) => {
+        const data = [];
+        querySnapshot.docs.map((doc) => {
+          data.push({
+            id: doc.id,
+            name: doc.data().name,
+            useStatus: doc.data().useStatus,
+          });
         });
+        setTableList(data);
       });
-      setTableList(data);
-    });
+    return query;
+  };
+  const checkUsing = (el) => {
+    console.log(el);
+    if (el.useStatus) {
+      return "tableItem tableItemUsing";
+    } else {
+      return "tableItem";
+    }
   };
   const getTableInfo = (data) => {
     let tablePriceTotal = 0;
@@ -127,7 +137,7 @@ export default function TableBill() {
                       className={
                         tableId === el.id
                           ? "tableItem tableItemActive"
-                          : "tableItem"
+                          : checkUsing(el)
                       }
                       onClick={() => {
                         setTableId(el.id);

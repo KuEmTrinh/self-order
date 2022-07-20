@@ -156,7 +156,6 @@ export default function Order() {
             price: parseInt(doc.data().basePrice),
             basePrice: parseInt(doc.data().price),
             newPrice: parseInt(doc.data().newPrice),
-            inputBasePrice: parseInt(doc.data().basePrice),
             status: doc.data().status,
             details: doc.data().details,
             changeStatus: false,
