@@ -107,6 +107,8 @@ export default function FoodList({ categoryId, paymentStatus }) {
     return query;
   }, [categoryId]);
   const openPropertiesBox = (id, index) => {
+    setCheckboxList("");
+    setCheckboxPrice("");
     setCountNumber(1);
     setFoodSelectIndex(index);
     if (searchingStatus) {
