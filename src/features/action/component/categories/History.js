@@ -74,7 +74,7 @@ export default function History({ userId, tableId, closeBox }) {
       // console.log(sendData)
       dispatch(addFoodToCart(JSON.stringify(sendData)));
     } else {
-      historyData[index].newPrice = historyData[index].price;
+      historyData[index].newPrice = parseInt(historyData[index].historyData);
       const sendDataFromHistoryList = JSON.stringify(historyData[index]);
       dispatch(addFoodToCart(sendDataFromHistoryList));
     }
@@ -104,7 +104,6 @@ export default function History({ userId, tableId, closeBox }) {
         querySnapshot.docs.map((doc) => {
           let price = "";
           if (doc.data().details) {
-            console.log(true)
             price = parseInt(doc.data().price);
           } else {
             price = parseInt(doc.data().basePrice);
@@ -117,14 +116,13 @@ export default function History({ userId, tableId, closeBox }) {
             count: doc.data().count,
             status: doc.data().status,
             imgUrl: doc.data().imgUrl,
-            price: doc.data().basePrice,
+            price: doc.data().historyPrice,
             details: doc.data().details,
             historyPrice: doc.data().historyPrice,
             newPrice: doc.data().newPrice,
             createdAt: getTimeDuration(doc.data().createdAt),
           });
         });
-        console.log(data);
         setHistoryData(data);
       });
     return query;

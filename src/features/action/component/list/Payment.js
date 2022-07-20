@@ -13,6 +13,7 @@ export default function Payment({
   cancelCount,
   setOpenPayment,
 }) {
+  console.log(listData);
   const [receiptMethod, setReceiptMethod] = useState(1);
   const [paymentData, setPaymentData] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");

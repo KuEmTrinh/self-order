@@ -115,7 +115,6 @@ export default function List({ userId, tableId, tableInfo, paymentStatus }) {
           data.push({
             id: doc.id,
             basePrice: doc.data().basePrice,
-            properties: doc.data().properties,
             changeStatus: doc.data().changeStatus,
             createdAt: doc.data().createdAt,
             vietnamese: doc.data().vietnamese,

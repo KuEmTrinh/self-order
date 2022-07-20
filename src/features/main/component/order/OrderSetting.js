@@ -19,6 +19,12 @@ export default function OrderSetting({
   userId,
 }) {
   useEffect(() => {
+    const newArray = [...order];
+    newArray.map((el) => {
+      if (el.details) {
+        el.basePrice = el.price;
+      }
+    });
     setCloneOrderList(order);
   }, [order]);
   const [cloneOrderList, setCloneOrderList] = useState("");
@@ -52,18 +58,6 @@ export default function OrderSetting({
   const saveChangeData = () => {
     cloneOrderList.map((el, index) => {
       if (el.changeStatus) {
-        console.log(el.price);
-        const changeStatusQuery = db
-          .collection("user")
-          .doc(userId)
-          .collection("order")
-          .doc(el.id)
-          .update({
-            changeStatus: true,
-            price: el.price,
-            basePrice: el.price,
-            count: el.count,
-          });
         const createHistory = db
           .collection("user")
           .doc(userId)
@@ -76,6 +70,18 @@ export default function OrderSetting({
             oldCount: parseInt(el.maxCount),
             newCount: parseInt(el.count),
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          });
+        const changeStatusQuery = db
+          .collection("user")
+          .doc(userId)
+          .collection("order")
+          .doc(el.id)
+          .update({
+            changeStatus: true,
+            price: el.price,
+            basePrice: el.price,
+            newPrice: el.newPrice,
+            count: el.count,
           });
       }
     });
@@ -208,7 +214,9 @@ export default function OrderSetting({
                                 />
                               </div>
                             </TableCell>
-                            <TableCell align="right">{row.price * row.count}</TableCell>
+                            <TableCell align="right">
+                              {row.price * row.count}
+                            </TableCell>
                             <TableCell align="right">
                               {row.timeDuration}
                             </TableCell>
