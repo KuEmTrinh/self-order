@@ -179,8 +179,8 @@ export default function FoodList({ categoryId, paymentStatus }) {
     sendFoodData.total = foodPropertyTotalPrice;
     sendFoodData.details = details;
     sendFoodData.basePrice = foodBasePrice + checkboxPrice;
+    console.log(sendFoodData);
     const data = JSON.stringify(sendFoodData);
-    console.log(data);
     dispatch(addFoodToCart(data));
     setShowModal(!showModal);
     setMessage("Đã thêm");

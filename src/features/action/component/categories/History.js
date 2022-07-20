@@ -65,9 +65,19 @@ export default function History({ userId, tableId, closeBox }) {
     setTimeout(() => {
       setDisableButton(false);
     }, 1000);
-    historyData[index].newPrice = historyData[index].price;
-    const sendDataFromHistoryList = JSON.stringify(historyData[index]);
-    dispatch(addFoodToCart(sendDataFromHistoryList));
+    const sendData = historyData[index];
+    if (sendData.details) {
+      sendData.countNumber = 1;
+      sendData.total = sendData.price;
+      sendData.basePrice = sendData.price;
+      sendData.properties = true;
+      // console.log(sendData)
+      dispatch(addFoodToCart(JSON.stringify(sendData)));
+    } else {
+      historyData[index].newPrice = historyData[index].price;
+      const sendDataFromHistoryList = JSON.stringify(historyData[index]);
+      dispatch(addFoodToCart(sendDataFromHistoryList));
+    }
     setMessage("Đã thêm");
     setOpen(true);
   };
@@ -92,6 +102,13 @@ export default function History({ userId, tableId, closeBox }) {
       .onSnapshot((querySnapshot) => {
         const data = [];
         querySnapshot.docs.map((doc) => {
+          let price = "";
+          if (doc.data().details) {
+            console.log(true)
+            price = parseInt(doc.data().price);
+          } else {
+            price = parseInt(doc.data().basePrice);
+          }
           data.push({
             id: doc.data().foodId,
             categoryId: doc.data().categoryId,
@@ -101,10 +118,12 @@ export default function History({ userId, tableId, closeBox }) {
             status: doc.data().status,
             imgUrl: doc.data().imgUrl,
             price: doc.data().basePrice,
+            details: doc.data().details,
             newPrice: doc.data().newPrice,
             createdAt: getTimeDuration(doc.data().createdAt),
           });
         });
+        console.log(data);
         setHistoryData(data);
       });
     return query;
@@ -148,6 +167,17 @@ export default function History({ userId, tableId, closeBox }) {
                     <p className="historyJapanese">{el.japanese}</p>
                     <p className="historyPrice">{el.price}</p>
                     <p className="historyTime">{el.createdAt}</p>
+                    {el.details ? (
+                      <div className="historyDetailsBox">
+                        {el.details.map((item) => {
+                          return (
+                            <span className="historyDetailsItem">{item}</span>
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      ""
+                    )}
                   </div>
                   {disableButton ? (
                     <button className="foodOrderButton disableButton">

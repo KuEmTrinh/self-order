@@ -167,7 +167,7 @@ export default function OrderSetting({
                                   {row.count}
                                 </div>
                                 <div className="orderSettingTableCountIcon">
-                                  {row.count < row.maxCount ? (
+                                  {/* {row.count < row.maxCount ? (
                                     <div className="tablePlusIcon">
                                       <AddIcon
                                         fontSize="small"
@@ -179,7 +179,16 @@ export default function OrderSetting({
                                     </div>
                                   ) : (
                                     ""
-                                  )}
+                                  )} */}
+                                  <div className="tablePlusIcon">
+                                      <AddIcon
+                                        fontSize="small"
+                                        onClick={() => {
+                                          plusCount(index);
+                                        }}
+                                        color="action"
+                                      ></AddIcon>
+                                    </div>
                                 </div>
                               </div>
                             </TableCell>

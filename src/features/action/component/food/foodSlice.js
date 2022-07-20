@@ -15,9 +15,7 @@ export const foodSlice = createSlice({
       const item = JSON.parse(action.payload);
       if (item.properties) {
         state.specialData.push(item);
-        console.log(item);
       } else {
-        console.log(item);
         item.count = 1;
         state.data.push(item);
         state.totalCount = state.data.length;
