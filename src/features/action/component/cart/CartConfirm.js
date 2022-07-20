@@ -33,6 +33,7 @@ export default function CartConfirm({
   });
   const { vertical, horizontal } = state;
   const changeStatusUsingTable = () => {
+    console.log(tableInfo);
     const query = db.collection("table").doc(tableId).update({
       useStatus: true,
     });
@@ -41,9 +42,6 @@ export default function CartConfirm({
   //confirm order
   const [confirmToggle, setConfirmToggle] = useState(false);
   const createOrder = (el) => {
-    if (tableInfo.useStatus === false) {
-      changeStatusUsingTable();
-    }
     if (el.newPrice) {
     } else {
       el.newPrice = el.price;
@@ -95,6 +93,10 @@ export default function CartConfirm({
   };
   const orderConfirm = () => {
     setConfirmToggle(false);
+    console.log("creating");
+    if (tableInfo.useStatus == false) {
+      changeStatusUsingTable();
+    }
     if (cartData) {
       cartData.map((el) => {
         createOrder(el);
