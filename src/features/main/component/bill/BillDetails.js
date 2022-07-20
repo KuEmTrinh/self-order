@@ -19,7 +19,7 @@ export default function BillDetails({ onClose, bill, userId }) {
       .update({
         code: getRandomInt(10000),
         paymentStatus: false,
-        useStatus: true,
+        useStatus: false,
       });
     return query;
   };
