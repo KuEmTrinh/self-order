@@ -68,8 +68,8 @@ export default function History({ userId, tableId, closeBox }) {
     const sendData = historyData[index];
     if (sendData.details) {
       sendData.countNumber = 1;
-      sendData.total = sendData.price;
-      sendData.basePrice = sendData.price;
+      sendData.total = sendData.historyPrice;
+      sendData.basePrice = sendData.historyPrice;
       sendData.properties = true;
       // console.log(sendData)
       dispatch(addFoodToCart(JSON.stringify(sendData)));
@@ -119,6 +119,7 @@ export default function History({ userId, tableId, closeBox }) {
             imgUrl: doc.data().imgUrl,
             price: doc.data().basePrice,
             details: doc.data().details,
+            historyPrice: doc.data().historyPrice,
             newPrice: doc.data().newPrice,
             createdAt: getTimeDuration(doc.data().createdAt),
           });
@@ -165,7 +166,7 @@ export default function History({ userId, tableId, closeBox }) {
                   <div className="historyInfomation">
                     <p className="historyVietnamese">{el.vietnamese}</p>
                     <p className="historyJapanese">{el.japanese}</p>
-                    <p className="historyPrice">{el.price}</p>
+                    <p className="historyPrice">{el.historyPrice}</p>
                     <p className="historyTime">{el.createdAt}</p>
                     {el.details ? (
                       <div className="historyDetailsBox">

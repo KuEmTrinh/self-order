@@ -107,16 +107,15 @@ export default function FoodList({ categoryId, paymentStatus }) {
     return query;
   }, [categoryId]);
   const openPropertiesBox = (id, index) => {
-    setCheckboxList("");
-    setCheckboxPrice("");
     setCountNumber(1);
     setFoodSelectIndex(index);
+    let price = "";
     if (searchingStatus) {
       setCheckboxList(searchData[index].checkbox);
-      var price = searchData[index].price;
+      price = searchData[index].price;
     } else {
       setCheckboxList(foodList[index].checkbox);
-      var price = foodList[index].price;
+      price = foodList[index].price;
     }
     setFoodPrice(price);
     let priceNumber = parseInt(price) * 1;
@@ -285,7 +284,7 @@ export default function FoodList({ categoryId, paymentStatus }) {
                 return (
                   <div className="radioListItem">
                     <FormControlLabel
-                      control={<Checkbox size="small" />}
+                      control={<Checkbox size="small" checked={el.checked}/>}
                       label={el.name}
                       onChange={() => {
                         let newArray = [...checkboxList];

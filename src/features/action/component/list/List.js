@@ -114,6 +114,8 @@ export default function List({ userId, tableId, tableInfo, paymentStatus }) {
         querySnapshot.docs.map((doc) => {
           data.push({
             id: doc.id,
+            basePrice: doc.data().basePrice,
+            properties: doc.data().properties,
             changeStatus: doc.data().changeStatus,
             createdAt: doc.data().createdAt,
             vietnamese: doc.data().vietnamese,
@@ -126,6 +128,7 @@ export default function List({ userId, tableId, tableInfo, paymentStatus }) {
             timeDuration: getTimeDuration(doc.data().createdAt),
           });
         });
+        console.log(data);
         setListData(data);
       });
     return query;
@@ -133,7 +136,7 @@ export default function List({ userId, tableId, tableInfo, paymentStatus }) {
   const openPaymentModal = () => {
     setOpenPayment(true);
   };
- 
+
   return (
     <div className="listInfomation">
       <Modal
@@ -232,7 +235,7 @@ export default function List({ userId, tableId, tableInfo, paymentStatus }) {
                     <p className="cartVietnamese">{el.vietnamese}</p>
                     <p className="cartJapanese">{el.japanese}</p>
                     <p className="cartPrice">
-                      {el.newPrice} ({el.price} x {el.count})
+                      {el.basePrice * el.count} ({el.basePrice} x {el.count})
                     </p>
                     <p className="listDuration">{el.timeDuration}</p>
                   </div>

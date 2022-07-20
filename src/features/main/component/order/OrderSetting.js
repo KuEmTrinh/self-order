@@ -41,7 +41,6 @@ export default function OrderSetting({
     setChangeData(true);
   };
   const changePriceValue = (e, index) => {
-    console.log(e.target.value);
     const newArray = cloneOrderList;
     const changeItem = newArray[index];
     changeItem.changeStatus = true;
@@ -53,7 +52,7 @@ export default function OrderSetting({
   const saveChangeData = () => {
     cloneOrderList.map((el, index) => {
       if (el.changeStatus) {
-        console.log(el.id);
+        console.log(el.price);
         const changeStatusQuery = db
           .collection("user")
           .doc(userId)
@@ -62,7 +61,7 @@ export default function OrderSetting({
           .update({
             changeStatus: true,
             price: el.price,
-            newPrice: el.newPrice,
+            basePrice: el.price,
             count: el.count,
           });
         const createHistory = db
@@ -181,14 +180,14 @@ export default function OrderSetting({
                                     ""
                                   )} */}
                                   <div className="tablePlusIcon">
-                                      <AddIcon
-                                        fontSize="small"
-                                        onClick={() => {
-                                          plusCount(index);
-                                        }}
-                                        color="action"
-                                      ></AddIcon>
-                                    </div>
+                                    <AddIcon
+                                      fontSize="small"
+                                      onClick={() => {
+                                        plusCount(index);
+                                      }}
+                                      color="action"
+                                    ></AddIcon>
+                                  </div>
                                 </div>
                               </div>
                             </TableCell>
@@ -209,7 +208,7 @@ export default function OrderSetting({
                                 />
                               </div>
                             </TableCell>
-                            <TableCell align="right">{row.newPrice}</TableCell>
+                            <TableCell align="right">{row.price * row.count}</TableCell>
                             <TableCell align="right">
                               {row.timeDuration}
                             </TableCell>
