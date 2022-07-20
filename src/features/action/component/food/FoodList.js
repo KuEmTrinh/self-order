@@ -186,6 +186,8 @@ export default function FoodList({ categoryId, paymentStatus }) {
     setMessage("Đã thêm");
     setOpen(true);
     setDisableButton(true);
+    setCheckboxList("");
+    setCheckboxPrice("");
     setTimeout(() => {
       setDisableButton(false);
     }, 1000);
@@ -220,6 +222,8 @@ export default function FoodList({ categoryId, paymentStatus }) {
         show={showModal}
         onClose={() => {
           setShowModal(false);
+          setCheckboxList("");
+          setCheckboxPrice("");
         }}
       >
         <p className="subTitleComponent">Tuỳ chọn chi tiết</p>
