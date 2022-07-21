@@ -202,7 +202,7 @@ export default function TableItem({ tables }) {
         </div>
       </Modal>
       <div className="orderBoxIcon">
-        <p className="componentTitle categoryList">Danh Sách Bàn</p>
+        <p className="subTitleComponent">Danh Sách Bàn</p>
         {listChangeStatus ? (
           <button
             className="button button-green"

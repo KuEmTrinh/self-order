@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import { db } from "../../../../app/firebase";
 import { firebase } from "../../../../app/firebase";
 import Method from "./Method";
+import TextField from "@mui/material/TextField";
+
 export default function Payment() {
   const userInfomation = JSON.parse(useSelector((state) => state.login.data));
   const uid = userInfomation.uid;
@@ -24,24 +26,30 @@ export default function Payment() {
   };
   return (
     <div className="method">
-      <p className="componentTitle">Phương thức thanh toán</p>
-      <div className="inputBox flex align-center">
-        <p className="inputBoxTitle">Tên</p>
-        <input
-          value={inputValue}
-          className="inputBoxEnter"
+      <p className="componentTitle">Quản lí Phương thức</p>
+      <p className="subTitleComponent">Tạo phương thức mới</p>
+      <div className="deviceInputBox">
+        <TextField
+          id="outlined-name"
+          label="Nhập tên danh sách"
           onChange={(e) => {
             onChangeValue(e);
           }}
+          value={inputValue}
         />
+        {inputValue !== "" ? (
+          <div
+            className="deviceCreateButton"
+            onClick={() => {
+              createTable();
+            }}
+          >
+            Tạo
+          </div>
+        ) : (
+          ""
+        )}
       </div>
-      {inputValue === "" ? (
-        ""
-      ) : (
-        <button className="button button-green" onClick={createTable}>
-          Tạo
-        </button>
-      )}
       <Method userId={uid}></Method>
     </div>
   );

@@ -9,6 +9,8 @@ import { db } from "../../../../app/firebase";
 import { firebase } from "../../../../app/firebase";
 import "./NewFood.css";
 import imageCompression from "browser-image-compression";
+import TextField from "@mui/material/TextField";
+
 export default function NewFood({ categoryId, categoryName }) {
   const [file, setFile] = useState("");
   const [percent, setPercent] = useState(0);
@@ -98,93 +100,75 @@ export default function NewFood({ categoryId, categoryName }) {
     );
     setTimeout(() => {
       setNomarl();
-    }, "3500");
+    }, "1500");
   };
 
   return (
     <div>
-      <p className="componentTitle">Tạo Sản Phẩm Cho "{String(categoryName)}"</p>
+      <p className="componentTitle">
+        Tạo Sản Phẩm Cho "{String(categoryName)}"
+      </p>
       <div className="mainNewFood">
-        <table>
-          <tbody>
-            <tr>
-              <td>
-                <p className="inputBoxTitle">Tên Tiếng Việt</p>
-              </td>
-              <th>
-                <div className="inputBox flex align-center">
-                  <input
-                    value={foodVietnamese}
-                    className="inputBoxEnter"
-                    onChange={foodVietnameseChangeValue}
-                  />
-                </div>
-              </th>
-            </tr>
-            <tr>
-              <td>
-                <p className="inputBoxTitle">Tên Tiếng Nhật</p>
-              </td>
-              <td>
-                <div className="inputBox flex align-center">
-                  <input
-                    value={foodJapanese}
-                    className="inputBoxEnter"
-                    onChange={foodJapaneseChangeValue}
-                  />
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <p className="inputBoxTitle">Giá</p>
-              </td>
-              <td>
-                <div className="inputBox flex align-center">
-                  <input
-                    value={foodPrice}
-                    className="inputBoxEnter"
-                    onChange={foodPriceChangeValue}
-                  />
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <p className="inputBoxTitle">Hình Ảnh</p>
-              </td>
-              <td>
-                <div className="inputBox flex align-center">
-                  <label for="accountSettingInput">
-                    <div className="accountSettingInputUpload">
-                      <FileUploadIcon></FileUploadIcon>
-                      <p>Chọn ảnh</p>
-                      <input
-                        className="inputSetting"
-                        onChange={handleChange}
-                        id="accountSettingInput"
-                        type="file"
-                      ></input>
-                    </div>
-                  </label>
-                </div>
-              </td>
-            </tr>
-            {resultBox ? (
-              <div className="resultBox">
-                {percent === 100 ? (
-                  <CheckIcon color="success" fontSize="large"></CheckIcon>
-                ) : (
-                  <div className="indexTop">
-                    <CircularProgress variant="determinate" value={percent} />
-                  </div>
-                )}
+        <div className="textFieldInputBox">
+          <div className="textFieldInputItem">
+            <TextField
+              id="outlined-name"
+              label="Nhập tên tiếng việt"
+              onChange={(e) => {
+                foodVietnameseChangeValue(e);
+              }}
+              value={foodVietnamese}
+            />
+          </div>
+          <div className="textFieldInputItem">
+            <TextField
+              id="outlined-name"
+              label="Nhập tên nhật"
+              onChange={(e) => {
+                foodJapaneseChangeValue(e);
+              }}
+              value={foodJapanese}
+            />
+          </div>
+          <div className="textFieldInputItem">
+            <TextField
+              id="outlined-name"
+              label="Nhập giá"
+              onChange={(e) => {
+                foodPriceChangeValue(e);
+              }}
+              value={foodPrice}
+            />
+          </div>
+          <div className="inputBox flex align-center">
+            <label for="accountSettingInput">
+              <div className="accountSettingInputUpload">
+                <FileUploadIcon></FileUploadIcon>
+                <p>Chọn ảnh</p>
+                <input
+                  className="inputSetting"
+                  onChange={handleChange}
+                  id="accountSettingInput"
+                  type="file"
+                ></input>
               </div>
-            ) : (
-              ""
-            )}
-          </tbody>
-        </table>
+            </label>
+          </div>
+          {resultBox ? (
+            <div className="resultBox">
+              {percent === 100 ? (
+                <CheckIcon color="success" fontSize="large"></CheckIcon>
+              ) : (
+                <div className="indexTop">
+                  <CircularProgress variant="determinate" value={percent} />
+                </div>
+              )}
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+
         <div className="createFoodPreview">
           <div className="food">
             {preview ? (
@@ -203,9 +187,16 @@ export default function NewFood({ categoryId, categoryName }) {
         </div>
       </div>
       <div className="centerButton">
-        <button className="button button-green" onClick={handleUpload}>
-          Tạo
-        </button>
+        {file !== "" &&
+        foodVietnamese !== "" &&
+        foodJapanese !== "" &&
+        foodPrice !== "" ? (
+          <button className="button button-green" onClick={handleUpload}>
+            Tạo
+          </button>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

@@ -133,6 +133,7 @@
     align-items: center;
     justify-content: center;
     margin:9px;
+    position: relative;
 }
 .tableItemName{
    font-weight: bold;   
@@ -274,4 +275,91 @@
 }
 .tableItemUsing p{
     color: #fff;
+}
+.tableBillFeatureItem p {
+    font-size: 12px;
+    font-weight: bold;
+    margin-right: 0.5rem;
+    color: #848484;
+}
+.tableBillFeatureItem{
+    width: 7rem;
+    display: flex;
+    justify-content: center;
+    padding: 3px;
+    border-radius: 5px;
+    align-items: center;
+    background-color: #f6f6f6;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+.tableBillFeature{
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.tableBillChange{
+    width: 20rem;
+}
+.currentTableBill{
+    display: flex;
+    justify-content: center;
+}
+.changeTableList{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.changeTableItem{
+    width: 3.5rem;
+    height: 3.5rem;
+    box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
+    border-radius: 5px;
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+    z-index: 500;
+    background: linear-gradient(90deg, #3dd49dca 0%, #3dd479d2 100%);
+}
+.changeTableItemName{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-weight: bold;
+    color: #fff;
+}
+.tableCurrentItem{
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 9px;
+    position: relative;
+}
+.tableCurrentTitle{
+    position: absolute;
+    background-color: #fff;
+    border-radius: 5px;
+    font-weight: bold;;
+    font-size: 12px;
+    width: 6rem;
+    text-align: center;
+    padding: 3px;
+    color: #272727 !important;
+    top: -5px;
+    right: 5px;
+    transform: translate(100% );
+    box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
+}
+.changeTableConfirmButton{
+    font-weight: bold;
+    background: linear-gradient(90deg, #3dd49d 0%, #3dd479 100%);
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 5rem;
+    margin-top: 1rem;
 }

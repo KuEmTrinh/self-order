@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { db } from "../../../../app/firebase";
 import { firebase } from "../../../../app/firebase";
+import TextField from "@mui/material/TextField";
+
 export default function NewTable() {
   const tableCurrentIndex = useSelector(
     (state) => state.table.tableCurrentIndex
@@ -33,24 +35,30 @@ export default function NewTable() {
   };
   return (
     <div>
-      <p className="componentTitle">Tạo Bàn</p>
-      <div className="inputBox flex align-center">
-        <p className="inputBoxTitle">Tên</p>
-        <input
-          value={inputValue}
-          className="inputBoxEnter"
+      <p className="componentTitle">Quản lí Bàn</p>
+      <p className="subTitleComponent">Tạo bàn mới</p>
+      <div className="deviceInputBox">
+        <TextField
+          id="outlined-name"
+          label="Nhập tên bàn"
           onChange={(e) => {
             onChangeValue(e);
           }}
+          value={inputValue}
         />
+        {inputValue !== "" ? (
+          <div
+            className="deviceCreateButton"
+            onClick={() => {
+              createTable();
+            }}
+          >
+            Tạo
+          </div>
+        ) : (
+          ""
+        )}
       </div>
-      {inputValue === "" ? (
-        ""
-      ) : (
-        <button className="button button-green" onClick={createTable}>
-          Tạo
-        </button>
-      )}
     </div>
   );
 }

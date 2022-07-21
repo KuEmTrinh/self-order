@@ -3,6 +3,8 @@ import { db } from "../../../../app/firebase";
 import { useSelector } from "react-redux";
 import TablePayment from "./TablePayment";
 import Modal from "../menu/Modal";
+import MoveDownIcon from "@mui/icons-material/MoveDown";
+import TableBillChange from "./TableBillChange";
 export default function TableBill() {
   const userInfomation = JSON.parse(useSelector((state) => state.login.data));
   const uid = userInfomation.uid;
@@ -17,6 +19,8 @@ export default function TableBill() {
   const [paymentToggle, setPaymentToggle] = useState(false);
   const [inputPrice, setInputPrice] = useState("");
   const [returnPrice, setReturnPrice] = useState(0);
+  const [changeTableToggle, setChangeTableToggle] = useState(false);
+  const [currentTableId, setCurrentTableId] = useState("");
   //useEffect
   useEffect(() => {
     getTableListData();
@@ -74,7 +78,6 @@ export default function TableBill() {
     return query;
   };
   const checkUsing = (el) => {
-    console.log(el);
     if (el.useStatus) {
       return "tableItem tableItemUsing";
     } else {
@@ -126,7 +129,21 @@ export default function TableBill() {
           setPaymentToggle={setPaymentToggle}
         />
       </Modal>
-
+      <Modal
+        show={changeTableToggle}
+        onClose={() => {
+          setChangeTableToggle(false);
+        }}
+      >
+        <TableBillChange
+          currentTableId={currentTableId}
+          orderData={orderData}
+          tableList={tableList}
+          tableName={tableName}
+          uid={uid}
+          setChangeTableToggle={setChangeTableToggle}
+        ></TableBillChange>
+      </Modal>
       <div className="tableBillList">
         <div className="tableBillListTop">
           <p className="subTitleComponent">Danh sách bàn</p>
@@ -158,7 +175,25 @@ export default function TableBill() {
           </div>
         </div>
         <div className="tableBillListTop">
-          <p className="subTitleComponent">Thông số hóa đơn</p>
+          <div className="tableBillFeature">
+            <p className="subTitleComponent">Thông số hóa đơn</p>
+            <div className="tableBillFeatureBox">
+              {tableId === "" ? (
+                ""
+              ) : (
+                <div
+                  className="tableBillFeatureItem"
+                  onClick={() => {
+                    setChangeTableToggle(!changeTableToggle);
+                    setCurrentTableId(tableId);
+                  }}
+                >
+                  <p>Chuyển bàn</p>
+                  <MoveDownIcon color="action" fontSize="small"></MoveDownIcon>
+                </div>
+              )}
+            </div>
+          </div>
           <div className="tableBillOrderDetails">
             <div className="tableBillName">
               <p className="tableBillContent">{tableName}</p>

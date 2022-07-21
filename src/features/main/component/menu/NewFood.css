@@ -12,3 +12,10 @@
     display: flex;
     justify-content: center;
 }
+.textFieldInputBox{
+    display: flex;
+    flex-direction: column;
+}
+.textFieldInputItem{
+    margin: 0.5rem 0;
+}

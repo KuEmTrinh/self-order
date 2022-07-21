@@ -23,12 +23,16 @@ export default function Method({ userId }) {
   }, []);
   return (
     <>
-      <p className="componentTitle mt-1">Danh sách Phương thức</p>
+      <p className="subTitleComponent">Danh sách phương thức</p>
       <div className="methodList">
         {methodData ? (
           <>
             {methodData.map((el, index) => {
-              return <div className="methodItem" key={index}>{el.name}</div>;
+              return (
+                <div className="methodItem" key={index}>
+                  {el.name}
+                </div>
+              );
             })}
           </>
         ) : (

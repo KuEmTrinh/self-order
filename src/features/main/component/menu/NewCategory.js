@@ -3,6 +3,8 @@ import { useState } from "react";
 import { db } from "../../../../app/firebase";
 import { firebase } from "../../../../app/firebase";
 import { useSelector } from "react-redux";
+import TextField from "@mui/material/TextField";
+
 export default function NewCategory() {
   const categoryCurrentIndex = useSelector(
     (state) => state.category.categoryCurrentIndex
@@ -30,29 +32,30 @@ export default function NewCategory() {
   };
   return (
     <>
-      <p className="componentTitle">Tạo Danh Mục</p>
-      <div className="inputBox flex align-center">
-        <p className="inputBoxTitle">Tên</p>
-        <input
-          value={inputValue}
-          className="inputBoxEnter"
+      <p className="componentTitle">Quản lí thực đơn</p>
+      <p className="subTitleComponent">Tạo danh sách mới</p>
+      <div className="deviceInputBox">
+        <TextField
+          id="outlined-name"
+          label="Nhập tên danh sách"
           onChange={(e) => {
             onChangeValue(e);
           }}
+          value={inputValue}
         />
+        {inputValue !== "" ? (
+          <div
+            className="deviceCreateButton"
+            onClick={() => {
+              createCategory();
+            }}
+          >
+            Tạo
+          </div>
+        ) : (
+          ""
+        )}
       </div>
-      {inputValue === "" ? (
-        ""
-      ) : (
-        <button
-          className="button button-green"
-          onClick={() => {
-            createCategory();
-          }}
-        >
-          Tạo
-        </button>
-      )}
     </>
   );
 }

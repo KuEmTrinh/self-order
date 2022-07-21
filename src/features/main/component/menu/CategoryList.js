@@ -122,7 +122,7 @@ export default function CategoryList({ categoryList }) {
         </div>
       </Modal>
       <div className="orderBoxIcon">
-        <p className="componentTitle categoryList">Danh Sách Danh Mục</p>
+        <p className="subTitleComponent">Danh Sách Danh Mục</p>
         {listChangeStatus ? (
           <button
             className="button button-green"
