@@ -164,7 +164,12 @@ export default function FoodList({ categoryId, paymentStatus }) {
     setProperties(newArray);
   };
   const addPropertyFood = () => {
-    const sendFoodData = foodList[foodSelectIndex];
+    let sendFoodData = "";
+    if (searchingStatus) {
+      sendFoodData = JSON.parse(JSON.stringify(searchData[foodSelectIndex]));
+    } else {
+      sendFoodData = JSON.parse(JSON.stringify(foodList[foodSelectIndex]));
+    }
     let details = [];
     if (checkboxList) {
       checkboxList.map((el) => {
@@ -176,6 +181,7 @@ export default function FoodList({ categoryId, paymentStatus }) {
     properties.map((el) => {
       details.push(el.listName + ":" + el.name);
     });
+    console.log(sendFoodData);
     sendFoodData.countNumber = countNumber;
     sendFoodData.total = foodPropertyTotalPrice;
     sendFoodData.details = details;
@@ -284,10 +290,10 @@ export default function FoodList({ categoryId, paymentStatus }) {
                 return (
                   <div className="radioListItem">
                     <FormControlLabel
-                      control={<Checkbox size="small" checked={el.checked}/>}
+                      control={<Checkbox size="small" checked={el.checked} />}
                       label={el.name}
                       onChange={() => {
-                        let newArray = [...checkboxList];
+                        let newArray = JSON.parse(JSON.stringify(checkboxList));
                         if (newArray[index].checked) {
                           newArray[index].checked = !newArray[index].checked;
                         } else {
@@ -475,7 +481,7 @@ export default function FoodList({ categoryId, paymentStatus }) {
                                 openPropertiesBox(el.id, index);
                               }}
                             >
-                              Xem
+                              Chọn
                             </button>
                           ) : (
                             <button
