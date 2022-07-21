@@ -148,3 +148,7 @@ img{
     border-radius: 5px;
     margin-top: 1rem;
 }
+.foodRadioList{
+    max-height: 50vh;
+    overflow-y: auto;
+}
