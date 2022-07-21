@@ -121,6 +121,9 @@ export default function TableBill() {
           tableFoodTotal={tableFoodTotal}
           tableFoodCancel={tableFoodCancel}
           tableFoodComplete={tableFoodComplete}
+          tableId={tableId}
+          uid={uid}
+          setPaymentToggle={setPaymentToggle}
         />
       </Modal>
 

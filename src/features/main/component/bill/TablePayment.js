@@ -3,6 +3,8 @@ import TextField from "@mui/material/TextField";
 import PrintIcon from "@mui/icons-material/Print";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { useReactToPrint } from "react-to-print";
+import { firebase } from "../../../../app/firebase";
+import { db } from "../../../../app/firebase";
 export default function TablePayment({
   tablePriceTotal,
   setInputPrice,
@@ -14,6 +16,9 @@ export default function TablePayment({
   tableFoodTotal,
   tableFoodCancel,
   tableFoodComplete,
+  tableId,
+  uid,
+  setPaymentToggle,
 }) {
   const componentRef = useRef();
   const tablePriceTotalChange = (e) => {
@@ -27,6 +32,71 @@ export default function TablePayment({
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
+  const getRandomInt = (max) => {
+    return Math.floor(Math.random() * max + 1);
+  };
+  const randomCodeTable = (tableId) => {
+    const query = db
+      .collection("table")
+      .doc(tableId)
+      .update({
+        code: getRandomInt(10000),
+        paymentStatus: false,
+        useStatus: false,
+      });
+    return query;
+  };
+  const resetList = () => {
+    const query = db.collection("user").doc(uid).collection("order");
+    query
+      .where("tableId", "==", tableId)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.docs.map((doc) => {
+          const docChangeInfo = query
+            .doc(doc.id)
+            .collection("changeInfo")
+            .get()
+            .then((querySnapshot) => {
+              try {
+                querySnapshot.docs.map((doc) => {
+                  doc.ref.delete();
+                });
+              } catch (error) {
+                console.log("have no info");
+              }
+            });
+          doc.ref.delete();
+        });
+      });
+  };
+  const paymentConfirm = () => {
+    console.log("confirm");
+    const query = db.collection("user").doc(uid).collection("bill").add({
+      tableName: tableName,
+      totalOrder: tableFoodTotal,
+      complete: tableFoodComplete,
+      cancel: tableFoodCancel,
+      tableId: tableId,
+      total: tablePriceTotal,
+      details: orderData,
+      status: 2,
+      method: "Thanh toán tại quầy",
+      receipt: 1,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    changeTablePaymentStatus(tableId);
+    randomCodeTable(tableId);
+    resetList();
+    setPaymentToggle(false);
+    return query;
+  };
+  const changeTablePaymentStatus = (tableId) => {
+    const query = db.collection("table").doc(tableId);
+    query.update({
+      paymentStatus: true,
+    });
+  };
   const RenderComponent = React.forwardRef((props, ref) => {
     return (
       <div className="billDetail">
@@ -116,7 +186,12 @@ export default function TablePayment({
       </div>
       <p className="subTitleComponent">Xác nhận thanh toán</p>
       <div className="tableBillButtonBox">
-        <div className="tableBillCompleteReceipt">
+        <div
+          className="tableBillCompleteReceipt"
+          onClick={() => {
+            paymentConfirm();
+          }}
+        >
           <p className="tableBillCompleteReceiptText">Hoàn thành</p>
           <div className="tableBillCompleteReceiptIcon">
             <CheckCircleIcon></CheckCircleIcon>
